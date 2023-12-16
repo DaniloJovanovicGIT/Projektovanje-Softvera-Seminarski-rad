@@ -42,27 +42,27 @@ public class Partner implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiNaziveKolonatabele() {
-        return "(`pib`,`naziv`, `datumOsnivanja`,`kontaktOsoba`,`brojTelefona`,`email`)";
+        return "(`pib`,`naziv`,`datumOsnivanja`,`kontaktOsoba`,`brojTelefona`,`email`)";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        return "`" + pib + "`,`" +naziv+"`,"+datumOsnivanja +",`" + kontaktOsoba + "`,`" + brojTelefona + "`,`" + email + "`";
+        return "'" + pib + "','" + naziv + "','" + datumOsnivanja + "','" + kontaktOsoba + "','" + brojTelefona + "','" + email + "'";
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "', naziv= '" + naziv + "', datumOsnivanja= " + datumOsnivanja + ", kontaktOsoba='" + kontaktOsoba + "', brojTelefona='" + brojTelefona + "', email='" + email + "'";
     }
 
     @Override
     public String vratiPrimarniKljuc() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "pib='" + pib + "'";
     }
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "p";
     }
 
     @Override
