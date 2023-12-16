@@ -13,6 +13,7 @@ import java.util.List;
  * @author Danilo
  */
 public class Zaposleni implements OpstiDomenskiObjekat {
+
     private String jmbg;
     private String ime;
     private String prezime;
@@ -29,45 +30,45 @@ public class Zaposleni implements OpstiDomenskiObjekat {
         this.staz = staz;
         this.odeljenje = odeljenje;
     }
-    
+
     @Override
     public String vratiNazivTabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "zaposleni";
     }
 
     @Override
     public String vratiNaziveKolonatabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(`jmbg`, `ime`, `prezime`, `staz`, `odeljenjeId`)";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + jmbg + "','" + ime + "','" + prezime + "'," + staz + "," + odeljenje.getOdeljenjeId();
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return ", ime='" + ime + "', prezime='" + prezime + "', staz=" + staz + ", odeljenjeId=" + odeljenje.getOdeljenjeId();
     }
 
     @Override
     public String vratiPrimarniKljuc() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "jmbg='" + jmbg + "'";
     }
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "z";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "INNER JOIN odeljenje ON zaposleni.odeljenjeId = odeljenje.odeljenjeId";
     }
 
     @Override
     public String uslov() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -114,5 +115,5 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     public void setOdeljenje(Odeljenje odeljenje) {
         this.odeljenje = odeljenje;
     }
-    
+
 }

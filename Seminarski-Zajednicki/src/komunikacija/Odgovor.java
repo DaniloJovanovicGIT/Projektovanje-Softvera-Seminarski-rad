@@ -11,13 +11,15 @@ package komunikacija;
 public class Odgovor {
     private Object parametar;
     private String poruka;
+    private VrstaOdgovora vrstaOdgovora;
 
-    public Odgovor() {
-    }
-
-    public Odgovor(Object parametar, String poruka) {
+    public Odgovor(Object parametar, String poruka, VrstaOdgovora vrstaOdgovora) {
         this.parametar = parametar;
         this.poruka = poruka;
+        this.vrstaOdgovora = vrstaOdgovora;
+    }
+
+    public Odgovor() {
     }
 
     public String getPoruka() {
@@ -34,6 +36,14 @@ public class Odgovor {
 
     public void setParametar(Object parametar) {
         this.parametar = parametar;
+    }
+
+    public VrstaOdgovora getVrstaOdgovora() {
+        return vrstaOdgovora;
+    }
+
+    public void setVrstaOdgovora(VrstaOdgovora vrstaOdgovora) {
+        this.vrstaOdgovora = vrstaOdgovora;
     }
     
 }

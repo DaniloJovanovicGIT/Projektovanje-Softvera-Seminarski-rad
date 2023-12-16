@@ -13,6 +13,7 @@ import java.util.List;
  * @author Danilo
  */
 public class Odeljenje implements OpstiDomenskiObjekat {
+
     private Long odeljenjeId;
     private String naziv;
 
@@ -23,35 +24,35 @@ public class Odeljenje implements OpstiDomenskiObjekat {
         this.odeljenjeId = odeljenjeId;
         this.naziv = naziv;
     }
-    
+
     @Override
     public String vratiNazivTabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "odeljenje";
     }
 
     @Override
     public String vratiNaziveKolonatabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(`odeljenjeId`, `naziv`)";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return odeljenjeId + ",'" + naziv + "'";
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return ", naziv='" + naziv + "'";
     }
 
     @Override
     public String vratiPrimarniKljuc() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "odeljenjeId=" + odeljenjeId;
     }
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "o";
     }
 
     @Override
@@ -61,7 +62,7 @@ public class Odeljenje implements OpstiDomenskiObjekat {
 
     @Override
     public String uslov() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -84,5 +85,5 @@ public class Odeljenje implements OpstiDomenskiObjekat {
     public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
-    
+
 }

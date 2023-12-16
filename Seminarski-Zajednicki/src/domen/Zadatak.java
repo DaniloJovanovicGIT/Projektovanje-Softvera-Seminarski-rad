@@ -14,6 +14,8 @@ import java.util.List;
  * @author Danilo
  */
 public class Zadatak implements OpstiDomenskiObjekat {
+
+    private Kampanja kampanja;
     private Long zadatakId;
     private String naziv;
     private String opis;
@@ -23,54 +25,53 @@ public class Zadatak implements OpstiDomenskiObjekat {
     public Zadatak() {
     }
 
-    public Zadatak(Long zadatakId, String naziv, String opis, Date ocekivaniZavrsetak, List<Zaposleni> zaduzeniZaposleni) {
+    public Zadatak(Kampanja kampanja, Long zadatakId, String naziv, String opis, Date ocekivaniZavrsetak, List<Zaposleni> zaduzeniZaposleni) {
+        this.kampanja = kampanja;
         this.zadatakId = zadatakId;
         this.naziv = naziv;
         this.opis = opis;
         this.ocekivaniZavrsetak = ocekivaniZavrsetak;
         this.zaduzeniZaposleni = zaduzeniZaposleni;
     }
-    
-    
 
     @Override
     public String vratiNazivTabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "zadatak";
     }
 
     @Override
     public String vratiNaziveKolonatabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(`kampanjaId`, `zadatakId`, `naziv`, `opis`, `ocekivaniZavrsetak`)";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return kampanja.getKampanjaId() + "," + zadatakId + ",'" + naziv + "','" + opis + "','" + ocekivaniZavrsetak + "'";
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return ", naziv='" + naziv + "', opis='" + opis + "', ocekivaniZavrsetak='" + ocekivaniZavrsetak + "'";
     }
 
     @Override
     public String vratiPrimarniKljuc() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "kampanjaId=" + kampanja.getKampanjaId() + " AND zadatakId=" + zadatakId;
     }
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "z";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "INNER JOIN angazovanje ON zadatak.kampanjaId = angazovanje.kampanjaId AND zadatak.zadatakId = angazovanje.zadatakId";
     }
 
     @Override
     public String uslov() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -116,6 +117,14 @@ public class Zadatak implements OpstiDomenskiObjekat {
 
     public void setZaduzeniZaposleni(List<Zaposleni> zaduzeniZaposleni) {
         this.zaduzeniZaposleni = zaduzeniZaposleni;
+    }
+
+    public Kampanja getKampanja() {
+        return kampanja;
+    }
+
+    public void setKampanja(Kampanja kampanja) {
+        this.kampanja = kampanja;
     }
 
 }
