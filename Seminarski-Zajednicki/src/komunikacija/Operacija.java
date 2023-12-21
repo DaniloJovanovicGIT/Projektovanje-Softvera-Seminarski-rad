@@ -8,7 +8,8 @@ package komunikacija;
  *
  * @author Danilo
  */
-public class Operacije {
+public class Operacija {
+    public static final int ZAPAMTI_OPSTI_DOMENSKI_OBJEKAT = 0;
     public static final int ZAPAMTI_PARTNERA = 1;
     public static final int VRATI_PARTNERE_ZA_VREDONST = 2;
     public static final int UCITAJ_PARTNERA = 3;

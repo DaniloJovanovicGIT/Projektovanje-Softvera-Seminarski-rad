@@ -7,8 +7,7 @@ package komunikacija;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -18,9 +17,9 @@ public class Primalac {
     private Socket soket;
     private ObjectInputStream ulaz;
 
-    public Primalac(Socket socket) throws IOException {
-        this.soket = socket;
-        this.ulaz = new ObjectInputStream(socket.getInputStream());
+    public Primalac(Socket soket) throws IOException {
+        this.soket = soket;
+        this.ulaz = new ObjectInputStream(soket.getInputStream());
     }
     
     public Object primi() throws Exception{
