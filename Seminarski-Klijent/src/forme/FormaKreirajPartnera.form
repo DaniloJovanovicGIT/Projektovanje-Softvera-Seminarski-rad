@@ -44,14 +44,12 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnKreirajPartnera" pref="246" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtPIB" max="32767" attributes="0"/>
-                      <Component id="txtNaziv" max="32767" attributes="0"/>
-                      <Component id="txtDatumOsnivanja" max="32767" attributes="0"/>
-                      <Component id="txtKontaktOsoba" max="32767" attributes="0"/>
-                      <Component id="txtBrojTelefona" max="32767" attributes="0"/>
-                      <Component id="txtEmail" pref="246" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="txtPIB" max="32767" attributes="0"/>
+                  <Component id="txtNaziv" max="32767" attributes="0"/>
+                  <Component id="txtDatumOsnivanja" max="32767" attributes="0"/>
+                  <Component id="txtKontaktOsoba" max="32767" attributes="0"/>
+                  <Component id="txtBrojTelefona" max="32767" attributes="0"/>
+                  <Component id="txtEmail" pref="246" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="59" max="32767" attributes="0"/>
           </Group>

@@ -6,6 +6,7 @@ package domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +48,8 @@ public class Partner implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        return "'" + pib + "','" + naziv + "','" + datumOsnivanja + "','" + kontaktOsoba + "','" + brojTelefona + "','" + email + "'";
+        
+        return "'" + pib + "','" + naziv + "','" + new java.sql.Date(datumOsnivanja.getTime()) + "','" + kontaktOsoba + "','" + brojTelefona + "','" + email + "'";
     }
 
     @Override
@@ -67,17 +69,25 @@ public class Partner implements OpstiDomenskiObjekat {
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String uslov() {
         return "";
     }
 
     @Override
+    public String uslov() {
+        return "WHERE pib ='"+pib+"'";
+    }
+
+    @Override
     public List<OpstiDomenskiObjekat> vratiSve(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<OpstiDomenskiObjekat> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            Partner partner = new Partner(rs.getString("pib"), rs.getString("naziv"), rs.getDate("datumOsnivanja"), rs.getString("kontaktOsoba"), rs.getString("brojTelefona"), rs.getString("email"));
+            lista.add(partner);
+        }
+
+        rs.close();
+        return lista;
     }
 
     public String getPib() {

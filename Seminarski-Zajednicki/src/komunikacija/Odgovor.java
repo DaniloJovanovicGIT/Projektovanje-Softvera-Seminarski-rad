@@ -4,30 +4,27 @@
  */
 package komunikacija;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  *
  * @author Danilo
  */
-public class Odgovor {
+public class Odgovor implements Serializable{
     private Object parametar;
+    private int operacija;
     private String poruka;
     private VrstaOdgovora vrstaOdgovora;
-
-    public Odgovor(Object parametar, String poruka, VrstaOdgovora vrstaOdgovora) {
-        this.parametar = parametar;
-        this.poruka = poruka;
-        this.vrstaOdgovora = vrstaOdgovora;
-    }
 
     public Odgovor() {
     }
 
-    public String getPoruka() {
-        return poruka;
-    }
-
-    public void setPoruka(String poruka) {
+    public Odgovor(Object parametar, int operacija, String poruka, VrstaOdgovora vrstaOdgovora) {
+        this.parametar = parametar;
+        this.operacija = operacija;
         this.poruka = poruka;
+        this.vrstaOdgovora = vrstaOdgovora;
     }
 
     public Object getParametar() {
@@ -38,6 +35,22 @@ public class Odgovor {
         this.parametar = parametar;
     }
 
+    public int getOperacija() {
+        return operacija;
+    }
+
+    public void setOperacija(int operacija) {
+        this.operacija = operacija;
+    }
+
+    public String getPoruka() {
+        return poruka;
+    }
+
+    public void setPoruka(String poruka) {
+        this.poruka = poruka;
+    }
+
     public VrstaOdgovora getVrstaOdgovora() {
         return vrstaOdgovora;
     }
@@ -45,5 +58,7 @@ public class Odgovor {
     public void setVrstaOdgovora(VrstaOdgovora vrstaOdgovora) {
         this.vrstaOdgovora = vrstaOdgovora;
     }
+
+   
     
 }

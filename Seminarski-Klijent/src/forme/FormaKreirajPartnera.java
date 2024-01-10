@@ -4,7 +4,14 @@
  */
 package forme;
 
+import domen.Partner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import komunikacija.Odgovor;
+import komunikacija.VrstaOdgovora;
+import kontroler.KontrolerKIPartner;
 
 /**
  *
@@ -12,11 +19,15 @@ import javax.swing.JOptionPane;
  */
 public class FormaKreirajPartnera extends javax.swing.JFrame {
 
+    KontrolerKIPartner kkip;
+
     /**
      * Creates new form KreirajPartnera
      */
     public FormaKreirajPartnera() {
         initComponents();
+        kkip = KontrolerKIPartner.getInstance();
+        kkip.setFkp(this);
     }
 
     /**
@@ -138,46 +149,29 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNazivActionPerformed
 
     private void btnKreirajPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajPartneraActionPerformed
-        JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera.", "Operacija uspešno obavljena.", JOptionPane.INFORMATION_MESSAGE);
+        String pib = txtPIB.getText();
+        String naziv = txtNaziv.getText();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        Date datumOsnivanja = null;
+        try {
+            datumOsnivanja = sdf.parse(txtDatumOsnivanja.getText());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String kontaktOsoba = txtKontaktOsoba.getText();
+        String brojTelefona = txtBrojTelefona.getText();
+        String email = txtEmail.getText();
+
+        kkip.kreirajPartnera(new Partner(pib, naziv, datumOsnivanja, kontaktOsoba, brojTelefona, email));
+
         //JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnKreirajPartneraActionPerformed
-                                                      
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormaKreirajPartnera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormaKreirajPartnera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormaKreirajPartnera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormaKreirajPartnera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormaKreirajPartnera().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKreirajPartnera;
@@ -195,4 +189,22 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
     private javax.swing.JTextField txtNaziv;
     private javax.swing.JTextField txtPIB;
     // End of variables declaration//GEN-END:variables
+
+    public void obradiServerskiOdgovor(Odgovor odgovor) {
+        if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera.", "Operacija uspešno obavljena.", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+        }
+        vratiVrednostiNaPodrazumevane();
+    }
+
+    private void vratiVrednostiNaPodrazumevane() {
+        txtPIB.setText("");
+        txtNaziv.setText("");
+        txtDatumOsnivanja.setText("");
+        txtKontaktOsoba.setText("");
+        txtBrojTelefona.setText("");
+        txtEmail.setText("");
+    }
 }

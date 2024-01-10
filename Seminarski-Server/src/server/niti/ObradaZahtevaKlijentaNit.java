@@ -14,19 +14,23 @@ import komunikacija.Odgovor;
 import komunikacija.Operacija;
 import komunikacija.Posiljalac;
 import komunikacija.Primalac;
+import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
-import poslovna.logika.Kontroler;
+import aplikaciona.logika.Kontroler;
+import sistemske.operacija.OpsteIzvrsenjeSO;
+import sistemske.operacija.SOZapamtiPartnera;
 
 /**
  *
  * @author Danilo
  */
 public class ObradaZahtevaKlijentaNit extends Thread {
+
     private Socket soket;
     private ServerskaNit serverskaNit;
     private Posiljalac posiljalac;
     private Primalac primalac;
-    
+
     ObradaZahtevaKlijentaNit(Socket soket, ServerskaNit serverskaNit) throws IOException {
         this.soket = soket;
         this.serverskaNit = serverskaNit;
@@ -36,7 +40,7 @@ public class ObradaZahtevaKlijentaNit extends Thread {
 
     @Override
     public void run() {
-         try {
+        try {
             while (soket != null && !soket.isClosed()) {
                 Zahtev zahtev = (Zahtev) primalac.primi();
                 Odgovor odgovor = obradiZahtev(zahtev);
@@ -48,21 +52,37 @@ public class ObradaZahtevaKlijentaNit extends Thread {
     }
 
     private Odgovor obradiZahtev(Zahtev zahtev) {
-        int operacija = zahtev.getOperacija();
-        Odgovor odgovor = null;
-        switch (operacija) {
-            case Operacija.ZAPAMTI_PARTNERA:
-                OpstiDomenskiObjekat odo = (OpstiDomenskiObjekat) zahtev.getParametar();
-                Kontroler.getInstance().zapamtiPartnera(odo);
-                break;
-            case Operacija.VRATI_PARTNERE_ZA_VREDONST:
-                
-                break;
-            
-                
+        try {
+            int operacija = zahtev.getOperacija();
+            Odgovor odgovor = null;
+            switch (operacija) {
+                case Operacija.ZAPAMTI_PARTNERA:
+                    Partner partner = (Partner) zahtev.getParametar();
+                    boolean sacuvanPartner = Kontroler.getInstance().sacuvajPartnera(partner);
+                    if (sacuvanPartner) {
+                        odgovor = new Odgovor(partner,Operacija.ZAPAMTI_PARTNERA, "Uspesno sacuvano.", VrstaOdgovora.USPESNO);
+                    }
+                    break;
+                case Operacija.VRATI_PARTNERE_ZA_VREDONST:
+
+                    break;
+
+            }
+            return odgovor;
+        } catch (Exception ex) {
+            Logger.getLogger(ObradaZahtevaKlijentaNit.class.getName()).log(Level.SEVERE, null, ex);
+            return new Odgovor(ex, -1, ex.getMessage(), VrstaOdgovora.GRESKA);
         }
-        return null;
     }
 
-    
+    public void zatvoriSoket() {
+        try {
+            if (soket != null && !soket.isClosed()) {
+                soket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

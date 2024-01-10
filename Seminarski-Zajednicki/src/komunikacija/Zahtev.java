@@ -13,14 +13,18 @@ import java.io.Serializable;
 public class Zahtev implements Serializable{
     private int operacija;
     private Object parametar;
-
+    private boolean signal;
+    
     public Zahtev() {
     }
 
-    public Zahtev(int operacija, Object parametar) {
+    public Zahtev(int operacija, Object parametar, boolean signal) {
         this.operacija = operacija;
         this.parametar = parametar;
+        this.signal = signal;
     }
+
+    
 
     public Object getParametar() {
         return parametar;
@@ -36,6 +40,14 @@ public class Zahtev implements Serializable{
 
     public void setOperacija(int operacija) {
         this.operacija = operacija;
+    }
+
+    public boolean isSignal() {
+        return signal;
+    }
+
+    public void setSignal(boolean signal) {
+        this.signal = signal;
     }
     
 }
