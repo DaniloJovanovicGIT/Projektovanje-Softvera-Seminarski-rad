@@ -5,12 +5,15 @@
 package kontroler;
 
 import domen.Partner;
+import forme.FormaIzmeniPartnera;
 import forme.FormaKreirajPartnera;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
+import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 
 /**
@@ -19,7 +22,8 @@ import komunikacija.Zahtev;
  */
 public class KontrolerKIPartner extends OpstiKontrolerKI {
 
-    private FormaKreirajPartnera fkp;
+    private FormaKreirajPartnera formaKreirajPartnera;
+    private FormaIzmeniPartnera formaIzmeniPartnera;
     private Partner partner;
     private static KontrolerKIPartner instance;
 
@@ -33,14 +37,14 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
         return instance;
     }
 
-    public FormaKreirajPartnera getFkp() {
-        return fkp;
+    public void setFkp(FormaKreirajPartnera fkp) {
+        this.formaKreirajPartnera = fkp;
     }
 
-    public void setFkp(FormaKreirajPartnera fkp) {
-        this.fkp = fkp;
+    public void setFormaIzmeniPartnera(FormaIzmeniPartnera formaIzmeniPartnera) {
+        this.formaIzmeniPartnera = formaIzmeniPartnera;
     }
-    
+
     public void kreirajPartnera(Partner partner) {
         try {
             System.out.println("Saljem zahtev." + partner.getNaziv());
@@ -55,8 +59,25 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
     }
 
     public void obradiOdgovorSOZapamtiPartnera(Odgovor odgovor) {
-        fkp.obradiServerskiOdgovor(odgovor);
+        formaKreirajPartnera.obradiServerskiOdgovor(odgovor);
     }
 
-    
+    public ArrayList<Partner> vratiSvePartnere() {
+        try {
+            System.out.println("Saljem zahtev." + partner.getNaziv());
+            posiljalac.posalji(new Zahtev(Operacija.VRATI_SVE_PARTNERE, null, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if(odgovor.getVrstaOdgovora()==VrstaOdgovora.USPESNO){
+                return (ArrayList<Partner>) odgovor.getParametar();
+            }else{
+                return null;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }

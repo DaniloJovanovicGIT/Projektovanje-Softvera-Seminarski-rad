@@ -26,6 +26,7 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
      */
     public FormaKreirajPartnera() {
         initComponents();
+        setLocationRelativeTo(null);
         kkip = KontrolerKIPartner.getInstance();
         kkip.setFkp(this);
     }
