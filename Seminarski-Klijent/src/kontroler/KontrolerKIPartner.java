@@ -64,7 +64,7 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
 
     public ArrayList<Partner> vratiSvePartnere() {
         try {
-            System.out.println("Saljem zahtev." + partner.getNaziv());
+            System.out.println("Saljem zahtev. Vrati sve partnere.");
             posiljalac.posalji(new Zahtev(Operacija.VRATI_SVE_PARTNERE, null, true));
             Odgovor odgovor = (Odgovor) primalac.primi();
             if(odgovor.getVrstaOdgovora()==VrstaOdgovora.USPESNO){

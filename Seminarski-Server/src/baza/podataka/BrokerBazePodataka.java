@@ -64,7 +64,7 @@ public class BrokerBazePodataka {
 
     public ArrayList<OpstiDomenskiObjekat> vrati(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
-                + " " + objekat.join() + " " + objekat.uslov();
+                + " " + objekat.join() + " ";
         System.out.println(upit);
         Statement st = konekcija.createStatement();
         ResultSet rs = st.executeQuery(upit);
@@ -97,5 +97,4 @@ public class BrokerBazePodataka {
         ResultSet rs = st.executeQuery(upit);
         return (List<OpstiDomenskiObjekat>)objekat.vratiSve(rs);
     }
-
 }

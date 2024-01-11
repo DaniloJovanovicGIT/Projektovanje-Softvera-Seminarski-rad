@@ -17,6 +17,7 @@ import komunikacija.Primalac;
 import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 import aplikaciona.logika.Kontroler;
+import java.util.ArrayList;
 import sistemske.operacija.OpsteIzvrsenjeSO;
 import sistemske.operacija.SOZapamtiPartnera;
 
@@ -60,11 +61,15 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     Partner partner = (Partner) zahtev.getParametar();
                     boolean sacuvanPartner = Kontroler.getInstance().sacuvajPartnera(partner);
                     if (sacuvanPartner) {
-                        odgovor = new Odgovor(partner,Operacija.ZAPAMTI_PARTNERA, "Uspesno sacuvano.", VrstaOdgovora.USPESNO);
+                        odgovor = new Odgovor(partner, Operacija.ZAPAMTI_PARTNERA, "Uspesno sacuvano.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(partner, Operacija.ZAPAMTI_PARTNERA, "Cuvanje neuspesno.", VrstaOdgovora.GRESKA);
                     }
                     break;
-                case Operacija.VRATI_PARTNERE_ZA_VREDONST:
-
+                case Operacija.VRATI_SVE_PARTNERE:
+                    ArrayList<Partner> listaSvihPartnera = Kontroler.getInstance().vratiSveParntere();
+                    odgovor = new Odgovor(listaSvihPartnera, Operacija.VRATI_SVE_PARTNERE, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    
                     break;
 
             }

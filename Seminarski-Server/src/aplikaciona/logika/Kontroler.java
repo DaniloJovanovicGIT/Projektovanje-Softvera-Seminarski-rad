@@ -6,6 +6,8 @@ package aplikaciona.logika;
 
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
+import java.util.ArrayList;
+import sistemske.operacija.SOVratiSvePartnere;
 import sistemske.operacija.SOZapamtiPartnera;
 
 /**
@@ -29,6 +31,12 @@ public class Kontroler {
     public boolean sacuvajPartnera(Partner partner) throws Exception {
         SOZapamtiPartnera so = new SOZapamtiPartnera();
         return so.opsteIzvrsenjeSO(partner);
+    }
+
+    public ArrayList<Partner> vratiSveParntere() throws Exception {
+        SOVratiSvePartnere so = new SOVratiSvePartnere();
+        so.opsteIzvrsenjeSO(new Partner());
+        return so.getLista();
     }
 
 }
