@@ -14,6 +14,8 @@ import java.util.List;
  * @author Danilo
  */
 public interface OpstiDomenskiObjekat extends Serializable{
+    
+    
     String vratiNazivTabele();
     
     String vratiNaziveKolonatabele();
@@ -29,6 +31,8 @@ public interface OpstiDomenskiObjekat extends Serializable{
     String join();
     
     String uslov();
+    
+    String uslovZaPretragu();
         
     List<OpstiDomenskiObjekat> vratiSve(ResultSet rs) throws SQLException;
 }

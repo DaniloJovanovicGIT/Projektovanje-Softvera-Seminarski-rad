@@ -160,4 +160,9 @@ public class Kampanja implements OpstiDomenskiObjekat {
         this.partner = partner;
     }
 
+    @Override
+    public String uslovZaPretragu() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

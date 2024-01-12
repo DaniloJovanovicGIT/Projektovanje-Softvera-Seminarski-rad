@@ -6,6 +6,7 @@ package domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,11 +19,13 @@ import java.util.Objects;
 public class Partner implements OpstiDomenskiObjekat {
 
     private String pib;
+    private String noviPib;
     private String naziv;
     private Date datumOsnivanja;
     private String kontaktOsoba;
     private String brojTelefona;
     private String email;
+    private String vrednostZaPretragu;
 
     public Partner(String pib, String naziv, Date datumOsnivanja, String kontatktOsoba, String brojTelefona, String email) {
         this.pib = pib;
@@ -48,13 +51,13 @@ public class Partner implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        
+
         return "'" + pib + "','" + naziv + "','" + new java.sql.Date(datumOsnivanja.getTime()) + "','" + kontaktOsoba + "','" + brojTelefona + "','" + email + "'";
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return "', naziv= '" + naziv + "', datumOsnivanja= " + datumOsnivanja + ", kontaktOsoba='" + kontaktOsoba + "', brojTelefona='" + brojTelefona + "', email='" + email + "'";
+        return "pib= '"+noviPib+"', naziv= '" + naziv + "', datumOsnivanja= '" + new java.sql.Date(datumOsnivanja.getTime()) + "', kontaktOsoba='" + kontaktOsoba + "', brojTelefona='" + brojTelefona + "', email='" + email + "'";
     }
 
     @Override
@@ -74,7 +77,12 @@ public class Partner implements OpstiDomenskiObjekat {
 
     @Override
     public String uslov() {
-        return "WHERE pib ='"+pib+"'";
+        return "WHERE pib ='" + pib + "'";
+    }
+
+    @Override
+    public String uslovZaPretragu() {
+        return "WHERE pib LIKE'%" + this.vrednostZaPretragu + "%' OR naziv LIKE'%" + this.vrednostZaPretragu + "%' OR kontaktOsoba LIKE'%" + this.vrednostZaPretragu + "%'";
     }
 
     @Override
@@ -138,6 +146,8 @@ public class Partner implements OpstiDomenskiObjekat {
         this.email = email;
     }
 
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -163,6 +173,22 @@ public class Partner implements OpstiDomenskiObjekat {
     @Override
     public String toString() {
         return naziv;
+    }
+
+    public String getVrednostZaPretragu() {
+        return vrednostZaPretragu;
+    }
+
+    public void setVrednostZaPretragu(String vrednostZaPretragu) {
+        this.vrednostZaPretragu = vrednostZaPretragu;
+    }
+
+    public String getNoviPib() {
+        return noviPib;
+    }
+
+    public void setNoviPib(String noviPib) {
+        this.noviPib = noviPib;
     }
 
 }

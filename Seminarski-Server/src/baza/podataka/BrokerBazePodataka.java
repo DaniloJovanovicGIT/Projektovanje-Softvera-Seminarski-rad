@@ -22,44 +22,36 @@ import java.util.logging.Logger;
  */
 public class BrokerBazePodataka {
 
-    private static BrokerBazePodataka instance;
-    private static Connection konekcija;
+    private Connection konekcija;
 
     public BrokerBazePodataka() {
     }
 
-    public static BrokerBazePodataka getInstance() {
-        if (instance == null) {
-            instance = new BrokerBazePodataka();
-        }
-        return instance;
-    }
+    public void otvoriKonekciju() throws SQLException {
+        if (konekcija == null || konekcija.isClosed() ) {
+            String lokacija = konstante.Konstante.LOKACIJA_BAZE + konstante.Konstante.NAZIV_BAZE;
+            String username = konstante.Konstante.USERNAME_BAZA;
+            String password = konstante.Konstante.PASSWORD_BAZA;
 
-    public void otvoriKonekciju() {
-        try {
-            if (konekcija == null || konekcija.isClosed()) {
-                String lokacija = konstante.Konstante.LOKACIJA_BAZE + konstante.Konstante.NAZIV_BAZE;
-                String username = konstante.Konstante.USERNAME_BAZA;
-                String password = konstante.Konstante.PASSWORD_BAZA;
-
-                konekcija = DriverManager.getConnection(lokacija, username, password);
-                konekcija.setAutoCommit(false);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BrokerBazePodataka.class.getName()).log(Level.SEVERE, null, ex);
+            konekcija = DriverManager.getConnection(lokacija, username, password);
+            konekcija.setAutoCommit(false);
         }
+        System.out.println("KOnekcija otvorena");
     }
 
     public void commit() throws SQLException {
         konekcija.commit();
+        System.out.println("Commit");
     }
 
     public void rollback() throws SQLException {
         konekcija.rollback();
+        System.out.println("Rollback");
     }
 
     public void zatvoriKonekciju() throws SQLException {
         konekcija.close();
+        System.out.println("Konekcija zatvorena");
     }
 
     public ArrayList<OpstiDomenskiObjekat> vrati(OpstiDomenskiObjekat objekat) throws SQLException {
@@ -79,6 +71,16 @@ public class BrokerBazePodataka {
         ps.executeUpdate();
         return ps;
     }
+    
+    
+    public boolean izmeni(OpstiDomenskiObjekat odo) throws SQLException {
+        String upit = "UPDATE " + odo.vratiNazivTabele() + " SET "
+                + odo.vratiVrednostiZaPromenu()+" WHERE "+ odo.vratiPrimarniKljuc();
+        System.out.println(upit);
+        PreparedStatement ps = konekcija.prepareStatement(upit, Statement.RETURN_GENERATED_KEYS);
+        ps.executeUpdate();
+        return true;
+    }
 
     public OpstiDomenskiObjekat pronadjiObjekat(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
@@ -89,12 +91,12 @@ public class BrokerBazePodataka {
         return (OpstiDomenskiObjekat) objekat.vratiSve(rs);
     }
 
-    public List<OpstiDomenskiObjekat> vratiSveSaUslovom(OpstiDomenskiObjekat objekat, String uslov) throws SQLException {
+    public List<OpstiDomenskiObjekat> vratiSveSaUslovom(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
-                + " " + objekat.join() + " " + objekat.uslov();
+                + " " + objekat.join() + " " + objekat.uslovZaPretragu();
         System.out.println(upit);
         Statement st = konekcija.createStatement();
         ResultSet rs = st.executeQuery(upit);
-        return (List<OpstiDomenskiObjekat>)objekat.vratiSve(rs);
+        return (List<OpstiDomenskiObjekat>) objekat.vratiSve(rs);
     }
 }

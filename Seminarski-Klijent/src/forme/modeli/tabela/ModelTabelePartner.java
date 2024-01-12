@@ -49,5 +49,9 @@ public class ModelTabelePartner extends AbstractTableModel{
         }
         
     }
+
+    public Partner vratiPartnera(int izabraniRed) {
+        return lista.get(izabraniRed);
+    }
     
 }

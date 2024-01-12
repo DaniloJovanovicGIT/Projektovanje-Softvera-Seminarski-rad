@@ -48,7 +48,7 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                 posiljalac.posalji(odgovor);
             }
         } catch (Exception ex) {
-            Logger.getLogger(ObradaZahtevaKlijentaNit.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ObradaZahtevaKlijentaNit.class.getName()).log(Level.SEVERE, "Klijent je prekinuo vezu", ex);
         }
     }
 
@@ -69,9 +69,23 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                 case Operacija.VRATI_SVE_PARTNERE:
                     ArrayList<Partner> listaSvihPartnera = Kontroler.getInstance().vratiSveParntere();
                     odgovor = new Odgovor(listaSvihPartnera, Operacija.VRATI_SVE_PARTNERE, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
-                    
-                    break;
 
+                    break;
+                case Operacija.VRATI_PARTNERE_ZA_VREDONST:
+                    Partner partnerZaVrednost = (Partner) zahtev.getParametar();
+                    ArrayList<Partner> listaPartneraZaVrednost = Kontroler.getInstance().vratiPartnereZaVrednost(partnerZaVrednost);
+                    odgovor = new Odgovor(listaPartneraZaVrednost, Operacija.VRATI_PARTNERE_ZA_VREDONST, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+
+                    break;
+                case Operacija.IZMENI_PARTNERA:
+                    Partner izmenjenPartner = (Partner) zahtev.getParametar();
+                    boolean uspesnoIzmenjeno = Kontroler.getInstance().izmeniPartnera(izmenjenPartner);
+                    if (uspesnoIzmenjeno) {
+                        odgovor = new Odgovor(izmenjenPartner, Operacija.IZMENI_PARTNERA, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(izmenjenPartner, Operacija.IZMENI_PARTNERA, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
             }
             return odgovor;
         } catch (Exception ex) {

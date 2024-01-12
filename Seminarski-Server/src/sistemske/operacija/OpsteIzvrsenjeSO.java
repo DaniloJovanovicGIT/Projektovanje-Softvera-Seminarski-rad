@@ -7,6 +7,8 @@ package sistemske.operacija;
 import baza.podataka.BrokerBazePodataka;
 import domen.OpstiDomenskiObjekat;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import komunikacija.Zahtev;
 
 /**
@@ -15,22 +17,26 @@ import komunikacija.Zahtev;
  */
 public abstract class OpsteIzvrsenjeSO {
 
-    static BrokerBazePodataka bbp = BrokerBazePodataka.getInstance();
-    
+    public BrokerBazePodataka bbp = new BrokerBazePodataka();
 
-    synchronized public boolean opsteIzvrsenjeSO(OpstiDomenskiObjekat odo) throws Exception {
+    synchronized public boolean opsteIzvrsenjeSO(OpstiDomenskiObjekat odo) throws SQLException {
         boolean signal = false;
-        bbp.otvoriKonekciju();
-        boolean ogranicenjaZadovoljena = proveriOgranicenja(odo);
-        if (ogranicenjaZadovoljena) {
-            signal = izvrsiSO(odo);
-            if (signal == true) {
-                bbp.commit();
-            } else {
-                bbp.rollback();
+        try {
+            bbp.otvoriKonekciju();
+            boolean ogranicenjaZadovoljena = proveriOgranicenja(odo);
+            if (ogranicenjaZadovoljena) {
+                signal = izvrsiSO(odo);
+                if (signal == true) {
+                    bbp.commit();
+                }
             }
+            return signal;
+        } catch (Exception ex) {
+            bbp.rollback();
+            Logger.getLogger(OpsteIzvrsenjeSO.class.getName()).log(Level.SEVERE, "Greska pri izvrsenju sistemske operacije", ex);
+        } finally {
+            bbp.zatvoriKonekciju();
         }
-        bbp.zatvoriKonekciju();
         return signal;
     }
 

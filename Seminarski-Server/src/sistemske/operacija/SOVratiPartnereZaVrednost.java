@@ -15,11 +15,11 @@ import java.util.logging.Logger;
  *
  * @author Danilo
  */
-public class SOVratiSvePartnere extends OpsteIzvrsenjeSO{
+public class SOVratiPartnereZaVrednost extends OpsteIzvrsenjeSO {
+
     private ArrayList<OpstiDomenskiObjekat> lista;
     private ArrayList<Partner> listaPartnera;
-     
-    
+
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
         return true;
@@ -27,9 +27,10 @@ public class SOVratiSvePartnere extends OpsteIzvrsenjeSO{
 
     @Override
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws Exception {
-         boolean signal = false;
+        Partner partner = (Partner) odo;
+        boolean signal = false;
         try {
-            lista = bbp.vrati(new Partner());
+            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiSveSaUslovom(partner);
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOZapamtiPartnera.class.getName()).log(Level.SEVERE, null, ex);
@@ -38,11 +39,12 @@ public class SOVratiSvePartnere extends OpsteIzvrsenjeSO{
         return signal;
     }
 
-    public ArrayList<Partner> getLista() {
+    public ArrayList<Partner> getListaPartnera() {
         listaPartnera = new ArrayList<>();
         for (OpstiDomenskiObjekat opstiDomenskiObjekat : lista) {
             listaPartnera.add((Partner) opstiDomenskiObjekat);
         }
         return listaPartnera;
     }
+
 }

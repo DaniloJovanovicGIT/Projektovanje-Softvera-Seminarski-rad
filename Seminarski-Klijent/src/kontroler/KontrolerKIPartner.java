@@ -67,9 +67,27 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
             System.out.println("Saljem zahtev. Vrati sve partnere.");
             posiljalac.posalji(new Zahtev(Operacija.VRATI_SVE_PARTNERE, null, true));
             Odgovor odgovor = (Odgovor) primalac.primi();
-            if(odgovor.getVrstaOdgovora()==VrstaOdgovora.USPESNO){
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
                 return (ArrayList<Partner>) odgovor.getParametar();
-            }else{
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Partner> vratiPartnereSaUslovom(String vrednostPretrazivanja) {
+        Partner  partner = new Partner();
+        partner.setVrednostZaPretragu(vrednostPretrazivanja);
+        try {
+            System.out.println("Saljem zahtev. Vrati partnere za vrednost");
+            posiljalac.posalji(new Zahtev(Operacija.VRATI_PARTNERE_ZA_VREDONST, partner, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return (ArrayList<Partner>) odgovor.getParametar();
+            } else {
                 return null;
             }
         } catch (IOException ex) {
@@ -78,6 +96,22 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public boolean izmeniPartnera(Partner izmenjenPartner) {
+        try {
+            System.out.println("Saljem zahtev. Vrati partnere za vrednost");
+            posiljalac.posalji(new Zahtev(Operacija.IZMENI_PARTNERA, izmenjenPartner, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return false;
     }
 
 }

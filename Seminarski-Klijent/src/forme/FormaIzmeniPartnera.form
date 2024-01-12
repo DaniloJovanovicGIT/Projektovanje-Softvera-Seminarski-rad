@@ -60,18 +60,22 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="txtPretrazi" max="32767" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnPronadji" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="txtPretrazi" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="btnPronadji" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="180" max="32767" attributes="0"/>
+                                  <Component id="txtIzaberiPartnera" min="-2" pref="168" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="180" max="32767" attributes="0"/>
-                          <Component id="txtIzaberiPartnera" min="-2" pref="168" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -85,9 +89,9 @@
                       <Component id="txtPretrazi" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPronadji" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="276" max="-2" attributes="0"/>
                   <EmptySpace pref="7" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="276" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="txtIzaberiPartnera" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -100,6 +104,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Pronadji"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPronadjiActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -124,8 +131,11 @@
         </Container>
         <Component class="javax.swing.JButton" name="txtIzaberiPartnera">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Izaberi partnera"/>
+            <Property name="text" type="java.lang.String" value="U&#x10d;itaj partnera"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIzaberiPartneraActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -261,7 +271,11 @@
         <Component class="javax.swing.JButton" name="btnIzmeniPartnera">
           <Properties>
             <Property name="text" type="java.lang.String" value="Izmeni partnera"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniPartneraActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
