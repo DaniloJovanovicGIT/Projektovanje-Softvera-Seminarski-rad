@@ -17,9 +17,11 @@ import komunikacija.Primalac;
 import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 import aplikaciona.logika.Kontroler;
+import domen.Odeljenje;
+import domen.Zaposleni;
 import java.util.ArrayList;
-import sistemske.operacija.OpsteIzvrsenjeSO;
-import sistemske.operacija.SOZapamtiPartnera;
+import sistemske.operacije.OpsteIzvrsenjeSO;
+import sistemske.operacije.partner.SOZapamtiPartnera;
 
 /**
  *
@@ -69,21 +71,41 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                 case Operacija.VRATI_SVE_PARTNERE:
                     ArrayList<Partner> listaSvihPartnera = Kontroler.getInstance().vratiSveParntere();
                     odgovor = new Odgovor(listaSvihPartnera, Operacija.VRATI_SVE_PARTNERE, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
-
                     break;
                 case Operacija.VRATI_PARTNERE_ZA_VREDONST:
                     Partner partnerZaVrednost = (Partner) zahtev.getParametar();
                     ArrayList<Partner> listaPartneraZaVrednost = Kontroler.getInstance().vratiPartnereZaVrednost(partnerZaVrednost);
                     odgovor = new Odgovor(listaPartneraZaVrednost, Operacija.VRATI_PARTNERE_ZA_VREDONST, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
-
                     break;
                 case Operacija.IZMENI_PARTNERA:
                     Partner izmenjenPartner = (Partner) zahtev.getParametar();
-                    boolean uspesnoIzmenjeno = Kontroler.getInstance().izmeniPartnera(izmenjenPartner);
-                    if (uspesnoIzmenjeno) {
+                    boolean uspesnoIzmenjenoPartner = Kontroler.getInstance().izmeniPartnera(izmenjenPartner);
+                    if (uspesnoIzmenjenoPartner) {
                         odgovor = new Odgovor(izmenjenPartner, Operacija.IZMENI_PARTNERA, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
                     } else {
                         odgovor = new Odgovor(izmenjenPartner, Operacija.IZMENI_PARTNERA, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
+                case Operacija.OBRISI_PARTNERA:
+                    Partner partnerZaBrisanje = (Partner) zahtev.getParametar();
+                    boolean uspesnoObrisanPartner = Kontroler.getInstance().obrisiPartnera(partnerZaBrisanje);
+                    if (uspesnoObrisanPartner) {
+                        odgovor = new Odgovor(partnerZaBrisanje, Operacija.OBRISI_PARTNERA, "Uspesno obrisano.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(partnerZaBrisanje, Operacija.OBRISI_PARTNERA, "Brisanje neuspesna.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
+                case Operacija.VRATI_SVA_ODELJENJA:
+                    ArrayList<Odeljenje> listaSvihOdeljenja = Kontroler.getInstance().vratiSvaOdeljenja();
+                    odgovor = new Odgovor(listaSvihOdeljenja, Operacija.VRATI_SVA_ODELJENJA, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    break;
+                case Operacija.ZAPAMTI_ZAPOSLENOG:
+                    Zaposleni noviZaposleni = (Zaposleni) zahtev.getParametar();
+                    boolean uspesnoSacuvanZaposleni = Kontroler.getInstance().sacuvajZaposlenog(noviZaposleni);
+                    if (uspesnoSacuvanZaposleni) {
+                        odgovor = new Odgovor(noviZaposleni, Operacija.ZAPAMTI_ZAPOSLENOG, "Sistem je zapamtio zaposlenog.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(noviZaposleni, Operacija.ZAPAMTI_ZAPOSLENOG, "Sistem ne može da zapamti zaposlenog.", VrstaOdgovora.GRESKA);
                     }
                     break;
             }

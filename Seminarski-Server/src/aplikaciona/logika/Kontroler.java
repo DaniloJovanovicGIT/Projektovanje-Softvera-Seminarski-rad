@@ -4,14 +4,19 @@
  */
 package aplikaciona.logika;
 
+import domen.Odeljenje;
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
+import domen.Zaposleni;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import sistemske.operacija.SOIzmeniPartnera;
-import sistemske.operacija.SOVratiPartnereZaVrednost;
-import sistemske.operacija.SOVratiSvePartnere;
-import sistemske.operacija.SOZapamtiPartnera;
+import sistemske.operacije.partner.SOIzmeniPartnera;
+import sistemske.operacije.partner.SOObrisiPartnera;
+import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
+import sistemske.operacije.SOVratiSvaOdeljenja;
+import sistemske.operacije.partner.SOVratiSvePartnere;
+import sistemske.operacije.partner.SOZapamtiPartnera;
+import sistemske.operacije.zaposleni.SOZapamtiZaposlenog;
 
 /**
  *
@@ -50,8 +55,23 @@ public class Kontroler {
 
     public boolean izmeniPartnera(Partner izmenjenPartner) throws SQLException {
         SOIzmeniPartnera so = new SOIzmeniPartnera();
-        so.opsteIzvrsenjeSO(izmenjenPartner);
-        return true;
+        return so.opsteIzvrsenjeSO(izmenjenPartner);
+    }
+
+    public boolean obrisiPartnera(Partner partnerZaBrisanje) throws SQLException {
+        SOObrisiPartnera so = new SOObrisiPartnera();
+        return so.opsteIzvrsenjeSO(partnerZaBrisanje);
+    }
+
+    public ArrayList<Odeljenje> vratiSvaOdeljenja() throws Exception {
+        SOVratiSvaOdeljenja so = new SOVratiSvaOdeljenja();
+        so.opsteIzvrsenjeSO(new Odeljenje());
+        return so.getLista();
+    }
+
+    public boolean sacuvajZaposlenog(Zaposleni noviZaposleni) throws SQLException {
+        SOZapamtiZaposlenog so = new SOZapamtiZaposlenog();
+        return so.opsteIzvrsenjeSO(noviZaposleni);
     }
 
 }

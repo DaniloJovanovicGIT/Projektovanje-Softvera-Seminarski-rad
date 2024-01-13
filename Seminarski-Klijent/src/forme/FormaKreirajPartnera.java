@@ -157,7 +157,7 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
         try {
             datumOsnivanja = sdf.parse(txtDatumOsnivanja.getText());
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             return;
         }
         String kontaktOsoba = txtKontaktOsoba.getText();

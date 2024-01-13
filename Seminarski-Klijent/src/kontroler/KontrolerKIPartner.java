@@ -4,6 +4,7 @@
  */
 package kontroler;
 
+import domen.Odeljenje;
 import domen.Partner;
 import forme.FormaIzmeniPartnera;
 import forme.FormaKreirajPartnera;
@@ -23,8 +24,6 @@ import komunikacija.Zahtev;
 public class KontrolerKIPartner extends OpstiKontrolerKI {
 
     private FormaKreirajPartnera formaKreirajPartnera;
-    private FormaIzmeniPartnera formaIzmeniPartnera;
-    private Partner partner;
     private static KontrolerKIPartner instance;
 
     private KontrolerKIPartner() {
@@ -39,10 +38,6 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
 
     public void setFkp(FormaKreirajPartnera fkp) {
         this.formaKreirajPartnera = fkp;
-    }
-
-    public void setFormaIzmeniPartnera(FormaIzmeniPartnera formaIzmeniPartnera) {
-        this.formaIzmeniPartnera = formaIzmeniPartnera;
     }
 
     public void kreirajPartnera(Partner partner) {
@@ -79,7 +74,7 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
     }
 
     public ArrayList<Partner> vratiPartnereSaUslovom(String vrednostPretrazivanja) {
-        Partner  partner = new Partner();
+        Partner partner = new Partner();
         partner.setVrednostZaPretragu(vrednostPretrazivanja);
         try {
             System.out.println("Saljem zahtev. Vrati partnere za vrednost");
@@ -100,7 +95,7 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
 
     public boolean izmeniPartnera(Partner izmenjenPartner) {
         try {
-            System.out.println("Saljem zahtev. Vrati partnere za vrednost");
+            System.out.println("Saljem zahtev. Izmeni partnera");
             posiljalac.posalji(new Zahtev(Operacija.IZMENI_PARTNERA, izmenjenPartner, true));
             Odgovor odgovor = (Odgovor) primalac.primi();
             if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
@@ -110,8 +105,25 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
             }
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return false;
     }
 
+    public boolean obrisiPartnera(Partner partnerZaBrisanje) {
+        try {
+            System.out.println("Saljem zahtev. Obrisi partnera");
+            posiljalac.posalji(new Zahtev(Operacija.OBRISI_PARTNERA, partnerZaBrisanje, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    
 }

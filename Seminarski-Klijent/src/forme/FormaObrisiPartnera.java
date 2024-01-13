@@ -9,20 +9,22 @@ import forme.modeli.tabela.ModelTabelePartner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Danilo
  */
-public class FormaIzmeniPartnera extends javax.swing.JFrame {
+public class FormaObrisiPartnera extends javax.swing.JFrame {
 
     Partner izabraniPartner;
 
     /**
      * Creates new form FormaIzmeniPartnera
      */
-    public FormaIzmeniPartnera() {
+    public FormaObrisiPartnera() {
         initComponents();
         setLocationRelativeTo(null);
         postaviModelTabele();
@@ -60,7 +62,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         btnIzmeniPartnera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Izmeni partnera");
+        setTitle("Obriši partnera");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pronadji partnera"));
 
@@ -137,19 +139,29 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
 
         lblEmail.setText("Email:");
 
+        txtPIB.setEditable(false);
+
+        txtNaziv.setEditable(false);
+
+        txtDatumOsnivanja.setEditable(false);
+
+        txtKontaktOsoba.setEditable(false);
         txtKontaktOsoba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtKontaktOsobaActionPerformed(evt);
             }
         });
 
+        txtBrojTelefona.setEditable(false);
+
+        txtEmail.setEditable(false);
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
             }
         });
 
-        btnIzmeniPartnera.setText("Izmeni partnera");
+        btnIzmeniPartnera.setText("Obriši partnera");
         btnIzmeniPartnera.setEnabled(false);
         btnIzmeniPartnera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,26 +287,12 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPronadjiActionPerformed
 
     private void btnIzmeniPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniPartneraActionPerformed
-        Partner izmenjenPartner = new Partner();
-        izmenjenPartner.setPib(izabraniPartner.getPib());
-        izmenjenPartner.setNaziv(txtNaziv.getText());
-        izmenjenPartner.setNoviPib(txtPIB.getText());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            izmenjenPartner.setDatumOsnivanja(sdf.parse(txtDatumOsnivanja.getText()));
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        izmenjenPartner.setKontaktOsoba(txtKontaktOsoba.getText());
-        izmenjenPartner.setBrojTelefona(txtBrojTelefona.getText());
-        izmenjenPartner.setEmail(txtEmail.getText());
-
-        boolean uspesnaIzmena = kontroler.KontrolerKIPartner.getInstance().izmeniPartnera(izmenjenPartner);
-        if (uspesnaIzmena) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
+        Partner partnerZaBrisanje = izabraniPartner;
+        boolean uspesnoBrisanje = kontroler.KontrolerKIPartner.getInstance().obrisiPartnera(partnerZaBrisanje);
+        if (uspesnoBrisanje) {
+            JOptionPane.showMessageDialog(this, "Sistem je obrisao partnera", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva partnera", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da obriše partnera", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
         }
         popuniTabeluSvimPartnerima();
     }//GEN-LAST:event_btnIzmeniPartneraActionPerformed

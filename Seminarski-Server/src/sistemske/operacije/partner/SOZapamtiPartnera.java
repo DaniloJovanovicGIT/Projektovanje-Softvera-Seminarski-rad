@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package sistemske.operacija;
+package sistemske.operacije.partner;
 
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sistemske.operacije.OpsteIzvrsenjeSO;
 
 /**
  *
@@ -32,15 +33,7 @@ public class SOZapamtiPartnera extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws SQLException {
-        boolean signal = false;
-        try {
-            bbp.zapamti(odo);
-            signal = true;
-        } catch (SQLException ex) {
-            Logger.getLogger(SOZapamtiPartnera.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        }
-        return signal;
+        return bbp.zapamti(odo);
     }
 
 }

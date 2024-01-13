@@ -28,7 +28,7 @@ public class BrokerBazePodataka {
     }
 
     public void otvoriKonekciju() throws SQLException {
-        if (konekcija == null || konekcija.isClosed() ) {
+        if (konekcija == null || konekcija.isClosed()) {
             String lokacija = konstante.Konstante.LOKACIJA_BAZE + konstante.Konstante.NAZIV_BAZE;
             String username = konstante.Konstante.USERNAME_BAZA;
             String password = konstante.Konstante.PASSWORD_BAZA;
@@ -63,23 +63,33 @@ public class BrokerBazePodataka {
         return (ArrayList<OpstiDomenskiObjekat>) objekat.vratiSve(rs);
     }
 
-    public PreparedStatement zapamti(OpstiDomenskiObjekat objekat) throws SQLException {
+    public boolean zapamti(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "INSERT INTO " + objekat.vratiNazivTabele() + " "
                 + objekat.vratiNaziveKolonatabele() + " VALUES(" + objekat.vratiVrednostiZaKreiranje() + ")";
         System.out.println(upit);
         PreparedStatement ps = konekcija.prepareStatement(upit, Statement.RETURN_GENERATED_KEYS);
         ps.executeUpdate();
-        return ps;
+        int brojObrisanihRedova = ps.executeUpdate();
+        return brojObrisanihRedova > 0;
     }
-    
-    
+
     public boolean izmeni(OpstiDomenskiObjekat odo) throws SQLException {
         String upit = "UPDATE " + odo.vratiNazivTabele() + " SET "
-                + odo.vratiVrednostiZaPromenu()+" WHERE "+ odo.vratiPrimarniKljuc();
+                + odo.vratiVrednostiZaPromenu() + " WHERE " + odo.vratiPrimarniKljuc();
         System.out.println(upit);
         PreparedStatement ps = konekcija.prepareStatement(upit, Statement.RETURN_GENERATED_KEYS);
         ps.executeUpdate();
-        return true;
+        int brojObrisanihRedova = ps.executeUpdate();
+        return brojObrisanihRedova > 0;
+    }
+
+    public boolean obrisi(OpstiDomenskiObjekat odo) throws SQLException {
+        String upit = "DELETE FROM " + odo.vratiNazivTabele()
+                + " WHERE " + odo.vratiPrimarniKljuc();
+        System.out.println(upit);
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        int brojObrisanihRedova = ps.executeUpdate();
+        return brojObrisanihRedova > 0;
     }
 
     public OpstiDomenskiObjekat pronadjiObjekat(OpstiDomenskiObjekat objekat) throws SQLException {
