@@ -6,6 +6,7 @@ package domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,7 +58,7 @@ public class Odeljenje implements OpstiDomenskiObjekat {
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -67,7 +68,15 @@ public class Odeljenje implements OpstiDomenskiObjekat {
 
     @Override
     public List<OpstiDomenskiObjekat> vratiSve(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<OpstiDomenskiObjekat> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            Odeljenje odeljenje = new Odeljenje(rs.getLong("odeljenjeId"), rs.getString("naziv"));
+            lista.add(odeljenje);
+        }
+
+        rs.close();
+        return lista;
     }
 
     public Long getOdeljenjeId() {
@@ -86,10 +95,15 @@ public class Odeljenje implements OpstiDomenskiObjekat {
         this.naziv = naziv;
     }
 
-
     @Override
     public String uslovZaPretragu() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public String toString() {
+        return naziv; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    
 }

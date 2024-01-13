@@ -67,8 +67,7 @@ public class BrokerBazePodataka {
         String upit = "INSERT INTO " + objekat.vratiNazivTabele() + " "
                 + objekat.vratiNaziveKolonatabele() + " VALUES(" + objekat.vratiVrednostiZaKreiranje() + ")";
         System.out.println(upit);
-        PreparedStatement ps = konekcija.prepareStatement(upit, Statement.RETURN_GENERATED_KEYS);
-        ps.executeUpdate();
+        PreparedStatement ps = konekcija.prepareStatement(upit);
         int brojObrisanihRedova = ps.executeUpdate();
         return brojObrisanihRedova > 0;
     }
@@ -78,7 +77,6 @@ public class BrokerBazePodataka {
                 + odo.vratiVrednostiZaPromenu() + " WHERE " + odo.vratiPrimarniKljuc();
         System.out.println(upit);
         PreparedStatement ps = konekcija.prepareStatement(upit, Statement.RETURN_GENERATED_KEYS);
-        ps.executeUpdate();
         int brojObrisanihRedova = ps.executeUpdate();
         return brojObrisanihRedova > 0;
     }

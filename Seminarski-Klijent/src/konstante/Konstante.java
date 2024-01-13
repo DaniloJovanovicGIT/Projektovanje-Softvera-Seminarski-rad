@@ -11,4 +11,6 @@ package konstante;
 public class Konstante {
     public static final int PORT_SERVERA = 9000;
     public static final String ADRESA_SERVERA = "localhost";
+    public static final String PORUKA_USPESNO = "Uspešno izvrsšeno.";
+    public static final String PORUKA_NEUSPESNO = "Došlo je do greške.";
 }

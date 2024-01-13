@@ -6,8 +6,8 @@ package kontroler;
 
 import domen.Odeljenje;
 import domen.Partner;
-import forme.FormaIzmeniPartnera;
-import forme.FormaKreirajPartnera;
+import forme.partner.FormaIzmeniPartnera;
+import forme.partner.FormaKreirajPartnera;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package forme;
+package forme.partner;
 
 import domen.Partner;
 import java.text.ParseException;
@@ -101,13 +101,12 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnKreirajPartnera, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtPIB)
-                        .addComponent(txtNaziv)
-                        .addComponent(txtDatumOsnivanja)
-                        .addComponent(txtKontaktOsoba)
-                        .addComponent(txtBrojTelefona)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)))
+                    .addComponent(txtPIB)
+                    .addComponent(txtNaziv)
+                    .addComponent(txtDatumOsnivanja)
+                    .addComponent(txtKontaktOsoba)
+                    .addComponent(txtBrojTelefona)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

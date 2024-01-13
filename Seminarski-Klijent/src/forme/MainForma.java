@@ -4,6 +4,11 @@
  */
 package forme;
 
+import forme.zaposleni.FormaKreirajZaposlenog;
+import forme.partner.FormaObrisiPartnera;
+import forme.partner.FormaIzmeniPartnera;
+import forme.partner.FormaKreirajPartnera;
+
 
 /**
  *
@@ -64,6 +69,11 @@ public class MainForma extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Obrisi");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -84,6 +94,11 @@ public class MainForma extends javax.swing.JFrame {
         jMenu3.setText("Zaposleni");
 
         jMenuItem7.setText("Kreiraj");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuItem8.setText("Izmeni");
@@ -119,6 +134,16 @@ public class MainForma extends javax.swing.JFrame {
         FormaIzmeniPartnera fip = new FormaIzmeniPartnera();
         fip.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       FormaObrisiPartnera fop =  new FormaObrisiPartnera();
+       fop.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        FormaKreirajZaposlenog fkz = new FormaKreirajZaposlenog();
+        fkz.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
