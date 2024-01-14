@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class Odeljenje implements OpstiDomenskiObjekat {
 
-    private Long odeljenjeId;
+    private int odeljenjeId;
     private String naziv;
 
     public Odeljenje() {
     }
 
-    public Odeljenje(Long odeljenjeId, String naziv) {
+    public Odeljenje(int odeljenjeId, String naziv) {
         this.odeljenjeId = odeljenjeId;
         this.naziv = naziv;
     }
@@ -71,7 +71,7 @@ public class Odeljenje implements OpstiDomenskiObjekat {
         ArrayList<OpstiDomenskiObjekat> lista = new ArrayList<>();
 
         while (rs.next()) {
-            Odeljenje odeljenje = new Odeljenje(rs.getLong("odeljenjeId"), rs.getString("naziv"));
+            Odeljenje odeljenje = new Odeljenje(rs.getInt("odeljenjeId"), rs.getString("naziv"));
             lista.add(odeljenje);
         }
 
@@ -79,11 +79,11 @@ public class Odeljenje implements OpstiDomenskiObjekat {
         return lista;
     }
 
-    public Long getOdeljenjeId() {
+    public int getOdeljenjeId() {
         return odeljenjeId;
     }
 
-    public void setOdeljenjeId(Long odeljenjeId) {
+    public void setOdeljenjeId(int odeljenjeId) {
         this.odeljenjeId = odeljenjeId;
     }
 

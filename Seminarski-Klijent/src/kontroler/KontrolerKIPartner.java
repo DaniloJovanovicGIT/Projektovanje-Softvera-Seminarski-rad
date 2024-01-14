@@ -6,6 +6,7 @@ package kontroler;
 
 import domen.Odeljenje;
 import domen.Partner;
+import domen.Zaposleni;
 import forme.partner.FormaIzmeniPartnera;
 import forme.partner.FormaKreirajPartnera;
 import java.io.IOException;
@@ -85,8 +86,6 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
             } else {
                 return null;
             }
-        } catch (IOException ex) {
-            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,7 +122,5 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-
-    
+    } 
 }

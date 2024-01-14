@@ -8,6 +8,7 @@ import forme.zaposleni.FormaKreirajZaposlenog;
 import forme.partner.FormaObrisiPartnera;
 import forme.partner.FormaIzmeniPartnera;
 import forme.partner.FormaKreirajPartnera;
+import forme.zaposleni.FormaIzmeniZaposlenog;
 
 
 /**
@@ -21,7 +22,7 @@ public class MainForma extends javax.swing.JFrame {
      */
     public MainForma() {
         initComponents();
-       
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -35,77 +36,82 @@ public class MainForma extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        miKreirajPartnera = new javax.swing.JMenuItem();
+        miIzmeniPartner = new javax.swing.JMenuItem();
+        miObrisiPartnera = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        miKreirajKampanju = new javax.swing.JMenuItem();
+        miIzmeniKampanju = new javax.swing.JMenuItem();
+        miObrisiKampanje = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        miKreirajZaposlenog = new javax.swing.JMenuItem();
+        miIzmeniZaposlenog = new javax.swing.JMenuItem();
+        miObrisiZaposleni = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Softver za vodjenje marketing agencije");
 
         jMenu1.setText("Partner");
 
-        jMenuItem1.setText("Kreiraj");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miKreirajPartnera.setText("Kreiraj");
+        miKreirajPartnera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miKreirajPartneraActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(miKreirajPartnera);
 
-        jMenuItem2.setText("Izmeni");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        miIzmeniPartner.setText("Izmeni");
+        miIzmeniPartner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                miIzmeniPartnerActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(miIzmeniPartner);
 
-        jMenuItem3.setText("Obrisi");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        miObrisiPartnera.setText("Obrisi");
+        miObrisiPartnera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                miObrisiPartneraActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(miObrisiPartnera);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Kampanja");
 
-        jMenuItem4.setText("Kreiraj");
-        jMenu2.add(jMenuItem4);
+        miKreirajKampanju.setText("Kreiraj");
+        jMenu2.add(miKreirajKampanju);
 
-        jMenuItem5.setText("Izmeni");
-        jMenu2.add(jMenuItem5);
+        miIzmeniKampanju.setText("Izmeni");
+        jMenu2.add(miIzmeniKampanju);
 
-        jMenuItem6.setText("Obrisi");
-        jMenu2.add(jMenuItem6);
+        miObrisiKampanje.setText("Obrisi");
+        jMenu2.add(miObrisiKampanje);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Zaposleni");
 
-        jMenuItem7.setText("Kreiraj");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        miKreirajZaposlenog.setText("Kreiraj");
+        miKreirajZaposlenog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                miKreirajZaposlenogActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem7);
+        jMenu3.add(miKreirajZaposlenog);
 
-        jMenuItem8.setText("Izmeni");
-        jMenu3.add(jMenuItem8);
+        miIzmeniZaposlenog.setText("Izmeni");
+        miIzmeniZaposlenog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miIzmeniZaposlenogActionPerformed(evt);
+            }
+        });
+        jMenu3.add(miIzmeniZaposlenog);
 
-        jMenuItem9.setText("Obrisi");
-        jMenu3.add(jMenuItem9);
+        miObrisiZaposleni.setText("Obrisi");
+        jMenu3.add(miObrisiZaposleni);
 
         jMenuBar1.add(jMenu3);
 
@@ -125,25 +131,30 @@ public class MainForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void miKreirajPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miKreirajPartneraActionPerformed
         FormaKreirajPartnera fkp = new FormaKreirajPartnera();
         fkp.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_miKreirajPartneraActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void miIzmeniPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miIzmeniPartnerActionPerformed
         FormaIzmeniPartnera fip = new FormaIzmeniPartnera();
         fip.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_miIzmeniPartnerActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void miObrisiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miObrisiPartneraActionPerformed
        FormaObrisiPartnera fop =  new FormaObrisiPartnera();
        fop.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_miObrisiPartneraActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void miKreirajZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miKreirajZaposlenogActionPerformed
         FormaKreirajZaposlenog fkz = new FormaKreirajZaposlenog();
         fkz.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_miKreirajZaposlenogActionPerformed
+
+    private void miIzmeniZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miIzmeniZaposlenogActionPerformed
+        FormaIzmeniZaposlenog fiz = new FormaIzmeniZaposlenog();
+        fiz.setVisible(true);
+    }//GEN-LAST:event_miIzmeniZaposlenogActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,15 +196,15 @@ public class MainForma extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem miIzmeniKampanju;
+    private javax.swing.JMenuItem miIzmeniPartner;
+    private javax.swing.JMenuItem miIzmeniZaposlenog;
+    private javax.swing.JMenuItem miKreirajKampanju;
+    private javax.swing.JMenuItem miKreirajPartnera;
+    private javax.swing.JMenuItem miKreirajZaposlenog;
+    private javax.swing.JMenuItem miObrisiKampanje;
+    private javax.swing.JMenuItem miObrisiPartnera;
+    private javax.swing.JMenuItem miObrisiZaposleni;
     // End of variables declaration//GEN-END:variables
 
 }

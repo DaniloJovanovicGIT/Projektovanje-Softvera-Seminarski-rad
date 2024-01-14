@@ -250,13 +250,13 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
     private void txtIzaberiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIzaberiPartneraActionPerformed
         int izabraniRed = tblPartneri.getSelectedRow();
         if (izabraniRed == -1) {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             izabraniPartner = mtp.vratiPartnera(izabraniRed);
             popuniPodatkePartnera(izabraniPartner);
-            JOptionPane.showMessageDialog(this, "Sistem je učitao partnera.", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je učitao partnera.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
             btnIzmeniPartnera.setEnabled(true);
         }
     }//GEN-LAST:event_txtIzaberiPartneraActionPerformed

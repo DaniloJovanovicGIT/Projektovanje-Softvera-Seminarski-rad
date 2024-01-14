@@ -5,6 +5,7 @@
 package kontroler;
 
 import domen.Odeljenje;
+import domen.Partner;
 import domen.Zaposleni;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +57,40 @@ public class KontorlerKIZaposleni extends OpstiKontrolerKI {
             return (Odgovor) primalac.primi();
         } catch (Exception ex) {
             Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Zaposleni> vratiSveZaposlene() {
+        try {
+            System.out.println("Saljem zahtev. Vrati sve zaposlene.");
+            posiljalac.posalji(new Zahtev(Operacija.VRATI_SVE_ZAPOSLENE, null, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return (ArrayList<Zaposleni>) odgovor.getParametar();
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Zaposleni> vratiZaposleneSaUslovom(String uslov) {
+        Zaposleni zaposleni = new Zaposleni();
+        zaposleni.setVrednostZaPretragu(uslov);
+        try {
+            System.out.println("Saljem zahtev. Vrati zaposlene za vrednost");
+            posiljalac.posalji(new Zahtev(Operacija.VRATI_ZAPOSLENE_ZA_VREDNOST, zaposleni, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return (ArrayList<Zaposleni>) odgovor.getParametar();
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

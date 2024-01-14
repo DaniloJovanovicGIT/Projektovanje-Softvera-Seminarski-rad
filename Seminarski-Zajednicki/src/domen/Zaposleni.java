@@ -6,6 +6,7 @@ package domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     private String prezime;
     private int staz;
     private Odeljenje odeljenje;
+    private String vrednostZaPretragu;
 
     public Zaposleni() {
     }
@@ -63,7 +65,7 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public String join() {
-        return "INNER JOIN odeljenje ON zaposleni.odeljenjeId = odeljenje.odeljenjeId";
+        return "INNER JOIN odeljenje o ON z.odeljenjeId = o.odeljenjeId";
     }
 
     @Override
@@ -73,7 +75,21 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public List<OpstiDomenskiObjekat> vratiSve(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<OpstiDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Zaposleni zaposleni = new Zaposleni();
+            zaposleni.setJmbg(rs.getString("jmbg"));
+            zaposleni.setIme(rs.getString("ime"));
+            zaposleni.setPrezime(rs.getString("prezime"));
+            zaposleni.setStaz(rs.getInt("staz"));
+
+            Odeljenje odeljenje = new Odeljenje();
+            odeljenje.setOdeljenjeId(rs.getInt("odeljenjeId"));
+            odeljenje.setNaziv(rs.getString("naziv"));
+            zaposleni.setOdeljenje(odeljenje);
+            lista.add(zaposleni);
+        }
+        return lista;
     }
 
     public String getJmbg() {
@@ -116,11 +132,17 @@ public class Zaposleni implements OpstiDomenskiObjekat {
         this.odeljenje = odeljenje;
     }
 
-
-
     @Override
     public String uslovZaPretragu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE z.ime LIKE'%" + this.vrednostZaPretragu + "%' OR z.prezime LIKE'%" + this.vrednostZaPretragu + "%' OR z.jmbg LIKE'%" + this.vrednostZaPretragu + "%' OR o.naziv LIKE'%" + this.vrednostZaPretragu + "%'";
+    }
+
+    public String getVrednostZaPretragu() {
+        return vrednostZaPretragu;
+    }
+
+    public void setVrednostZaPretragu(String vrednostZaPretragu) {
+        this.vrednostZaPretragu = vrednostZaPretragu;
     }
 
 }
