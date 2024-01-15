@@ -62,6 +62,7 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
         btnIzmeniZaposlenog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Izmeni zaposlenog");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pronađi zaposlenog"));
 
