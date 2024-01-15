@@ -154,7 +154,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="btnIzmeniPartnera" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="btnObrisiPartnera" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="lblDatumOsnivanja" max="32767" attributes="0"/>
@@ -213,7 +213,7 @@
                       <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnIzmeniPartnera" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnObrisiPartnera" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -286,13 +286,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnIzmeniPartnera">
+        <Component class="javax.swing.JButton" name="btnObrisiPartnera">
           <Properties>
             <Property name="text" type="java.lang.String" value="Obri&#x161;i partnera"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniPartneraActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnObrisiPartneraActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

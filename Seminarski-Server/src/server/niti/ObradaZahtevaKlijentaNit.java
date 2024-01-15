@@ -92,7 +92,7 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     if (uspesnoObrisanPartner) {
                         odgovor = new Odgovor(partnerZaBrisanje, Operacija.OBRISI_PARTNERA, "Uspesno obrisano.", VrstaOdgovora.USPESNO);
                     } else {
-                        odgovor = new Odgovor(partnerZaBrisanje, Operacija.OBRISI_PARTNERA, "Brisanje neuspesna.", VrstaOdgovora.GRESKA);
+                        odgovor = new Odgovor(partnerZaBrisanje, Operacija.OBRISI_PARTNERA, "Brisanje neuspesno.", VrstaOdgovora.GRESKA);
                     }
                     break;
                 case Operacija.VRATI_SVA_ODELJENJA:
@@ -124,6 +124,15 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                         odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
                     } else {
                         odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
+                case Operacija.OBRISI_ZAPOSLENOG:
+                    Zaposleni zaposleniZaBrisanje = (Zaposleni) zahtev.getParametar();
+                    boolean uspesnoObrisanZaposleni = Kontroler.getInstance().obrisiZaposlenog(zaposleniZaBrisanje);
+                    if (uspesnoObrisanZaposleni) {
+                        odgovor = new Odgovor(zaposleniZaBrisanje, Operacija.OBRISI_ZAPOSLENOG, "Uspesno obrisano.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(zaposleniZaBrisanje, Operacija.OBRISI_ZAPOSLENOG, "Brisanje neuspesno.", VrstaOdgovora.GRESKA);
                     }
                     break;
             }

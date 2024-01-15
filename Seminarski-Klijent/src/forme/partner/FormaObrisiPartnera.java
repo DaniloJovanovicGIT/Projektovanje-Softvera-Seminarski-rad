@@ -59,7 +59,7 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         txtKontaktOsoba = new javax.swing.JTextField();
         txtBrojTelefona = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        btnIzmeniPartnera = new javax.swing.JButton();
+        btnObrisiPartnera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Obriši partnera");
@@ -161,11 +161,11 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
             }
         });
 
-        btnIzmeniPartnera.setText("Obriši partnera");
-        btnIzmeniPartnera.setEnabled(false);
-        btnIzmeniPartnera.addActionListener(new java.awt.event.ActionListener() {
+        btnObrisiPartnera.setText("Obriši partnera");
+        btnObrisiPartnera.setEnabled(false);
+        btnObrisiPartnera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIzmeniPartneraActionPerformed(evt);
+                btnObrisiPartneraActionPerformed(evt);
             }
         });
 
@@ -176,7 +176,7 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnIzmeniPartnera, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnObrisiPartnera, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblDatumOsnivanja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -223,7 +223,7 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnIzmeniPartnera)
+                .addComponent(btnObrisiPartnera)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -262,14 +262,14 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
     private void txtIzaberiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIzaberiPartneraActionPerformed
         int izabraniRed = tblPartneri.getSelectedRow();
         if (izabraniRed == -1) {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             izabraniPartner = mtp.vratiPartnera(izabraniRed);
             popuniPodatkePartnera(izabraniPartner);
-            JOptionPane.showMessageDialog(this, "Sistem je učitao partnera.", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
-            btnIzmeniPartnera.setEnabled(true);
+            JOptionPane.showMessageDialog(this, "Sistem je učitao partnera.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            btnObrisiPartnera.setEnabled(true);
         }
     }//GEN-LAST:event_txtIzaberiPartneraActionPerformed
 
@@ -279,30 +279,30 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         if (listaPartnera != null && !listaPartnera.isEmpty()) {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             mtp.setLista(listaPartnera);
-            JOptionPane.showMessageDialog(this, "Sistem je našao partnere po zadatoj vrednosti.", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je našao partnere po zadatoj vrednosti.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe partnere po zadatoj vrednosti", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe partnere po zadatoj vrednosti", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             dispose();
         }
     }//GEN-LAST:event_btnPronadjiActionPerformed
 
-    private void btnIzmeniPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniPartneraActionPerformed
+    private void btnObrisiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiPartneraActionPerformed
         Partner partnerZaBrisanje = izabraniPartner;
         boolean uspesnoBrisanje = kontroler.KontrolerKIPartner.getInstance().obrisiPartnera(partnerZaBrisanje);
         if (uspesnoBrisanje) {
-            JOptionPane.showMessageDialog(this, "Sistem je obrisao partnera", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je obrisao partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da obriše partnera", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da obriše partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
         popuniTabeluSvimPartnerima();
-    }//GEN-LAST:event_btnIzmeniPartneraActionPerformed
+    }//GEN-LAST:event_btnObrisiPartneraActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIzmeniPartnera;
+    private javax.swing.JButton btnObrisiPartnera;
     private javax.swing.JButton btnPronadji;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -111,4 +111,20 @@ public class KontorlerKIZaposleni extends OpstiKontrolerKI {
         return false;
     }
 
+    public boolean obrisiZaposlenog(Zaposleni izabraniZaposleni) {
+        try {
+            System.out.println("Saljem zahtev. Obrisi zaposlenog");
+            posiljalac.posalji(new Zahtev(Operacija.OBRISI_ZAPOSLENOG, izabraniZaposleni, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

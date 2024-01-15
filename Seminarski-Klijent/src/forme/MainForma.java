@@ -9,6 +9,7 @@ import forme.partner.FormaObrisiPartnera;
 import forme.partner.FormaIzmeniPartnera;
 import forme.partner.FormaKreirajPartnera;
 import forme.zaposleni.FormaIzmeniZaposlenog;
+import forme.zaposleni.FormaObrisiZaposlenog;
 
 
 /**
@@ -111,6 +112,11 @@ public class MainForma extends javax.swing.JFrame {
         jMenu3.add(miIzmeniZaposlenog);
 
         miObrisiZaposleni.setText("Obrisi");
+        miObrisiZaposleni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miObrisiZaposleniActionPerformed(evt);
+            }
+        });
         jMenu3.add(miObrisiZaposleni);
 
         jMenuBar1.add(jMenu3);
@@ -155,6 +161,11 @@ public class MainForma extends javax.swing.JFrame {
         FormaIzmeniZaposlenog fiz = new FormaIzmeniZaposlenog();
         fiz.setVisible(true);
     }//GEN-LAST:event_miIzmeniZaposlenogActionPerformed
+
+    private void miObrisiZaposleniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miObrisiZaposleniActionPerformed
+        FormaObrisiZaposlenog foz = new FormaObrisiZaposlenog();
+        foz.setVisible(true);
+    }//GEN-LAST:event_miObrisiZaposleniActionPerformed
 
     /**
      * @param args the command line arguments
