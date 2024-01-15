@@ -95,4 +95,20 @@ public class KontorlerKIZaposleni extends OpstiKontrolerKI {
         return null;
     }
 
+    public boolean izmeniZaposlenog(Zaposleni izmenjenZaposleni) {
+        try {
+            System.out.println("Saljem zahtev. Izmeni zaposlenog");
+            posiljalac.posalji(new Zahtev(Operacija.IZMENI_ZAPOSLENOG, izmenjenZaposleni, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

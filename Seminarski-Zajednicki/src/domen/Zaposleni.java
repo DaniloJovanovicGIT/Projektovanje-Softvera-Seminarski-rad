@@ -21,7 +21,8 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     private int staz;
     private Odeljenje odeljenje;
     private String vrednostZaPretragu;
-
+    private String noviJmbg;
+    
     public Zaposleni() {
     }
 
@@ -50,7 +51,7 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return ", ime='" + ime + "', prezime='" + prezime + "', staz=" + staz + ", odeljenjeId=" + odeljenje.getOdeljenjeId();
+        return "jmbg ='"+noviJmbg+"', ime='" + ime + "', prezime='" + prezime + "', staz=" + staz + ", odeljenjeId=" + odeljenje.getOdeljenjeId();
     }
 
     @Override
@@ -143,6 +144,14 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     public void setVrednostZaPretragu(String vrednostZaPretragu) {
         this.vrednostZaPretragu = vrednostZaPretragu;
+    }
+
+    public String getNoviJmbg() {
+        return noviJmbg;
+    }
+
+    public void setNoviJmbg(String noviJmbg) {
+        this.noviJmbg = noviJmbg;
     }
 
 }

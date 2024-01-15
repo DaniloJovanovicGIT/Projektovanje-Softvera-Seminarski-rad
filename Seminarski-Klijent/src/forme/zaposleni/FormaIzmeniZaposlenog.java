@@ -9,6 +9,8 @@ import domen.Partner;
 import domen.Zaposleni;
 import forme.modeli.tabela.ModelTabelePartner;
 import forme.modeli.tabela.ModelTabeleZaposleni;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -164,6 +166,11 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
 
         btnIzmeniZaposlenog.setText("Izmeni zaposlenog");
         btnIzmeniZaposlenog.setEnabled(false);
+        btnIzmeniZaposlenog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniZaposlenogActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -281,6 +288,24 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_btnPonadjiActionPerformed
+
+    private void btnIzmeniZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZaposlenogActionPerformed
+        Zaposleni izmenjenZaposleni = new Zaposleni();
+        izmenjenZaposleni.setJmbg(izabraniZaposleni.getJmbg());
+        izmenjenZaposleni.setNoviJmbg(txtJMBG.getText());
+        izmenjenZaposleni.setIme(txtIme.getText());
+        izmenjenZaposleni.setPrezime(txtPrezime.getText());
+        izmenjenZaposleni.setStaz(Integer.parseInt(txtGodineStaza.getText()));
+        izmenjenZaposleni.setOdeljenje((Odeljenje) cmbOdeljenje.getSelectedItem());
+
+        boolean uspesnaIzmena = kontroler.KontorlerKIZaposleni.getInstance().izmeniZaposlenog(izmenjenZaposleni);
+        if (uspesnaIzmena) {
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio zaposlenog", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        }
+        popuniTabeluSvimZaposlenim();
+    }//GEN-LAST:event_btnIzmeniZaposlenogActionPerformed
 
     /**
      * @param args the command line arguments

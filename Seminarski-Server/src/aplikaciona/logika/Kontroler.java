@@ -16,6 +16,9 @@ import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
 import sistemske.operacije.SOVratiSvaOdeljenja;
 import sistemske.operacije.partner.SOVratiSvePartnere;
 import sistemske.operacije.partner.SOZapamtiPartnera;
+import sistemske.operacije.zaposleni.SOIzmeniZaposlenog;
+import sistemske.operacije.zaposleni.SOVratiSveZaposlene;
+import sistemske.operacije.zaposleni.SOVratiZaposleneZaVrednost;
 import sistemske.operacije.zaposleni.SOZapamtiZaposlenog;
 
 /**
@@ -72,6 +75,23 @@ public class Kontroler {
     public boolean sacuvajZaposlenog(Zaposleni noviZaposleni) throws SQLException {
         SOZapamtiZaposlenog so = new SOZapamtiZaposlenog();
         return so.opsteIzvrsenjeSO(noviZaposleni);
+    }
+
+    public ArrayList<Zaposleni> vratiSveZaposlene() throws SQLException {
+        SOVratiSveZaposlene so =  new SOVratiSveZaposlene();
+        so.opsteIzvrsenjeSO(new Zaposleni());
+        return so.getLista();
+    }
+
+    public ArrayList<Zaposleni> vratiZaposleneZaVrednost(Zaposleni zaposleniZaVrednost) throws SQLException {
+        SOVratiZaposleneZaVrednost so = new SOVratiZaposleneZaVrednost();
+        so.opsteIzvrsenjeSO(zaposleniZaVrednost);
+        return so.getLista();
+    }
+
+    public boolean izmeniZaposlenog(Zaposleni izmenjenZaposleni) throws SQLException {
+        SOIzmeniZaposlenog so = new SOIzmeniZaposlenog();
+        return so.opsteIzvrsenjeSO(izmenjenZaposleni);
     }
 
 }

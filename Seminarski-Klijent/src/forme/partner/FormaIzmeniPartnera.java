@@ -279,11 +279,11 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         izmenjenPartner.setPib(izabraniPartner.getPib());
         izmenjenPartner.setNaziv(txtNaziv.getText());
         izmenjenPartner.setNoviPib(txtPIB.getText());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(konstante.Konstante.FORMAT_DATUMA);
         try {
             izmenjenPartner.setDatumOsnivanja(sdf.parse(txtDatumOsnivanja.getText()));
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             return;
         }
         izmenjenPartner.setKontaktOsoba(txtKontaktOsoba.getText());
@@ -292,9 +292,9 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
 
         boolean uspesnaIzmena = kontroler.KontrolerKIPartner.getInstance().izmeniPartnera(izmenjenPartner);
         if (uspesnaIzmena) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva partnera", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
         popuniTabeluSvimPartnerima();
     }//GEN-LAST:event_btnIzmeniPartneraActionPerformed

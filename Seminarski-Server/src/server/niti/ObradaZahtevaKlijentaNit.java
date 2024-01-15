@@ -108,6 +108,24 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                         odgovor = new Odgovor(noviZaposleni, Operacija.ZAPAMTI_ZAPOSLENOG, "Sistem ne može da zapamti zaposlenog.", VrstaOdgovora.GRESKA);
                     }
                     break;
+                case Operacija.VRATI_SVE_ZAPOSLENE:
+                    ArrayList<Zaposleni> listaSvihZaposleni = Kontroler.getInstance().vratiSveZaposlene();
+                    odgovor = new Odgovor(listaSvihZaposleni, Operacija.VRATI_SVE_ZAPOSLENE, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    break;
+                case Operacija.VRATI_ZAPOSLENE_ZA_VREDNOST:
+                    Zaposleni zaposleniZaVrednost = (Zaposleni) zahtev.getParametar();
+                    ArrayList<Zaposleni> listaZaposlenihZaVrednost = Kontroler.getInstance().vratiZaposleneZaVrednost(zaposleniZaVrednost);
+                    odgovor = new Odgovor(listaZaposlenihZaVrednost, Operacija.VRATI_ZAPOSLENE_ZA_VREDNOST, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    break;
+                case Operacija.IZMENI_ZAPOSLENOG:
+                    Zaposleni izmenjenZaposleni = (Zaposleni) zahtev.getParametar();
+                    boolean uspesnoIzmenjenoZaposleni = Kontroler.getInstance().izmeniZaposlenog(izmenjenZaposleni);
+                    if (uspesnoIzmenjenoZaposleni) {
+                        odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
             }
             return odgovor;
         } catch (Exception ex) {

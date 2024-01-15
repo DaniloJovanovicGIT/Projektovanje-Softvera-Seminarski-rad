@@ -13,4 +13,6 @@ public class Konstante {
     public static final String ADRESA_SERVERA = "localhost";
     public static final String PORUKA_USPESNO = "Uspešno izvrsšeno.";
     public static final String PORUKA_NEUSPESNO = "Došlo je do greške.";
+    public static final String FORMAT_DATUMA = "dd.MM.yyyy";
+    
 }
