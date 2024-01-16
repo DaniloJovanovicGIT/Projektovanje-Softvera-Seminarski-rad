@@ -81,7 +81,7 @@
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="btnDodajZadatak1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPrikaziZadatak" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnDodajZadatak" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -133,7 +133,7 @@
                       <Component id="btnDodajZadatak" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnObrisiZadatak" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnIzmeniZadatak" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnDodajZadatak1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPrikaziZadatak" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
@@ -247,12 +247,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniZadatakActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDodajZadatak1">
+        <Component class="javax.swing.JButton" name="btnPrikaziZadatak">
           <Properties>
             <Property name="text" type="java.lang.String" value="Prika&#x17e;i zadatak"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDodajZadatak1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrikaziZadatakActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

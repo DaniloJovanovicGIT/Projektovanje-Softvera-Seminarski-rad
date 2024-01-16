@@ -20,22 +20,24 @@ public class Kampanja implements OpstiDomenskiObjekat {
     private String naziv;
     private Date datumPocetka;
     private Date datumZavrsetka;
-    private String kontaktOsoba;
+    private Zaposleni odgovorniZaposleni;
     private Partner partner;
     private List<Zadatak> zadaci;
 
     public Kampanja() {
     }
 
-    public Kampanja(Long kampanjaId, String naziv, Date datumPocetka, Date datumZavrsetka, String kontaktOsoba, Partner partner, List<Zadatak> zadaci) {
+    public Kampanja(Long kampanjaId, String naziv, Date datumPocetka, Date datumZavrsetka, Zaposleni odgovorniZaposleni, Partner partner, List<Zadatak> zadaci) {
         this.kampanjaId = kampanjaId;
         this.naziv = naziv;
         this.datumPocetka = datumPocetka;
         this.datumZavrsetka = datumZavrsetka;
-        this.kontaktOsoba = kontaktOsoba;
+        this.odgovorniZaposleni = odgovorniZaposleni;
         this.partner = partner;
         this.zadaci = zadaci;
     }
+
+    
 
     @Override
     public String vratiNazivTabele() {
@@ -114,14 +116,6 @@ public class Kampanja implements OpstiDomenskiObjekat {
         this.datumZavrsetka = datumZavrsetka;
     }
 
-    public String getKontaktOsoba() {
-        return kontaktOsoba;
-    }
-
-    public void setKontaktOsoba(String kontaktOsoba) {
-        this.kontaktOsoba = kontaktOsoba;
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -163,6 +157,14 @@ public class Kampanja implements OpstiDomenskiObjekat {
     @Override
     public String uslovZaPretragu() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Zaposleni getOdgovorniZaposleni() {
+        return odgovorniZaposleni;
+    }
+
+    public void setOdgovorniZaposleni(Zaposleni odgovorniZaposleni) {
+        this.odgovorniZaposleni = odgovorniZaposleni;
     }
 
 }

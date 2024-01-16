@@ -12,6 +12,7 @@ import forme.modeli.tabela.ModelTabeleZadatak;
 import forme.modeli.tabela.ModelTabeleZaposleni;
 import forme.zadatak.FormaIzmeniZadatak;
 import forme.zadatak.FormaKreirajZadatak;
+import forme.zadatak.FormaPrikaziZadatak;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import konstante.Konstante;
@@ -58,7 +59,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         btnDodajZadatak = new javax.swing.JButton();
         btnObrisiZadatak = new javax.swing.JButton();
         btnIzmeniZadatak = new javax.swing.JButton();
-        btnDodajZadatak1 = new javax.swing.JButton();
+        btnPrikaziZadatak = new javax.swing.JButton();
         btnSacuvajKampanju = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,10 +115,10 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
             }
         });
 
-        btnDodajZadatak1.setText("Prikaži zadatak");
-        btnDodajZadatak1.addActionListener(new java.awt.event.ActionListener() {
+        btnPrikaziZadatak.setText("Prikaži zadatak");
+        btnPrikaziZadatak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDodajZadatak1ActionPerformed(evt);
+                btnPrikaziZadatakActionPerformed(evt);
             }
         });
 
@@ -143,7 +144,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnDodajZadatak1)
+                        .addComponent(btnPrikaziZadatak)
                         .addGap(18, 18, 18)
                         .addComponent(btnDodajZadatak)
                         .addGap(18, 18, 18)
@@ -184,7 +185,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
                     .addComponent(btnDodajZadatak)
                     .addComponent(btnObrisiZadatak)
                     .addComponent(btnIzmeniZadatak)
-                    .addComponent(btnDodajZadatak1))
+                    .addComponent(btnPrikaziZadatak))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -221,9 +222,18 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         fzk.setVisible(true);
     }//GEN-LAST:event_btnDodajZadatakActionPerformed
 
-    private void btnDodajZadatak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajZadatak1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDodajZadatak1ActionPerformed
+    private void btnPrikaziZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziZadatakActionPerformed
+        {
+            ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+            int izabraniRed = tblZadaci.getSelectedRow();
+            if (izabraniRed != -1) {
+                Zadatak zadatakZaPrikaz = mtz.vratiZadatak(izabraniRed);
+                FormaPrikaziZadatak fpz = new FormaPrikaziZadatak(this, rootPaneCheckingEnabled, zadatakZaPrikaz);
+            fpz.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        }        }    }//GEN-LAST:event_btnPrikaziZadatakActionPerformed
 
     private void btnObrisiZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiZadatakActionPerformed
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
@@ -252,9 +262,9 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajZadatak;
-    private javax.swing.JButton btnDodajZadatak1;
     private javax.swing.JButton btnIzmeniZadatak;
     private javax.swing.JButton btnObrisiZadatak;
+    private javax.swing.JButton btnPrikaziZadatak;
     private javax.swing.JButton btnSacuvajKampanju;
     private javax.swing.JComboBox cmbGlavniOdgovorni;
     private javax.swing.JComboBox cmbPartner;
@@ -307,8 +317,14 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         mtz.dodaj(noviZadatak);
     }
 
-    private void izmeniZadatak(Zadatak zadatakZaIzmenu) {
-        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this,true,zadatakZaIzmenu);
+    public void izmeniZadatak(Zadatak zadatakZaIzmenu) {
+        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this, true, zadatakZaIzmenu);
         fiz.setVisible(true);
+    }
+
+    public void izmeniIzabraniZadatak(Zadatak noviZadatak) {
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        int izabraniRed = tblZadaci.getSelectedRow();
+        mtz.izmeniIzabraniZadatak(noviZadatak, izabraniRed);
     }
 }

@@ -72,4 +72,13 @@ public class ModelTabeleZadatak extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    public void izmeniIzabraniZadatak(Zadatak noviZadatak, int izabraniRed) {
+        Zadatak zadatakZaMenjanje = lista.get(izabraniRed);
+        zadatakZaMenjanje.setNaziv(noviZadatak.getNaziv());
+        zadatakZaMenjanje.setOpis(noviZadatak.getOpis());
+        zadatakZaMenjanje.setOcekivaniZavrsetak(noviZadatak.getOcekivaniZavrsetak());
+        zadatakZaMenjanje.setStatusZadatka(noviZadatak.getStatusZadatka());
+        fireTableRowsUpdated(izabraniRed, izabraniRed);
+    }
+
 }

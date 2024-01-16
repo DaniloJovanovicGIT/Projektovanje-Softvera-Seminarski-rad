@@ -18,13 +18,13 @@ import konstante.Konstante;
  *
  * @author Danilo
  */
-public class FormaIzmeniZadatak extends javax.swing.JDialog {
+public class FormaPrikaziZadatak extends javax.swing.JDialog {
     FormaKreirajKampanju fkk;
     Zadatak izabraniZadatak;
     /**
      * Creates new form FormaKreirajZadatak
      */
-    public FormaIzmeniZadatak(java.awt.Frame parent, boolean modal, Zadatak izabraniZadatak) {
+    public FormaPrikaziZadatak(java.awt.Frame parent, boolean modal, Zadatak izabraniZadatak) {
         super(parent, modal);
         initComponents();
         fkk = (FormaKreirajKampanju) parent;
@@ -55,7 +55,7 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
         txtOpis = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Izmeni zadatak");
+        setTitle("Zadatak");
 
         jLabel1.setText("Naziv:");
 
@@ -65,17 +65,27 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
 
         jLabel4.setText("Status zadatka:");
 
-        btnIzmeniZadatak.setText("Izmeni zadatak");
+        btnIzmeniZadatak.setText("Izađi");
         btnIzmeniZadatak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIzmeniZadatakActionPerformed(evt);
             }
         });
 
-        cmbStatusZadatka.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtNaziv.setEditable(false);
+        txtNaziv.setFocusable(false);
 
+        txtDatumZavrsetka.setEditable(false);
+        txtDatumZavrsetka.setFocusable(false);
+
+        cmbStatusZadatka.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbStatusZadatka.setEnabled(false);
+        cmbStatusZadatka.setFocusable(false);
+
+        txtOpis.setEditable(false);
         txtOpis.setColumns(20);
         txtOpis.setRows(5);
+        txtOpis.setFocusable(false);
         jScrollPane1.setViewportView(txtOpis);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,27 +144,6 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIzmeniZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZadatakActionPerformed
-        String nazivZadatka = txtNaziv.getText();
-        String opisZadatka = txtOpis.getText();
-        
-        Date datumZavrsetka = null;
-        SimpleDateFormat sdf = konstante.Konstante.SIMPLE_DATE_FORMAT;
-        try {
-            datumZavrsetka = sdf.parse(txtDatumZavrsetka.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, konstante.Konstante.PORUKA_GRESKA_FORMAT_DATUMA, konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        StatusZadatka statusZadatka = (StatusZadatka) cmbStatusZadatka.getSelectedItem();
-        Zadatak noviZadatak = new Zadatak();
-        noviZadatak.setNaziv(nazivZadatka);
-        noviZadatak.setOpis(opisZadatka);
-        noviZadatak.setOcekivaniZavrsetak(datumZavrsetka);
-        noviZadatak.setStatusZadatka(statusZadatka);
-        
-        fkk.izmeniIzabraniZadatak(noviZadatak);
-        JOptionPane.showConfirmDialog(this, "Zadatak je izmenjen.", konstante.Konstante.PORUKA_USPESNO,JOptionPane.DEFAULT_OPTION);
         dispose();
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
 
