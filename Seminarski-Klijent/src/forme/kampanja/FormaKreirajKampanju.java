@@ -4,6 +4,18 @@
  */
 package forme.kampanja;
 
+import domen.Partner;
+import domen.Zadatak;
+import domen.Zaposleni;
+import forme.modeli.tabela.ModelTabelePartner;
+import forme.modeli.tabela.ModelTabeleZadatak;
+import forme.modeli.tabela.ModelTabeleZaposleni;
+import forme.zadatak.FormaIzmeniZadatak;
+import forme.zadatak.FormaKreirajZadatak;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import konstante.Konstante;
+
 /**
  *
  * @author Danilo
@@ -16,6 +28,9 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
     public FormaKreirajKampanju() {
         initComponents();
         setLocationRelativeTo(null);
+        postaviModelTabele();
+        popuniPartnere();
+        popuniZaposlene();
     }
 
     /**
@@ -27,74 +42,273 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblGlavniOdgovorni = new javax.swing.JLabel();
+        lblParnter = new javax.swing.JLabel();
+        lblNaziv = new javax.swing.JLabel();
+        txtNaziv = new javax.swing.JTextField();
+        txtDatumPocetka = new javax.swing.JTextField();
+        txtDatumZavrsetka = new javax.swing.JTextField();
+        cmbPartner = new javax.swing.JComboBox();
+        lblDatumPocetka = new javax.swing.JLabel();
+        cmbGlavniOdgovorni = new javax.swing.JComboBox();
+        lblDatumZavrsetka = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblZadaci = new javax.swing.JTable();
+        btnDodajZadatak = new javax.swing.JButton();
+        btnObrisiZadatak = new javax.swing.JButton();
+        btnIzmeniZadatak = new javax.swing.JButton();
+        btnDodajZadatak1 = new javax.swing.JButton();
+        btnSacuvajKampanju = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kreiraj kampanju");
 
-        jLabel1.setText("jLabel1");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Podaci o kampanji"));
 
-        jLabel2.setText("jLabel1");
+        lblGlavniOdgovorni.setText("Glavni odgvorni:");
 
-        jLabel3.setText("jLabel1");
+        lblParnter.setText("Za partnera:");
 
-        jLabel4.setText("jLabel1");
+        lblNaziv.setText("Naziv:");
 
-        jLabel5.setText("jLabel1");
+        cmbPartner.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel6.setText("jLabel1");
+        lblDatumPocetka.setText("Datum početka:");
+
+        cmbGlavniOdgovorni.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblDatumZavrsetka.setText("Datum završetka:");
+
+        tblZadaci.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblZadaci);
+
+        btnDodajZadatak.setText("Dodaj zadatak");
+        btnDodajZadatak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajZadatakActionPerformed(evt);
+            }
+        });
+
+        btnObrisiZadatak.setText("Obriši zadatak");
+        btnObrisiZadatak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiZadatakActionPerformed(evt);
+            }
+        });
+
+        btnIzmeniZadatak.setText("Izmeni zadatak");
+        btnIzmeniZadatak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniZadatakActionPerformed(evt);
+            }
+        });
+
+        btnDodajZadatak1.setText("Prikaži zadatak");
+        btnDodajZadatak1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajZadatak1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblDatumZavrsetka, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGlavniOdgovorni, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblParnter, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDatumZavrsetka, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbGlavniOdgovorni, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnDodajZadatak1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDodajZadatak)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnObrisiZadatak)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnIzmeniZadatak))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblParnter, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNaziv)
+                            .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDatumZavrsetka, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDatumZavrsetka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblGlavniOdgovorni, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbGlavniOdgovorni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDodajZadatak)
+                    .addComponent(btnObrisiZadatak)
+                    .addComponent(btnIzmeniZadatak)
+                    .addComponent(btnDodajZadatak1))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        btnSacuvajKampanju.setText("Sačuvaj kampanju");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(809, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(390, 390, 390)
+                .addComponent(btnSacuvajKampanju, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSacuvajKampanju, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnDodajZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajZadatakActionPerformed
+        FormaKreirajZadatak fzk = new FormaKreirajZadatak(this, true);
+        fzk.setVisible(true);
+    }//GEN-LAST:event_btnDodajZadatakActionPerformed
+
+    private void btnDodajZadatak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajZadatak1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDodajZadatak1ActionPerformed
+
+    private void btnObrisiZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiZadatakActionPerformed
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        int izabraniRed = tblZadaci.getSelectedRow();
+        if (izabraniRed != -1) {
+            mtz.obrisi(izabraniRed);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnObrisiZadatakActionPerformed
+
+    private void btnIzmeniZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZadatakActionPerformed
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        int izabraniRed = tblZadaci.getSelectedRow();
+        if (izabraniRed != -1) {
+            Zadatak zadatakZaIzmenu = mtz.vratiZadatak(izabraniRed);
+            izmeniZadatak(zadatakZaIzmenu);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
+
     /**
      * @param args the command line arguments
      */
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton btnDodajZadatak;
+    private javax.swing.JButton btnDodajZadatak1;
+    private javax.swing.JButton btnIzmeniZadatak;
+    private javax.swing.JButton btnObrisiZadatak;
+    private javax.swing.JButton btnSacuvajKampanju;
+    private javax.swing.JComboBox cmbGlavniOdgovorni;
+    private javax.swing.JComboBox cmbPartner;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDatumPocetka;
+    private javax.swing.JLabel lblDatumZavrsetka;
+    private javax.swing.JLabel lblGlavniOdgovorni;
+    private javax.swing.JLabel lblNaziv;
+    private javax.swing.JLabel lblParnter;
+    private javax.swing.JTable tblZadaci;
+    private javax.swing.JTextField txtDatumPocetka;
+    private javax.swing.JTextField txtDatumZavrsetka;
+    private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
+
+    private void popuniPartnere() {
+        cmbPartner.removeAllItems();
+        ArrayList<Partner> listaSvihPartnera = kontroler.KontrolerKIPartner.getInstance().vratiSvePartnere();
+        if (listaSvihPartnera != null && !listaSvihPartnera.isEmpty()) {
+            for (Partner partner : listaSvihPartnera) {
+                cmbPartner.addItem(partner);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+
+    private void popuniZaposlene() {
+        cmbGlavniOdgovorni.removeAllItems();
+        ArrayList<Zaposleni> listaSvihZaposlnih = kontroler.KontorlerKIZaposleni.getInstance().vratiSveZaposlene();
+        if (listaSvihZaposlnih != null) {
+            for (Zaposleni zaposleni : listaSvihZaposlnih) {
+                cmbGlavniOdgovorni.addItem(zaposleni);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne može ucita zaposlene", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+
+    private void postaviModelTabele() {
+        ModelTabeleZadatak mtz = new ModelTabeleZadatak();
+        tblZadaci.setModel(mtz);
+    }
+
+    public void dodajNoviZadatak(Zadatak noviZadatak) {
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        mtz.dodaj(noviZadatak);
+    }
+
+    private void izmeniZadatak(Zadatak zadatakZaIzmenu) {
+        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this,true,zadatakZaIzmenu);
+        fiz.setVisible(true);
+    }
 }

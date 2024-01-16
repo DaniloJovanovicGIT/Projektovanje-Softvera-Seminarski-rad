@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import konstante.Konstante;
 
 /**
  *
@@ -337,7 +338,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             mtp.setLista(listaSvihPartnera);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             dispose();
         }
     }
@@ -345,7 +346,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
     private void popuniPodatkePartnera(Partner izabraniPartner) {
         txtPIB.setText(izabraniPartner.getPib());
         txtNaziv.setText(izabraniPartner.getNaziv());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
         txtDatumOsnivanja.setText(sdf.format(izabraniPartner.getDatumOsnivanja()));
         txtKontaktOsoba.setText(izabraniPartner.getKontaktOsoba());
         txtBrojTelefona.setText(izabraniPartner.getBrojTelefona());

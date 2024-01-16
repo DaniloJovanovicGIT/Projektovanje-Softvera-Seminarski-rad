@@ -5,6 +5,7 @@
 package forme.modeli.tabela;
 
 import domen.Partner;
+import domen.Zadatak;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -53,5 +54,7 @@ public class ModelTabelePartner extends AbstractTableModel{
     public Partner vratiPartnera(int izabraniRed) {
         return lista.get(izabraniRed);
     }
+
+    
     
 }

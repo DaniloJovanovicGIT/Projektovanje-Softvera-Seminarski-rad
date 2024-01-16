@@ -18,6 +18,7 @@ import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 import aplikaciona.logika.Kontroler;
 import domen.Odeljenje;
+import domen.StatusZadatka;
 import domen.Zaposleni;
 import java.util.ArrayList;
 import sistemske.operacije.OpsteIzvrsenjeSO;
@@ -134,6 +135,10 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     } else {
                         odgovor = new Odgovor(zaposleniZaBrisanje, Operacija.OBRISI_ZAPOSLENOG, "Brisanje neuspesno.", VrstaOdgovora.GRESKA);
                     }
+                    break;
+                case Operacija.VRATI_SVE_STATUSE_ZADATKA:
+                    ArrayList<StatusZadatka> listaSvihStatusaZadatka = Kontroler.getInstance().vratiSveStatuseZadatka();
+                    odgovor = new Odgovor(listaSvihStatusaZadatka, Operacija.VRATI_SVE_STATUSE_ZADATKA, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
                     break;
             }
             return odgovor;

@@ -7,6 +7,7 @@ package aplikaciona.logika;
 import domen.Odeljenje;
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
+import domen.StatusZadatka;
 import domen.Zaposleni;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
 import sistemske.operacije.SOVratiSvaOdeljenja;
 import sistemske.operacije.partner.SOVratiSvePartnere;
 import sistemske.operacije.partner.SOZapamtiPartnera;
+import sistemske.operacije.zadatak.SOVratiSveStatuseZadatka;
 import sistemske.operacije.zaposleni.SOIzmeniZaposlenog;
 import sistemske.operacije.zaposleni.SOObrisiZaposlenog;
 import sistemske.operacije.zaposleni.SOVratiSveZaposlene;
@@ -98,6 +100,12 @@ public class Kontroler {
     public boolean obrisiZaposlenog(Zaposleni zaposleniZaBrisanje) throws SQLException {
         SOObrisiZaposlenog so = new SOObrisiZaposlenog();
         return so.opsteIzvrsenjeSO(zaposleniZaBrisanje);
+    }
+
+    public ArrayList<StatusZadatka> vratiSveStatuseZadatka() throws SQLException {
+        SOVratiSveStatuseZadatka so = new SOVratiSveStatuseZadatka();
+        so.opsteIzvrsenjeSO(new StatusZadatka());
+        return so.getListaStatusaZadatka();
     }
 
 }

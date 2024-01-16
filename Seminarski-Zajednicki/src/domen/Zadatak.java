@@ -6,6 +6,7 @@ package domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,18 +21,18 @@ public class Zadatak implements OpstiDomenskiObjekat {
     private String naziv;
     private String opis;
     private Date ocekivaniZavrsetak;
-    private List<Zaposleni> zaduzeniZaposleni;
+    private StatusZadatka statusZadatka;
 
     public Zadatak() {
     }
 
-    public Zadatak(Kampanja kampanja, Long zadatakId, String naziv, String opis, Date ocekivaniZavrsetak, List<Zaposleni> zaduzeniZaposleni) {
+    public Zadatak(Kampanja kampanja, Long zadatakId, String naziv, String opis, Date ocekivaniZavrsetak, StatusZadatka statusZadatka) {
         this.kampanja = kampanja;
         this.zadatakId = zadatakId;
         this.naziv = naziv;
         this.opis = opis;
         this.ocekivaniZavrsetak = ocekivaniZavrsetak;
-        this.zaduzeniZaposleni = zaduzeniZaposleni;
+        this.statusZadatka = statusZadatka;
     }
 
     @Override
@@ -41,12 +42,12 @@ public class Zadatak implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiNaziveKolonatabele() {
-        return "(`kampanjaId`, `zadatakId`, `naziv`, `opis`, `ocekivaniZavrsetak`)";
+        return "(`kampanjaId`, `zadatakId`, `naziv`, `opis`, `ocekivaniZavrsetak`,`statusZadatka`)";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        return kampanja.getKampanjaId() + "," + zadatakId + ",'" + naziv + "','" + opis + "','" + ocekivaniZavrsetak + "'";
+        return kampanja.getKampanjaId() + "," + zadatakId + ",'" + naziv + "','" + opis + "','" + ocekivaniZavrsetak + "'," + statusZadatka + "";
     }
 
     @Override
@@ -66,7 +67,7 @@ public class Zadatak implements OpstiDomenskiObjekat {
 
     @Override
     public String join() {
-        return "INNER JOIN angazovanje ON zadatak.kampanjaId = angazovanje.kampanjaId AND zadatak.zadatakId = angazovanje.zadatakId";
+        return "INNER JOIN statuszadatka sz ON z.statusZadatka = sz.statusZadatkaId";
     }
 
     @Override
@@ -76,7 +77,26 @@ public class Zadatak implements OpstiDomenskiObjekat {
 
     @Override
     public List<OpstiDomenskiObjekat> vratiSve(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<OpstiDomenskiObjekat> listaZadataka = new ArrayList<>();
+
+        while (rs.next()) {
+            Zadatak zadatak = new Zadatak();
+            zadatak.setZadatakId(rs.getLong("zadatakId"));
+            zadatak.setNaziv(rs.getString("naziv"));
+            zadatak.setOpis(rs.getString("opis"));
+            zadatak.setOcekivaniZavrsetak(rs.getDate("ocekivaniZavrsetak"));
+
+            
+            StatusZadatka statusZadatka = new StatusZadatka();
+            statusZadatka.setStatusZadatkaId(rs.getInt("sz.statusZadatkaId"));
+            statusZadatka.setNaziv(rs.getString("sz.naziv"));
+
+            zadatak.setStatusZadatka(statusZadatka);
+           
+            listaZadataka.add(zadatak);
+        }
+
+        return listaZadataka;
     }
 
     public Long getZadatakId() {
@@ -111,14 +131,6 @@ public class Zadatak implements OpstiDomenskiObjekat {
         this.ocekivaniZavrsetak = ocekivaniZavrsetak;
     }
 
-    public List<Zaposleni> getZaduzeniZaposleni() {
-        return zaduzeniZaposleni;
-    }
-
-    public void setZaduzeniZaposleni(List<Zaposleni> zaduzeniZaposleni) {
-        this.zaduzeniZaposleni = zaduzeniZaposleni;
-    }
-
     public Kampanja getKampanja() {
         return kampanja;
     }
@@ -127,10 +139,17 @@ public class Zadatak implements OpstiDomenskiObjekat {
         this.kampanja = kampanja;
     }
 
-
     @Override
     public String uslovZaPretragu() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public StatusZadatka getStatusZadatka() {
+        return statusZadatka;
+    }
+
+    public void setStatusZadatka(StatusZadatka statuZadatka) {
+        this.statusZadatka = statuZadatka;
     }
 
 }

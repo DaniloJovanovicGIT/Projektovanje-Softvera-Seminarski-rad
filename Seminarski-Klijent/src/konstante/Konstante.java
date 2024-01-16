@@ -4,6 +4,8 @@
  */
 package konstante;
 
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Danilo
@@ -14,5 +16,6 @@ public class Konstante {
     public static final String PORUKA_USPESNO = "Uspešno izvrsšeno.";
     public static final String PORUKA_NEUSPESNO = "Došlo je do greške.";
     public static final String FORMAT_DATUMA = "dd.MM.yyyy";
-    
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(FORMAT_DATUMA);
+    public static final String PORUKA_GRESKA_FORMAT_DATUMA = "Datum mora biti u formatu dd.MM.yyyy.";
 }

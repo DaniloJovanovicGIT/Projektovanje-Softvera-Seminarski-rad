@@ -154,4 +154,8 @@ public class Zaposleni implements OpstiDomenskiObjekat {
         this.noviJmbg = noviJmbg;
     }
 
+    @Override
+    public String toString() {
+        return ime+" "+prezime+"("+odeljenje.getNaziv()+")";
+    }
 }
