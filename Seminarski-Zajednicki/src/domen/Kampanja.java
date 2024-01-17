@@ -46,17 +46,17 @@ public class Kampanja implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiNaziveKolonatabele() {
-        return "(`kampanjaId`, `naziv`, `datumPocetka`, `datumZavrsetka`, `kontaktOsoba`, `pib`)";
+        return "(`naziv`, `datumPocetka`, `datumZavrsetka`, `jmbg`, `pib`)";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        return kampanjaId + ",'" + naziv + "','" + datumPocetka + "','" + datumZavrsetka + "','" + kontaktOsoba + "','" + partner.getPib() + "'";
+        return "'" + naziv + "','" + new java.sql.Date(datumPocetka.getTime()) + "','" + new java.sql.Date(datumZavrsetka.getTime()) + "','" + odgovorniZaposleni.getJmbg() + "','" + partner.getPib() + "'";
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return ", naziv='" + naziv + "', datumPocetka='" + datumPocetka + "', datumZavrsetka='" + datumZavrsetka + "', kontaktOsoba='" + kontaktOsoba + "', pib='" + partner.getPib() + "'";
+        return ", naziv='" + naziv + "', datumPocetka='" + datumPocetka + "', datumZavrsetka='" + datumZavrsetka + "', jmbg='" + odgovorniZaposleni.getJmbg() + "', pib='" + partner.getPib() + "'";
     }
 
     @Override
@@ -165,6 +165,11 @@ public class Kampanja implements OpstiDomenskiObjekat {
 
     public void setOdgovorniZaposleni(Zaposleni odgovorniZaposleni) {
         this.odgovorniZaposleni = odgovorniZaposleni;
+    }
+
+    @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "kampanjaId";
     }
 
 }

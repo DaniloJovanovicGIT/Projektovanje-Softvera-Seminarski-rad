@@ -4,6 +4,7 @@
  */
 package baza.podataka;
 
+import domen.Kampanja;
 import domen.OpstiDomenskiObjekat;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -106,5 +107,17 @@ public class BrokerBazePodataka {
         Statement st = konekcija.createStatement();
         ResultSet rs = st.executeQuery(upit);
         return (List<OpstiDomenskiObjekat>) objekat.vratiSve(rs);
+    }
+
+    public int vratiMaxId(OpstiDomenskiObjekat objekat) throws SQLException {
+        int maxId = 0;
+        String upit = "SELECT MAX(" + objekat.vratiNazivPrimarnogKljuca()+ ") as maxId FROM " + objekat.vratiNazivTabele();
+        System.out.println(upit);
+        Statement st = konekcija.createStatement();
+        ResultSet rs = st.executeQuery(upit);
+        if (rs.next()) {
+            maxId = rs.getInt("maxId");
+        }
+        return maxId;
     }
 }

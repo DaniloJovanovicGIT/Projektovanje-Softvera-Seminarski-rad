@@ -57,7 +57,7 @@ public class Partner implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return "pib= '"+noviPib+"', naziv= '" + naziv + "', datumOsnivanja= '" + new java.sql.Date(datumOsnivanja.getTime()) + "', kontaktOsoba='" + kontaktOsoba + "', brojTelefona='" + brojTelefona + "', email='" + email + "'";
+        return "pib= '" + noviPib + "', naziv= '" + naziv + "', datumOsnivanja= '" + new java.sql.Date(datumOsnivanja.getTime()) + "', kontaktOsoba='" + kontaktOsoba + "', brojTelefona='" + brojTelefona + "', email='" + email + "'";
     }
 
     @Override
@@ -146,8 +146,6 @@ public class Partner implements OpstiDomenskiObjekat {
         this.email = email;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -189,6 +187,11 @@ public class Partner implements OpstiDomenskiObjekat {
 
     public void setNoviPib(String noviPib) {
         this.noviPib = noviPib;
+    }
+
+    @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "pib";
     }
 
 }

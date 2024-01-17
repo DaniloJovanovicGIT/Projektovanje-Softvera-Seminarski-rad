@@ -18,6 +18,8 @@ public interface OpstiDomenskiObjekat extends Serializable{
     
     String vratiNazivTabele();
     
+    String vratiNazivPrimarnogKljuca();
+    
     String vratiNaziveKolonatabele();
     
     String vratiVrednostiZaKreiranje();

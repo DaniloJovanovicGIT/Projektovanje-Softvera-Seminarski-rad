@@ -105,5 +105,10 @@ public class Odeljenje implements OpstiDomenskiObjekat {
         return naziv; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 
+    @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "odeljenjeId";
+    }
+
     
 }

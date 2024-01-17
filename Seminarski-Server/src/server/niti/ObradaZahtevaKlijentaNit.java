@@ -17,6 +17,7 @@ import komunikacija.Primalac;
 import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 import aplikaciona.logika.Kontroler;
+import domen.Kampanja;
 import domen.Odeljenje;
 import domen.StatusZadatka;
 import domen.Zaposleni;
@@ -139,6 +140,15 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                 case Operacija.VRATI_SVE_STATUSE_ZADATKA:
                     ArrayList<StatusZadatka> listaSvihStatusaZadatka = Kontroler.getInstance().vratiSveStatuseZadatka();
                     odgovor = new Odgovor(listaSvihStatusaZadatka, Operacija.VRATI_SVE_STATUSE_ZADATKA, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    break;
+                case Operacija.ZAPAMTI_KAMPANJU:
+                    Kampanja novaKampanja = (Kampanja) zahtev.getParametar();
+                    boolean uspesnoSacuvanaKampanja = Kontroler.getInstance().sacuvajKampanju(novaKampanja);
+                    if (uspesnoSacuvanaKampanja) {
+                        odgovor = new Odgovor(novaKampanja, Operacija.ZAPAMTI_KAMPANJU, "Sistem je zapamtio kampanju.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(novaKampanja, Operacija.ZAPAMTI_KAMPANJU, "Sistem ne može da zapamti kampanju.", VrstaOdgovora.GRESKA);
+                    }
                     break;
             }
             return odgovor;

@@ -102,4 +102,10 @@ public class StatusZadatka implements OpstiDomenskiObjekat {
     public String toString() {
         return naziv;
     } 
+
+    @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "statusZadatkaId";
+    }
+    
 }

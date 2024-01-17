@@ -42,12 +42,17 @@ public class Zadatak implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiNaziveKolonatabele() {
-        return "(`kampanjaId`, `zadatakId`, `naziv`, `opis`, `ocekivaniZavrsetak`,`statusZadatka`)";
+        return "(`kampanjaId`, `naziv`, `opis`, `ocekivaniZavrsetak`,`statusZadatka`)";
+    }
+
+    @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "kampanjaId, zadatakId";
     }
 
     @Override
     public String vratiVrednostiZaKreiranje() {
-        return kampanja.getKampanjaId() + "," + zadatakId + ",'" + naziv + "','" + opis + "','" + ocekivaniZavrsetak + "'," + statusZadatka + "";
+        return kampanja.getKampanjaId() + ",'" + naziv + "','" + opis + "','" +new java.sql.Date(ocekivaniZavrsetak.getTime()) + "'," + statusZadatka.getStatusZadatkaId() + "";
     }
 
     @Override

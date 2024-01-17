@@ -261,6 +261,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Sa&#x10d;uvaj kampanju"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSacuvajKampanjuActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

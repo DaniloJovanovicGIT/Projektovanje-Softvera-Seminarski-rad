@@ -24,6 +24,10 @@ public class ModelTabeleZadatak extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    public ArrayList<Zadatak> getLista() {
+        return lista;
+    }
+
     @Override
     public int getRowCount() {
         return lista.size();

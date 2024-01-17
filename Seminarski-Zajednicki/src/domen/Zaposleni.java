@@ -22,7 +22,7 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     private Odeljenje odeljenje;
     private String vrednostZaPretragu;
     private String noviJmbg;
-    
+
     public Zaposleni() {
     }
 
@@ -45,13 +45,18 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     }
 
     @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "jmbg";
+    }
+
+    @Override
     public String vratiVrednostiZaKreiranje() {
         return "'" + jmbg + "','" + ime + "','" + prezime + "'," + staz + "," + odeljenje.getOdeljenjeId();
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return "jmbg ='"+noviJmbg+"', ime='" + ime + "', prezime='" + prezime + "', staz=" + staz + ", odeljenjeId=" + odeljenje.getOdeljenjeId();
+        return "jmbg ='" + noviJmbg + "', ime='" + ime + "', prezime='" + prezime + "', staz=" + staz + ", odeljenjeId=" + odeljenje.getOdeljenjeId();
     }
 
     @Override
@@ -156,6 +161,6 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public String toString() {
-        return ime+" "+prezime+"("+odeljenje.getNaziv()+")";
+        return ime + " " + prezime + "(" + odeljenje.getNaziv() + ")";
     }
 }

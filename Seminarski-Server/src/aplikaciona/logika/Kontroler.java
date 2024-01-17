@@ -4,6 +4,7 @@
  */
 package aplikaciona.logika;
 
+import domen.Kampanja;
 import domen.Odeljenje;
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
@@ -15,6 +16,7 @@ import sistemske.operacije.partner.SOIzmeniPartnera;
 import sistemske.operacije.partner.SOObrisiPartnera;
 import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
 import sistemske.operacije.SOVratiSvaOdeljenja;
+import sistemske.operacije.kampanja.SOZapamtiKampanju;
 import sistemske.operacije.partner.SOVratiSvePartnere;
 import sistemske.operacije.partner.SOZapamtiPartnera;
 import sistemske.operacije.zadatak.SOVratiSveStatuseZadatka;
@@ -106,6 +108,11 @@ public class Kontroler {
         SOVratiSveStatuseZadatka so = new SOVratiSveStatuseZadatka();
         so.opsteIzvrsenjeSO(new StatusZadatka());
         return so.getListaStatusaZadatka();
+    }
+
+    public boolean sacuvajKampanju(Kampanja novaKampanja) throws SQLException {
+        SOZapamtiKampanju so = new SOZapamtiKampanju();
+        return so.opsteIzvrsenjeSO(novaKampanja);
     }
 
 }

@@ -4,6 +4,7 @@
  */
 package forme.kampanja;
 
+import domen.Kampanja;
 import domen.Partner;
 import domen.Zadatak;
 import domen.Zaposleni;
@@ -13,9 +14,17 @@ import forme.modeli.tabela.ModelTabeleZaposleni;
 import forme.zadatak.FormaIzmeniZadatak;
 import forme.zadatak.FormaKreirajZadatak;
 import forme.zadatak.FormaPrikaziZadatak;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import komunikacija.Odgovor;
+import komunikacija.VrstaOdgovora;
 import konstante.Konstante;
+import kontroler.KontrolerKIKampanja;
 
 /**
  *
@@ -190,6 +199,11 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         );
 
         btnSacuvajKampanju.setText("Sačuvaj kampanju");
+        btnSacuvajKampanju.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSacuvajKampanjuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,8 +243,8 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
             if (izabraniRed != -1) {
                 Zadatak zadatakZaPrikaz = mtz.vratiZadatak(izabraniRed);
                 FormaPrikaziZadatak fpz = new FormaPrikaziZadatak(this, rootPaneCheckingEnabled, zadatakZaPrikaz);
-            fpz.setVisible(true);
-                
+                fpz.setVisible(true);
+
             } else {
                 JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }        }    }//GEN-LAST:event_btnPrikaziZadatakActionPerformed
@@ -255,6 +269,43 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
+
+    private void btnSacuvajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajKampanjuActionPerformed
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        
+        Partner partner = (Partner) cmbPartner.getSelectedItem();
+        String naziv = txtNaziv.getText();
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
+
+        Date datumPocetka = null;
+        Date datumZavrsetka = null;
+
+        try {
+            datumPocetka = sdf.parse(txtDatumPocetka.getText());
+            datumZavrsetka = sdf.parse(txtDatumZavrsetka.getText());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Zaposleni odgovorniZaposleni = (Zaposleni) cmbGlavniOdgovorni.getSelectedItem();
+        ArrayList<Zadatak> listaZadataka = mtz.getLista();
+        
+        Kampanja kampanja = new Kampanja();
+        kampanja.setPartner(partner);
+        kampanja.setNaziv(naziv);
+        kampanja.setDatumPocetka(datumPocetka);
+        kampanja.setDatumZavrsetka(datumZavrsetka);
+        kampanja.setOdgovorniZaposleni(odgovorniZaposleni);
+        kampanja.setZadaci(listaZadataka);
+        
+        Odgovor odgovor = KontrolerKIKampanja.getInstance().kreirajKampanju(kampanja);
+        if(odgovor!=null && odgovor.getVrstaOdgovora()==VrstaOdgovora.USPESNO){
+            JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSacuvajKampanjuActionPerformed
 
     /**
      * @param args the command line arguments
