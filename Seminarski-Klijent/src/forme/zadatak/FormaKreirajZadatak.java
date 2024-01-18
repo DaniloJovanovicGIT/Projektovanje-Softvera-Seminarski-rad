@@ -6,13 +6,12 @@ package forme.zadatak;
 
 import domen.StatusZadatka;
 import domen.Zadatak;
-import forme.kampanja.FormaKreirajKampanju;
+import forme.modeli.tabela.ModelTabeleZadatak;
+import java.awt.Frame;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,13 +19,13 @@ import javax.swing.JOptionPane;
  * @author Danilo
  */
 public class FormaKreirajZadatak extends javax.swing.JDialog {
-    FormaKreirajKampanju fkk;
+    ModelTabeleZadatak mtz;
     /**
      * Creates new form FormaKreirajZadatak
      */
-    public FormaKreirajZadatak(java.awt.Frame parent, boolean modal) {
+    public FormaKreirajZadatak(Frame parent, boolean modal, ModelTabeleZadatak mtz) {
         super(parent, modal);
-        fkk = (FormaKreirajKampanju) parent;
+        this.mtz = mtz;
         initComponents();
         setLocationRelativeTo(null);
         popuniStatuseZadatka();
@@ -151,7 +150,7 @@ public class FormaKreirajZadatak extends javax.swing.JDialog {
         noviZadatak.setOcekivaniZavrsetak(datumZavrsetka);
         noviZadatak.setStatusZadatka(statusZadatka);
         
-        fkk.dodajNoviZadatak(noviZadatak);
+        mtz.dodaj(noviZadatak);
         JOptionPane.showConfirmDialog(this, "Zadatak je dodat u kampanju.", konstante.Konstante.PORUKA_USPESNO,JOptionPane.DEFAULT_OPTION);
         vratiVrednostiNaDefault();
     }//GEN-LAST:event_btnKreirajZadatakActionPerformed

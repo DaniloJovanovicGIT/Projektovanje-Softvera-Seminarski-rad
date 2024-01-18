@@ -4,6 +4,7 @@
  */
 package forme.modeli.tabela;
 
+import domen.StatusZadatka;
 import domen.Zadatak;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,6 +84,12 @@ public class ModelTabeleZadatak extends AbstractTableModel {
         zadatakZaMenjanje.setOcekivaniZavrsetak(noviZadatak.getOcekivaniZavrsetak());
         zadatakZaMenjanje.setStatusZadatka(noviZadatak.getStatusZadatka());
         fireTableRowsUpdated(izabraniRed, izabraniRed);
+    }
+
+    public void otkazi(int izabraniRed) {
+        Zadatak zadatak = lista.get(izabraniRed);
+        zadatak.setStatusZadatka(new StatusZadatka(5, "Otkazan"));
+        fireTableDataChanged();
     }
 
 }

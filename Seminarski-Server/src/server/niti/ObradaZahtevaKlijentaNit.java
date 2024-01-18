@@ -150,6 +150,24 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                         odgovor = new Odgovor(novaKampanja, Operacija.ZAPAMTI_KAMPANJU, "Sistem ne može da zapamti kampanju.", VrstaOdgovora.GRESKA);
                     }
                     break;
+                case Operacija.VRATI_SVE_KAMPANJE:
+                    ArrayList<Kampanja> listaSvihKampanja = Kontroler.getInstance().vratiSveKampanje();
+                    odgovor = new Odgovor(listaSvihKampanja, Operacija.VRATI_SVE_KAMPANJE, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    break;
+                case Operacija.VRATI_KAMPANJE_ZA_VREDNOST:
+                    Kampanja kampanjaZaVrednost = (Kampanja) zahtev.getParametar();
+                    ArrayList<Kampanja> listaKampanjaZaVrednost = Kontroler.getInstance().vratiKampanjeZaVrednost(kampanjaZaVrednost);
+                    odgovor = new Odgovor(listaKampanjaZaVrednost, Operacija.VRATI_KAMPANJE_ZA_VREDNOST, "Uspesno vraceno.", VrstaOdgovora.USPESNO);
+                    break;
+                case Operacija.IZMENI_KAMPANJU:
+                    Kampanja izmenjenaKampanja = (Kampanja) zahtev.getParametar();
+                    boolean uspesnoIzmenjenaKampanja = Kontroler.getInstance().izmeniKampanju(izmenjenaKampanja);
+                    if (uspesnoIzmenjenaKampanja) {
+                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
             }
             return odgovor;
         } catch (Exception ex) {

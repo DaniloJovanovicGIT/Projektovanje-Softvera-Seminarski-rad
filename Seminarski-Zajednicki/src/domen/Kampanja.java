@@ -6,8 +6,11 @@ package domen;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,6 +27,8 @@ public class Kampanja implements OpstiDomenskiObjekat {
     private Partner partner;
     private List<Zadatak> zadaci;
 
+    private String vrednostZaPretragu;
+
     public Kampanja() {
     }
 
@@ -37,8 +42,6 @@ public class Kampanja implements OpstiDomenskiObjekat {
         this.zadaci = zadaci;
     }
 
-    
-
     @Override
     public String vratiNazivTabele() {
         return "kampanja";
@@ -50,13 +53,18 @@ public class Kampanja implements OpstiDomenskiObjekat {
     }
 
     @Override
+    public String vratiNazivPrimarnogKljuca() {
+        return "kampanjaId";
+    }
+
+    @Override
     public String vratiVrednostiZaKreiranje() {
         return "'" + naziv + "','" + new java.sql.Date(datumPocetka.getTime()) + "','" + new java.sql.Date(datumZavrsetka.getTime()) + "','" + odgovorniZaposleni.getJmbg() + "','" + partner.getPib() + "'";
     }
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return ", naziv='" + naziv + "', datumPocetka='" + datumPocetka + "', datumZavrsetka='" + datumZavrsetka + "', jmbg='" + odgovorniZaposleni.getJmbg() + "', pib='" + partner.getPib() + "'";
+        return " naziv='" + naziv + "', datumPocetka='" + new java.sql.Date(datumPocetka.getTime()) + "', datumZavrsetka='" + new java.sql.Date(datumZavrsetka.getTime()) + "', jmbg='" + odgovorniZaposleni.getJmbg() + "', pib='" + partner.getPib() + "'";
     }
 
     @Override
@@ -71,7 +79,8 @@ public class Kampanja implements OpstiDomenskiObjekat {
 
     @Override
     public String join() {
-        return "LEFT JOIN zadatak ON kampanja.kampanjaId = zadatak.kampanjaId";
+        return "JOIN partner p ON k.pib=p.pib JOIN zaposleni z ON k.jmbg = z.jmbg LEFT JOIN odeljenje o ON z.odeljenjeId=o.odeljenjeId LEFT JOIN zadatak zad ON k.kampanjaId=zad.kampanjaId"
+                + " LEFT JOIN statusZadatka sz ON zad.statusZadatka = sz.statusZadatkaId";
     }
 
     @Override
@@ -81,7 +90,66 @@ public class Kampanja implements OpstiDomenskiObjekat {
 
     @Override
     public List<OpstiDomenskiObjekat> vratiSve(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Map<Integer, Kampanja> kampanjaMap = new HashMap<>();
+        ArrayList<OpstiDomenskiObjekat> kampanje = new ArrayList<>();
+
+        while (rs.next()) {
+            int kampanjaId = rs.getInt("k.kampanjaId");
+            Kampanja kampanja = kampanjaMap.get(kampanjaId);
+
+            if (kampanja == null) {
+                kampanja = new Kampanja();
+                kampanja.setKampanjaId(rs.getLong("k.kampanjaId"));
+                kampanja.setNaziv(rs.getString("k.naziv"));
+                kampanja.setDatumPocetka(rs.getDate("k.datumPocetka"));
+                kampanja.setDatumZavrsetka(rs.getDate("k.datumZavrsetka"));
+                kampanja.setZadaci(new ArrayList<>());
+
+                Partner partner = new Partner();
+                partner.setPib(rs.getString("p.pib"));
+                partner.setNaziv(rs.getString("p.naziv"));
+                partner.setDatumOsnivanja(rs.getDate("p.datumOsnivanja"));
+                partner.setKontaktOsoba(rs.getString("p.kontaktOsoba"));
+                partner.setBrojTelefona(rs.getString("p.brojTelefona"));
+                partner.setEmail(rs.getString("p.email"));
+
+                kampanja.setPartner(partner);
+
+                Zaposleni glavniOdgovorni = new Zaposleni();
+                glavniOdgovorni.setJmbg(rs.getString("z.jmbg"));
+                glavniOdgovorni.setIme(rs.getString("z.ime"));
+                glavniOdgovorni.setPrezime(rs.getString("z.prezime"));
+                glavniOdgovorni.setStaz(rs.getInt("z.staz"));
+
+                Odeljenje odeljenje = new Odeljenje();
+                odeljenje.setOdeljenjeId(rs.getInt("o.odeljenjeId"));
+                odeljenje.setNaziv(rs.getString("o.naziv"));
+
+                glavniOdgovorni.setOdeljenje(odeljenje);
+
+                kampanja.setOdgovorniZaposleni(glavniOdgovorni);
+
+                kampanjaMap.put(kampanjaId, kampanja);
+                kampanje.add(kampanja);
+            }
+
+            Zadatak zadatak = new Zadatak();
+            zadatak.setKampanja(kampanja);
+            zadatak.setNaziv(rs.getString("zad.naziv"));
+            zadatak.setOpis(rs.getString("zad.opis"));
+            zadatak.setZadatakId(rs.getLong("zad.zadatakId"));
+            zadatak.setOcekivaniZavrsetak(rs.getDate("zad.ocekivaniZavrsetak"));
+
+            StatusZadatka statusZadatka = new StatusZadatka();
+            statusZadatka.setStatusZadatkaId(rs.getInt("sz.statusZadatkaId"));
+            statusZadatka.setNaziv(rs.getString("sz.naziv"));
+
+            zadatak.setStatusZadatka(statusZadatka);
+
+            kampanja.getZadaci().add(zadatak);
+        }
+
+        return kampanje;
     }
 
     public Long getKampanjaId() {
@@ -156,7 +224,7 @@ public class Kampanja implements OpstiDomenskiObjekat {
 
     @Override
     public String uslovZaPretragu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE k.naziv LIKE'%" + this.vrednostZaPretragu + "%' OR p.naziv LIKE'%" + this.vrednostZaPretragu + "%' OR z.ime LIKE'%" + this.vrednostZaPretragu + "%'OR z.prezime LIKE'%" + this.vrednostZaPretragu + "%'OR o.naziv LIKE'%" + this.vrednostZaPretragu + "%'";
     }
 
     public Zaposleni getOdgovorniZaposleni() {
@@ -167,9 +235,7 @@ public class Kampanja implements OpstiDomenskiObjekat {
         this.odgovorniZaposleni = odgovorniZaposleni;
     }
 
-    @Override
-    public String vratiNazivPrimarnogKljuca() {
-        return "kampanjaId";
+    public void setVrednostZaPretragu(String uslov) {
+        this.vrednostZaPretragu = uslov;
     }
-
 }

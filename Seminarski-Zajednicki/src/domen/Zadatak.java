@@ -57,7 +57,7 @@ public class Zadatak implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiVrednostiZaPromenu() {
-        return ", naziv='" + naziv + "', opis='" + opis + "', ocekivaniZavrsetak='" + ocekivaniZavrsetak + "'";
+        return " naziv='" + naziv + "', opis='" + opis + "', ocekivaniZavrsetak='" + new java.sql.Date(ocekivaniZavrsetak.getTime()) + "', statusZadatka="+statusZadatka.getStatusZadatkaId();
     }
 
     @Override

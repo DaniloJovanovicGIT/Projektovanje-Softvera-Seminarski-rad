@@ -19,15 +19,15 @@ import konstante.Konstante;
  * @author Danilo
  */
 public class FormaPrikaziZadatak extends javax.swing.JDialog {
-    FormaKreirajKampanju fkk;
+
     Zadatak izabraniZadatak;
+
     /**
      * Creates new form FormaKreirajZadatak
      */
     public FormaPrikaziZadatak(java.awt.Frame parent, boolean modal, Zadatak izabraniZadatak) {
         super(parent, modal);
         initComponents();
-        fkk = (FormaKreirajKampanju) parent;
         this.izabraniZadatak = izabraniZadatak;
         popuniStatuseZadatka();
         postaviVrednostiZadatka();
@@ -85,6 +85,7 @@ public class FormaPrikaziZadatak extends javax.swing.JDialog {
         txtOpis.setEditable(false);
         txtOpis.setColumns(20);
         txtOpis.setRows(5);
+        txtOpis.setAutoscrolls(false);
         txtOpis.setFocusable(false);
         jScrollPane1.setViewportView(txtOpis);
 
@@ -150,7 +151,6 @@ public class FormaPrikaziZadatak extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIzmeniZadatak;
@@ -170,7 +170,7 @@ public class FormaPrikaziZadatak extends javax.swing.JDialog {
         ArrayList<StatusZadatka> listaSvihStatusa = kontroler.KontrolerKIZadatak.getInstance().vratiSveStatuseZadataka();
         if (listaSvihStatusa != null) {
             for (StatusZadatka status : listaSvihStatusa) {
-                 cmbStatusZadatka.addItem(status);
+                cmbStatusZadatka.addItem(status);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može statuse zadataka", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
@@ -178,18 +178,11 @@ public class FormaPrikaziZadatak extends javax.swing.JDialog {
         }
     }
 
-    private void vratiVrednostiNaDefault() {
-        txtDatumZavrsetka.setText("");
-        txtNaziv.setText("");
-        txtOpis.setText("");
-        cmbStatusZadatka.setSelectedItem(null);
-    }
-
     private void postaviVrednostiZadatka() {
         txtNaziv.setText(izabraniZadatak.getNaziv());
         txtOpis.setText(izabraniZadatak.getOpis());
         SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
         txtDatumZavrsetka.setText(sdf.format(izabraniZadatak.getOcekivaniZavrsetak()));
-        cmbStatusZadatka.setSelectedIndex(izabraniZadatak.getStatusZadatka().getStatusZadatkaId()-1);
+        cmbStatusZadatka.setSelectedIndex(izabraniZadatak.getStatusZadatka().getStatusZadatkaId() - 1);
     }
 }

@@ -232,7 +232,8 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDodajZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajZadatakActionPerformed
-        FormaKreirajZadatak fzk = new FormaKreirajZadatak(this, true);
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        FormaKreirajZadatak fzk = new FormaKreirajZadatak(this, true, mtz);
         fzk.setVisible(true);
     }//GEN-LAST:event_btnDodajZadatakActionPerformed
 
@@ -264,7 +265,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         int izabraniRed = tblZadaci.getSelectedRow();
         if (izabraniRed != -1) {
             Zadatak zadatakZaIzmenu = mtz.vratiZadatak(izabraniRed);
-            izmeniZadatak(zadatakZaIzmenu);
+            izmeniZadatak(zadatakZaIzmenu, mtz);
         } else {
             JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
@@ -272,7 +273,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
 
     private void btnSacuvajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajKampanjuActionPerformed
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
-        
+
         Partner partner = (Partner) cmbPartner.getSelectedItem();
         String naziv = txtNaziv.getText();
         SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
@@ -290,7 +291,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
 
         Zaposleni odgovorniZaposleni = (Zaposleni) cmbGlavniOdgovorni.getSelectedItem();
         ArrayList<Zadatak> listaZadataka = mtz.getLista();
-        
+
         Kampanja kampanja = new Kampanja();
         kampanja.setPartner(partner);
         kampanja.setNaziv(naziv);
@@ -298,11 +299,11 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         kampanja.setDatumZavrsetka(datumZavrsetka);
         kampanja.setOdgovorniZaposleni(odgovorniZaposleni);
         kampanja.setZadaci(listaZadataka);
-        
+
         Odgovor odgovor = KontrolerKIKampanja.getInstance().kreirajKampanju(kampanja);
-        if(odgovor!=null && odgovor.getVrstaOdgovora()==VrstaOdgovora.USPESNO){
+        if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
             JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSacuvajKampanjuActionPerformed
@@ -368,14 +369,9 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         mtz.dodaj(noviZadatak);
     }
 
-    public void izmeniZadatak(Zadatak zadatakZaIzmenu) {
-        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this, true, zadatakZaIzmenu);
-        fiz.setVisible(true);
-    }
-
-    public void izmeniIzabraniZadatak(Zadatak noviZadatak) {
-        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+    public void izmeniZadatak(Zadatak zadatakZaIzmenu, ModelTabeleZadatak mtz) {
         int izabraniRed = tblZadaci.getSelectedRow();
-        mtz.izmeniIzabraniZadatak(noviZadatak, izabraniRed);
+        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this, true, zadatakZaIzmenu, mtz, izabraniRed);
+        fiz.setVisible(true);
     }
 }

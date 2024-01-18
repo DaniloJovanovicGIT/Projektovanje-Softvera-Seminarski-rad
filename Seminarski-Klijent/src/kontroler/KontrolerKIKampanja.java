@@ -5,10 +5,12 @@
 package kontroler;
 
 import domen.Kampanja;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
+import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 
 /**
@@ -37,6 +39,52 @@ public class KontrolerKIKampanja extends OpstiKontrolerKI {
             return (Odgovor) primalac.primi();
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIKampanja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Kampanja> vratiSveKampanje() {
+        try {
+            System.out.println("Saljem zahtev. Vrati sve kampanje.");
+            posiljalac.posalji(new Zahtev(Operacija.VRATI_SVE_KAMPANJE, null, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return (ArrayList<Kampanja>) odgovor.getParametar();
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Kampanja> vratiKampanjeSaUslovom(String uslov) {
+        Kampanja kampanja = new Kampanja();
+        kampanja.setVrednostZaPretragu(uslov);
+        try {
+            System.out.println("Saljem zahtev. Vrati kampanje za vrednost");
+            posiljalac.posalji(new Zahtev(Operacija.VRATI_KAMPANJE_ZA_VREDNOST, kampanja, true));
+            Odgovor odgovor = (Odgovor) primalac.primi();
+            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                return (ArrayList<Kampanja>) odgovor.getParametar();
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Odgovor izmeniKampanju(Kampanja izmenjenaKampanja) {
+        try {
+            System.out.println("Saljem zahtev. Izmeni kampanju");
+            posiljalac.posalji(new Zahtev(Operacija.IZMENI_KAMPANJU, izmenjenaKampanja, true));
+            return (Odgovor) primalac.primi();
+
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

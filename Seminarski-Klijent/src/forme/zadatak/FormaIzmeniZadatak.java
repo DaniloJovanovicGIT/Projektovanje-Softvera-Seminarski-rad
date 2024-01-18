@@ -7,6 +7,8 @@ package forme.zadatak;
 import domen.StatusZadatka;
 import domen.Zadatak;
 import forme.kampanja.FormaKreirajKampanju;
+import forme.modeli.tabela.ModelTabeleZadatak;
+import java.awt.Frame;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,16 +21,18 @@ import konstante.Konstante;
  * @author Danilo
  */
 public class FormaIzmeniZadatak extends javax.swing.JDialog {
-    FormaKreirajKampanju fkk;
     Zadatak izabraniZadatak;
+    ModelTabeleZadatak mtz;
+    int izabraniRed;
     /**
      * Creates new form FormaKreirajZadatak
      */
-    public FormaIzmeniZadatak(java.awt.Frame parent, boolean modal, Zadatak izabraniZadatak) {
+    public FormaIzmeniZadatak(Frame parent, boolean modal, Zadatak izabraniZadatak, ModelTabeleZadatak mtz, int izabraniRed) {
         super(parent, modal);
         initComponents();
-        fkk = (FormaKreirajKampanju) parent;
+        this.mtz=mtz;
         this.izabraniZadatak = izabraniZadatak;
+        this.izabraniRed = izabraniRed;
         popuniStatuseZadatka();
         postaviVrednostiZadatka();
         setLocationRelativeTo(null);
@@ -153,7 +157,7 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
         noviZadatak.setOcekivaniZavrsetak(datumZavrsetka);
         noviZadatak.setStatusZadatka(statusZadatka);
         
-        fkk.izmeniIzabraniZadatak(noviZadatak);
+        mtz.izmeniIzabraniZadatak(noviZadatak, izabraniRed);
         JOptionPane.showConfirmDialog(this, "Zadatak je izmenjen.", konstante.Konstante.PORUKA_USPESNO,JOptionPane.DEFAULT_OPTION);
         dispose();
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed

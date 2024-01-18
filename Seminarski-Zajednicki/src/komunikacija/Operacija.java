@@ -26,5 +26,7 @@ public class Operacija {
     public static final int IZMENI_ZAPOSLENOG = 14;
     public static final int OBRISI_ZAPOSLENOG = 15;
     public static final int VRATI_SVE_STATUSE_ZADATKA = 16;
+    public static final int VRATI_SVE_KAMPANJE=17;
+    public static final int IZMENI_KAMPANJU=18;
     
 }

@@ -8,6 +8,7 @@ import domen.Kampanja;
 import domen.Partner;
 import domen.Zadatak;
 import domen.Zaposleni;
+import forme.modeli.tabela.ModelTabeleKampanja;
 import forme.modeli.tabela.ModelTabelePartner;
 import forme.modeli.tabela.ModelTabeleZadatak;
 import forme.modeli.tabela.ModelTabeleZaposleni;
@@ -31,14 +32,16 @@ import kontroler.KontrolerKIKampanja;
  * @author Danilo
  */
 public class FormaIzmeniKampanju extends javax.swing.JFrame {
-
+    Kampanja izabranaKampanja;
     /**
      * Creates new form FormaKreirajKampanju
      */
     public FormaIzmeniKampanju() {
         initComponents();
         setLocationRelativeTo(null);
-        postaviModelTabele();
+        postaviModelTabeleKampanja();
+        postaviModelTabeleZadatak();
+        popuniSveKampanje();
         popuniPartnere();
         popuniZaposlene();
     }
@@ -66,10 +69,16 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblZadaci = new javax.swing.JTable();
         btnDodajZadatak = new javax.swing.JButton();
-        btnObrisiZadatak = new javax.swing.JButton();
+        btnOtkažiZadatak = new javax.swing.JButton();
         btnIzmeniZadatak = new javax.swing.JButton();
         btnPrikaziZadatak = new javax.swing.JButton();
-        btnSacuvajKampanju = new javax.swing.JButton();
+        btnIzmeniKampanju = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblKampanje = new javax.swing.JTable();
+        txtVrednostPretrage = new javax.swing.JTextField();
+        btnPretraziKampanje = new javax.swing.JButton();
+        btnUcitajKampanju = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kreiraj kampanju");
@@ -87,6 +96,11 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         lblDatumPocetka.setText("Datum početka:");
 
         cmbGlavniOdgovorni.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbGlavniOdgovorni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbGlavniOdgovorniActionPerformed(evt);
+            }
+        });
 
         lblDatumZavrsetka.setText("Datum završetka:");
 
@@ -110,10 +124,10 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
             }
         });
 
-        btnObrisiZadatak.setText("Obriši zadatak");
-        btnObrisiZadatak.addActionListener(new java.awt.event.ActionListener() {
+        btnOtkažiZadatak.setText("Otkaži zadatak");
+        btnOtkažiZadatak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnObrisiZadatakActionPerformed(evt);
+                btnOtkažiZadatakActionPerformed(evt);
             }
         });
 
@@ -157,11 +171,11 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnDodajZadatak)
                         .addGap(18, 18, 18)
-                        .addComponent(btnObrisiZadatak)
+                        .addComponent(btnOtkažiZadatak)
                         .addGap(18, 18, 18)
                         .addComponent(btnIzmeniZadatak))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,47 +206,118 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDodajZadatak)
-                    .addComponent(btnObrisiZadatak)
+                    .addComponent(btnOtkažiZadatak)
                     .addComponent(btnIzmeniZadatak)
                     .addComponent(btnPrikaziZadatak))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        btnSacuvajKampanju.setText("Sačuvaj kampanju");
-        btnSacuvajKampanju.addActionListener(new java.awt.event.ActionListener() {
+        btnIzmeniKampanju.setText("Izmeni kampanju");
+        btnIzmeniKampanju.setEnabled(false);
+        btnIzmeniKampanju.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSacuvajKampanjuActionPerformed(evt);
+                btnIzmeniKampanjuActionPerformed(evt);
             }
         });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Izaberi kampanju"));
+
+        tblKampanje.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblKampanje);
+
+        btnPretraziKampanje.setText("Pretraži kampanje");
+        btnPretraziKampanje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretraziKampanjeActionPerformed(evt);
+            }
+        });
+
+        btnUcitajKampanju.setText("Učitaj kampanju");
+        btnUcitajKampanju.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUcitajKampanjuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 935, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtVrednostPretrage, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPretraziKampanje))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(379, 379, 379)
+                        .addComponent(btnUcitajKampanju, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtVrednostPretrage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretraziKampanje))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUcitajKampanju, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(390, 390, 390)
-                .addComponent(btnSacuvajKampanju, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(396, 396, 396)
+                .addComponent(btnIzmeniKampanju, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSacuvajKampanju, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnIzmeniKampanju, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDodajZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajZadatakActionPerformed
-        FormaKreirajZadatak fzk = new FormaKreirajZadatak(this, true);
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        FormaKreirajZadatak fzk = new FormaKreirajZadatak(this, true, mtz);
         fzk.setVisible(true);
     }//GEN-LAST:event_btnDodajZadatakActionPerformed
 
@@ -249,30 +334,30 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }        }    }//GEN-LAST:event_btnPrikaziZadatakActionPerformed
 
-    private void btnObrisiZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiZadatakActionPerformed
+    private void btnOtkažiZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOtkažiZadatakActionPerformed
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
         int izabraniRed = tblZadaci.getSelectedRow();
         if (izabraniRed != -1) {
-            mtz.obrisi(izabraniRed);
+            mtz.otkazi(izabraniRed);
         } else {
             JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnObrisiZadatakActionPerformed
+    }//GEN-LAST:event_btnOtkažiZadatakActionPerformed
 
     private void btnIzmeniZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZadatakActionPerformed
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
         int izabraniRed = tblZadaci.getSelectedRow();
         if (izabraniRed != -1) {
             Zadatak zadatakZaIzmenu = mtz.vratiZadatak(izabraniRed);
-            izmeniZadatak(zadatakZaIzmenu);
+            izmeniZadatak(zadatakZaIzmenu, mtz);
         } else {
             JOptionPane.showMessageDialog(this, "Morate izabrati zadatak iz tabele.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
 
-    private void btnSacuvajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajKampanjuActionPerformed
+    private void btnIzmeniKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniKampanjuActionPerformed
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
-        
+
         Partner partner = (Partner) cmbPartner.getSelectedItem();
         String naziv = txtNaziv.getText();
         SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
@@ -291,21 +376,57 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         Zaposleni odgovorniZaposleni = (Zaposleni) cmbGlavniOdgovorni.getSelectedItem();
         ArrayList<Zadatak> listaZadataka = mtz.getLista();
         
-        Kampanja kampanja = new Kampanja();
+
+        Kampanja kampanja = izabranaKampanja;
         kampanja.setPartner(partner);
         kampanja.setNaziv(naziv);
         kampanja.setDatumPocetka(datumPocetka);
         kampanja.setDatumZavrsetka(datumZavrsetka);
         kampanja.setOdgovorniZaposleni(odgovorniZaposleni);
+        for (Zadatak zadatak : listaZadataka) {
+            zadatak.setKampanja(kampanja);
+        }
         kampanja.setZadaci(listaZadataka);
-        
-        Odgovor odgovor = KontrolerKIKampanja.getInstance().kreirajKampanju(kampanja);
-        if(odgovor!=null && odgovor.getVrstaOdgovora()==VrstaOdgovora.USPESNO){
+
+        Odgovor odgovor = KontrolerKIKampanja.getInstance().izmeniKampanju(kampanja);
+        if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
             JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnSacuvajKampanjuActionPerformed
+    }//GEN-LAST:event_btnIzmeniKampanjuActionPerformed
+
+    private void btnUcitajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajKampanjuActionPerformed
+        int izabraniRed = tblKampanje.getSelectedRow();
+        if (izabraniRed == -1) {
+            JOptionPane.showMessageDialog(this, "Sistem ne može da učita kampanju.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
+            izabranaKampanja = mtk.vratiKampanju(izabraniRed);
+            popuniPodatkeKampanja(izabranaKampanja);
+            JOptionPane.showMessageDialog(this, "Sistem je učitao kampanju.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            btnIzmeniKampanju.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnUcitajKampanjuActionPerformed
+
+    private void cmbGlavniOdgovorniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGlavniOdgovorniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbGlavniOdgovorniActionPerformed
+
+    private void btnPretraziKampanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziKampanjeActionPerformed
+        String uslov = txtVrednostPretrage.getText();
+        ArrayList<Kampanja> listaKampanjaPretraga = kontroler.KontrolerKIKampanja.getInstance().vratiKampanjeSaUslovom(uslov);
+        System.out.println("POSLAT ZAHTEV");
+        if (listaKampanjaPretraga != null && !listaKampanjaPretraga.isEmpty()) {
+            ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
+            mtk.setLista(listaKampanjaPretraga);
+            JOptionPane.showMessageDialog(this, "Sistem je našao kampanje po zadatoj vrednosti.", Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe kampanje po zadatoj vrednosti", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }//GEN-LAST:event_btnPretraziKampanjeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,23 +434,29 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajZadatak;
+    private javax.swing.JButton btnIzmeniKampanju;
     private javax.swing.JButton btnIzmeniZadatak;
-    private javax.swing.JButton btnObrisiZadatak;
+    private javax.swing.JButton btnOtkažiZadatak;
+    private javax.swing.JButton btnPretraziKampanje;
     private javax.swing.JButton btnPrikaziZadatak;
-    private javax.swing.JButton btnSacuvajKampanju;
+    private javax.swing.JButton btnUcitajKampanju;
     private javax.swing.JComboBox cmbGlavniOdgovorni;
     private javax.swing.JComboBox cmbPartner;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblDatumPocetka;
     private javax.swing.JLabel lblDatumZavrsetka;
     private javax.swing.JLabel lblGlavniOdgovorni;
     private javax.swing.JLabel lblNaziv;
     private javax.swing.JLabel lblParnter;
+    private javax.swing.JTable tblKampanje;
     private javax.swing.JTable tblZadaci;
     private javax.swing.JTextField txtDatumPocetka;
     private javax.swing.JTextField txtDatumZavrsetka;
     private javax.swing.JTextField txtNaziv;
+    private javax.swing.JTextField txtVrednostPretrage;
     // End of variables declaration//GEN-END:variables
 
     private void popuniPartnere() {
@@ -348,7 +475,7 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
     private void popuniZaposlene() {
         cmbGlavniOdgovorni.removeAllItems();
         ArrayList<Zaposleni> listaSvihZaposlnih = kontroler.KontorlerKIZaposleni.getInstance().vratiSveZaposlene();
-        if (listaSvihZaposlnih != null) {
+        if (listaSvihZaposlnih != null && !listaSvihZaposlnih.isEmpty()) {
             for (Zaposleni zaposleni : listaSvihZaposlnih) {
                 cmbGlavniOdgovorni.addItem(zaposleni);
             }
@@ -358,7 +485,7 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         }
     }
 
-    private void postaviModelTabele() {
+    private void postaviModelTabeleZadatak() {
         ModelTabeleZadatak mtz = new ModelTabeleZadatak();
         tblZadaci.setModel(mtz);
     }
@@ -368,14 +495,36 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         mtz.dodaj(noviZadatak);
     }
 
-    public void izmeniZadatak(Zadatak zadatakZaIzmenu) {
-        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this, true, zadatakZaIzmenu);
+    public void izmeniZadatak(Zadatak zadatakZaIzmenu, ModelTabeleZadatak mtz) {
+        int izabraniRed = tblZadaci.getSelectedRow();
+        FormaIzmeniZadatak fiz = new FormaIzmeniZadatak(this, true, zadatakZaIzmenu, mtz, izabraniRed);
         fiz.setVisible(true);
     }
 
-    public void izmeniIzabraniZadatak(Zadatak noviZadatak) {
+    private void postaviModelTabeleKampanja() {
+        ModelTabeleKampanja mtk = new ModelTabeleKampanja();
+        tblKampanje.setModel(mtk);
+    }
+
+    private void popuniSveKampanje() {
+        ArrayList<Kampanja> listaKampanja = KontrolerKIKampanja.getInstance().vratiSveKampanje();
+        ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
+        if (listaKampanja != null && !listaKampanja.isEmpty()) {
+            mtk.setLista(listaKampanja);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne može da vrati sve kampanje", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+
+    private void popuniPodatkeKampanja(Kampanja izabranaKampanja) {
+        cmbPartner.setSelectedItem(izabranaKampanja.getPartner());
+        txtNaziv.setText(izabranaKampanja.getNaziv());
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
+        txtDatumPocetka.setText(sdf.format(izabranaKampanja.getDatumPocetka()));
+        txtDatumZavrsetka.setText(sdf.format(izabranaKampanja.getDatumZavrsetka()));
+        cmbGlavniOdgovorni.setSelectedItem(izabranaKampanja.getOdgovorniZaposleni());
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
-        int izabraniRed = tblZadaci.getSelectedRow();
-        mtz.izmeniIzabraniZadatak(noviZadatak, izabraniRed);
+        mtz.setLista((ArrayList<Zadatak>) izabranaKampanja.getZadaci());
     }
 }
