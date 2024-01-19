@@ -60,7 +60,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         btnIzmeniPartnera = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Izmeni partnera");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pronadji partnera"));
@@ -252,7 +252,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         int izabraniRed = tblPartneri.getSelectedRow();
         if (izabraniRed == -1) {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
+            this.dispose();
         } else {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             izabraniPartner = mtp.vratiPartnera(izabraniRed);
@@ -268,9 +268,9 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         if (listaPartnera != null && !listaPartnera.isEmpty()) {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             mtp.setLista(listaPartnera);
-            JOptionPane.showMessageDialog(this, "Sistem je našao partnere po zadatoj vrednosti.", "Uspešno izvršeno.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je našao partnere po zadatoj vrednosti.", Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe partnere po zadatoj vrednosti", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe partnere po zadatoj vrednosti", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             dispose();
         }
     }//GEN-LAST:event_btnPronadjiActionPerformed
@@ -280,11 +280,11 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         izmenjenPartner.setPib(izabraniPartner.getPib());
         izmenjenPartner.setNaziv(txtNaziv.getText());
         izmenjenPartner.setNoviPib(txtPIB.getText());
-        SimpleDateFormat sdf = new SimpleDateFormat(konstante.Konstante.FORMAT_DATUMA);
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
         try {
             izmenjenPartner.setDatumOsnivanja(sdf.parse(txtDatumOsnivanja.getText()));
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             return;
         }
         izmenjenPartner.setKontaktOsoba(txtKontaktOsoba.getText());
@@ -293,11 +293,13 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
 
         boolean uspesnaIzmena = kontroler.KontrolerKIPartner.getInstance().izmeniPartnera(izmenjenPartner);
         if (uspesnaIzmena) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je promenio partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da promeni partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            this.dispose();
         }
-        popuniTabeluSvimPartnerima();
+        //popuniTabeluSvimPartnerima(); Ukoliko zelimo da nakon izmene mozemo ponovo da menjamo drugog partnera
     }//GEN-LAST:event_btnIzmeniPartneraActionPerformed
 
     /**

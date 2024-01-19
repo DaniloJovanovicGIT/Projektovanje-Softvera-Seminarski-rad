@@ -17,6 +17,7 @@ import sistemske.operacije.partner.SOObrisiPartnera;
 import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
 import sistemske.operacije.SOVratiSvaOdeljenja;
 import sistemske.operacije.kampanja.SOIzmeniKampanju;
+import sistemske.operacije.kampanja.SOObrisiKampanju;
 import sistemske.operacije.kampanja.SOVratiKampanjeZaVrednost;
 import sistemske.operacije.kampanja.SOVratiSveKampanje;
 import sistemske.operacije.kampanja.SOZapamtiKampanju;
@@ -133,6 +134,11 @@ public class Kontroler {
     public boolean izmeniKampanju(Kampanja izmenjenaKampanja) throws SQLException {
         SOIzmeniKampanju so = new SOIzmeniKampanju();
         return so.opsteIzvrsenjeSO(izmenjenaKampanja);
+    }
+
+    public boolean obrisiKampanju(Kampanja kampanjaZaBrisanje) throws Exception {
+        SOObrisiKampanju so = new SOObrisiKampanju();
+        return so.opsteIzvrsenjeSO(kampanjaZaBrisanje);
     }
 
 }

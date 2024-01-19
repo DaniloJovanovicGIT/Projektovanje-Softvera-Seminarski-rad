@@ -61,7 +61,7 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         btnObrisiPartnera = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Obriši partnera");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pronadji partnera"));
@@ -263,7 +263,7 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         int izabraniRed = tblPartneri.getSelectedRow();
         if (izabraniRed == -1) {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
+            this.dispose();
         } else {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             izabraniPartner = mtp.vratiPartnera(izabraniRed);
@@ -282,7 +282,7 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sistem je našao partnere po zadatoj vrednosti.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da nađe partnere po zadatoj vrednosti", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
+            this.dispose();
         }
     }//GEN-LAST:event_btnPronadjiActionPerformed
 
@@ -291,8 +291,10 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         boolean uspesnoBrisanje = kontroler.KontrolerKIPartner.getInstance().obrisiPartnera(partnerZaBrisanje);
         if (uspesnoBrisanje) {
             JOptionPane.showMessageDialog(this, "Sistem je obrisao partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da obriše partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            this.dispose();
         }
         popuniTabeluSvimPartnerima();
     }//GEN-LAST:event_btnObrisiPartneraActionPerformed

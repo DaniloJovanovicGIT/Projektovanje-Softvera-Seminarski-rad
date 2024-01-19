@@ -163,11 +163,21 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     Kampanja izmenjenaKampanja = (Kampanja) zahtev.getParametar();
                     boolean uspesnoIzmenjenaKampanja = Kontroler.getInstance().izmeniKampanju(izmenjenaKampanja);
                     if (uspesnoIzmenjenaKampanja) {
-                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
+                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem je zapamtio kampanju.", VrstaOdgovora.USPESNO);
                     } else {
-                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem ne može da zapamti kampanju.", VrstaOdgovora.GRESKA);
                     }
                     break;
+                case Operacija.OBRISI_KAMPANJU:
+                    Kampanja kampanjaZaBrisanje = (Kampanja) zahtev.getParametar();
+                    boolean uspesnoObrisanaKampanja = Kontroler.getInstance().obrisiKampanju(kampanjaZaBrisanje);
+                    if (uspesnoObrisanaKampanja) {
+                        odgovor = new Odgovor(kampanjaZaBrisanje, Operacija.OBRISI_KAMPANJU, "Sistem je obrisao kampanju.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(kampanjaZaBrisanje, Operacija.OBRISI_KAMPANJU, "Sistem ne može da obriše kampanju.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
+
             }
             return odgovor;
         } catch (Exception ex) {

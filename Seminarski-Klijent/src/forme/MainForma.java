@@ -6,6 +6,7 @@ package forme;
 
 import forme.kampanja.FormaIzmeniKampanju;
 import forme.kampanja.FormaKreirajKampanju;
+import forme.kampanja.FormaObrisiKampanju;
 import forme.zaposleni.FormaKreirajZaposlenog;
 import forme.partner.FormaObrisiPartnera;
 import forme.partner.FormaIzmeniPartnera;
@@ -101,6 +102,11 @@ public class MainForma extends javax.swing.JFrame {
         jMenu2.add(miIzmeniKampanju);
 
         miObrisiKampanje.setText("Obrisi");
+        miObrisiKampanje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miObrisiKampanjeActionPerformed(evt);
+            }
+        });
         jMenu2.add(miObrisiKampanje);
 
         jMenuBar1.add(jMenu2);
@@ -188,6 +194,11 @@ public class MainForma extends javax.swing.JFrame {
         FormaIzmeniKampanju fik = new FormaIzmeniKampanju();
         fik.setVisible(true);
     }//GEN-LAST:event_miIzmeniKampanjuActionPerformed
+
+    private void miObrisiKampanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miObrisiKampanjeActionPerformed
+        FormaObrisiKampanju fok = new FormaObrisiKampanju();
+        fok.setVisible(true);
+    }//GEN-LAST:event_miObrisiKampanjeActionPerformed
 
     /**
      * @param args the command line arguments

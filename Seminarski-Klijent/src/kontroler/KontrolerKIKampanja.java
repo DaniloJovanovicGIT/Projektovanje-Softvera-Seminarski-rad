@@ -89,4 +89,16 @@ public class KontrolerKIKampanja extends OpstiKontrolerKI {
         return null;
     }
 
+    public Odgovor obrisiKampanju(Kampanja kampanja) {
+        try {
+            System.out.println("Saljem zahtev. Obriši kampanju");
+            posiljalac.posalji(new Zahtev(Operacija.OBRISI_KAMPANJU, kampanja, true));
+            return (Odgovor) primalac.primi();
+
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }

@@ -47,7 +47,7 @@ public class FormaKreirajZaposlenog extends javax.swing.JFrame {
         cmbOdeljenja = new javax.swing.JComboBox();
         btnSacuvajZaposlenog = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Kreiraj zaposlenog");
 
         lblJmbg.setText("JMBG:");

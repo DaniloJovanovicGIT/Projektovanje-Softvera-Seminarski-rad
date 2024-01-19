@@ -71,7 +71,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
         btnPrikaziZadatak = new javax.swing.JButton();
         btnSacuvajKampanju = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Kreiraj kampanju");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Podaci o kampanji"));
