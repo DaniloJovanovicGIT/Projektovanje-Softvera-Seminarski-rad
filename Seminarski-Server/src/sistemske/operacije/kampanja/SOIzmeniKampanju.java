@@ -28,13 +28,13 @@ public class SOIzmeniKampanju extends OpsteIzvrsenjeSO {
         boolean signal = false;
         try {
             Kampanja kampanja = (Kampanja) odo;
-            boolean izmenjenaKampanja = bbp.izmeni(kampanja);
+            boolean izmenjenaKampanja = bbp.promeni(kampanja);
             if(izmenjenaKampanja){
                 for (Zadatak zadatak : kampanja.getZadaci()) {
                     if(zadatak.getZadatakId()==null){
                         bbp.zapamti(zadatak);
                     }else{
-                        bbp.izmeni(zadatak);
+                        bbp.promeni(zadatak);
                     }
                 }
             }else{

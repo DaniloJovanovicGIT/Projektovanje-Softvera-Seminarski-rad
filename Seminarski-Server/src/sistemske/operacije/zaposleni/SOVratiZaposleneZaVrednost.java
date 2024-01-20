@@ -31,7 +31,7 @@ public class SOVratiZaposleneZaVrednost extends OpsteIzvrsenjeSO {
         Zaposleni zaposleni = (Zaposleni) odo;
         boolean signal = false;
         try {
-            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiSveSaUslovom(zaposleni);
+            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiZaVrednost(zaposleni);
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOVratiSveZaposlene.class.getName()).log(Level.SEVERE, null, ex);

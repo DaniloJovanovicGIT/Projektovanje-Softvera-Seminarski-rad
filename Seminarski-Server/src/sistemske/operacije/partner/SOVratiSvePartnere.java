@@ -31,7 +31,7 @@ public class SOVratiSvePartnere extends OpsteIzvrsenjeSO{
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws Exception {
          boolean signal = false;
         try {
-            lista = bbp.vrati(new Partner());
+            lista = bbp.vratiSve(new Partner());
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOZapamtiPartnera.class.getName()).log(Level.SEVERE, null, ex);

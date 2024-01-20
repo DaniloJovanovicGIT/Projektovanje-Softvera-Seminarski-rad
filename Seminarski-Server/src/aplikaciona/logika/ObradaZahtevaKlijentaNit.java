@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package server.niti;
+package aplikaciona.logika;
 
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
@@ -16,7 +16,7 @@ import komunikacija.Posiljalac;
 import komunikacija.Primalac;
 import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
-import aplikaciona.logika.Kontroler;
+import poslovna.logika.Kontroler;
 import domen.Kampanja;
 import domen.Odeljenje;
 import domen.StatusZadatka;

@@ -31,7 +31,7 @@ public class SOVratiSvaOdeljenja extends OpsteIzvrsenjeSO{
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws Exception {
          boolean signal = false;
         try {
-            lista = bbp.vrati(new Odeljenje());
+            lista = bbp.vratiSve(new Odeljenje());
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOZapamtiPartnera.class.getName()).log(Level.SEVERE, null, ex);

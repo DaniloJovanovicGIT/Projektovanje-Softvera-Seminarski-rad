@@ -31,7 +31,7 @@ public class SOVratiSveStatuseZadatka extends OpsteIzvrsenjeSO {
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) {
         boolean signal = false;
         try {
-            lista = bbp.vrati(new StatusZadatka());
+            lista = bbp.vratiSve(new StatusZadatka());
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOVratiSveStatuseZadatka.class.getName()).log(Level.SEVERE, null, ex);

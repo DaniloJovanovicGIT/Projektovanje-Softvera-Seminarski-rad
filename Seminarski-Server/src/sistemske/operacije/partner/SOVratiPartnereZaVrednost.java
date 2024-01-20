@@ -32,7 +32,7 @@ public class SOVratiPartnereZaVrednost extends OpsteIzvrsenjeSO {
         Partner partner = (Partner) odo;
         boolean signal = false;
         try {
-            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiSveSaUslovom(partner);
+            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiZaVrednost(partner);
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOZapamtiPartnera.class.getName()).log(Level.SEVERE, null, ex);

@@ -30,7 +30,7 @@ public class SOVratiSveZaposlene extends OpsteIzvrsenjeSO{
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws Exception {
          boolean signal = false;
         try {
-            lista = bbp.vrati(new Zaposleni());
+            lista = bbp.vratiSve(new Zaposleni());
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOVratiSveZaposlene.class.getName()).log(Level.SEVERE, null, ex);

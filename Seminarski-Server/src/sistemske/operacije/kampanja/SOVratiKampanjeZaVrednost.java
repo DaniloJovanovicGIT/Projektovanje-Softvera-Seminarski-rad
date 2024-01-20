@@ -30,7 +30,7 @@ public class SOVratiKampanjeZaVrednost extends OpsteIzvrsenjeSO {
     public boolean izvrsiSO(OpstiDomenskiObjekat odo){
         boolean signal = false;
         try {
-            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiSveSaUslovom(odo);
+            lista = (ArrayList<OpstiDomenskiObjekat>) bbp.vratiZaVrednost(odo);
             signal = true;
         } catch (SQLException ex) {
             Logger.getLogger(SOVratiKampanjeZaVrednost.class.getName()).log(Level.SEVERE, null, ex);

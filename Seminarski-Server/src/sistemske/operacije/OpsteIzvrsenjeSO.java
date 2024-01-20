@@ -27,12 +27,12 @@ public abstract class OpsteIzvrsenjeSO {
             if (ogranicenjaZadovoljena) {
                 signal = izvrsiSO(odo);
                 if (signal == true) {
-                    bbp.commit();
+                    bbp.potvrdiTransakciju();
                 }
             }
             return signal;
         } catch (Exception ex) {
-            bbp.rollback();
+            bbp.odbaciTransakciju();
             Logger.getLogger(OpsteIzvrsenjeSO.class.getName()).log(Level.SEVERE, "Greska pri izvrsenju sistemske operacije", ex);
         } finally {
             bbp.zatvoriKonekciju();

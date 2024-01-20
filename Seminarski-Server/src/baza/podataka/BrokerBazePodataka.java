@@ -40,12 +40,12 @@ public class BrokerBazePodataka {
         System.out.println("KOnekcija otvorena");
     }
 
-    public void commit() throws SQLException {
+    public void potvrdiTransakciju() throws SQLException {
         konekcija.commit();
         System.out.println("Commit");
     }
 
-    public void rollback() throws SQLException {
+    public void odbaciTransakciju() throws SQLException {
         konekcija.rollback();
         System.out.println("Rollback");
     }
@@ -55,7 +55,7 @@ public class BrokerBazePodataka {
         System.out.println("Konekcija zatvorena");
     }
 
-    public ArrayList<OpstiDomenskiObjekat> vrati(OpstiDomenskiObjekat objekat) throws SQLException {
+    public ArrayList<OpstiDomenskiObjekat> vratiSve(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
                 + " " + objekat.join() + " ";
         System.out.println(upit);
@@ -73,7 +73,7 @@ public class BrokerBazePodataka {
         return brojObrisanihRedova > 0;
     }
 
-    public boolean izmeni(OpstiDomenskiObjekat odo) throws SQLException {
+    public boolean promeni(OpstiDomenskiObjekat odo) throws SQLException {
         String upit = "UPDATE " + odo.vratiNazivTabele() + " SET "
                 + odo.vratiVrednostiZaPromenu() + " WHERE " + odo.vratiPrimarniKljuc();
         System.out.println(upit);
@@ -100,7 +100,7 @@ public class BrokerBazePodataka {
         return (OpstiDomenskiObjekat) objekat.vratiSve(rs);
     }
 
-    public List<OpstiDomenskiObjekat> vratiSveSaUslovom(OpstiDomenskiObjekat objekat) throws SQLException {
+    public List<OpstiDomenskiObjekat> vratiZaVrednost(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
                 + " " + objekat.join() + " " + objekat.uslovZaPretragu();
         System.out.println(upit);
@@ -109,7 +109,7 @@ public class BrokerBazePodataka {
         return (List<OpstiDomenskiObjekat>) objekat.vratiSve(rs);
     }
 
-    public int vratiMaxId(OpstiDomenskiObjekat objekat) throws SQLException {
+    public int vratiPoslednjiUbaceniKey(OpstiDomenskiObjekat objekat) throws SQLException {
         int maxId = 0;
         String upit = "SELECT MAX(" + objekat.vratiNazivPrimarnogKljuca()+ ") as maxId FROM " + objekat.vratiNazivTabele();
         System.out.println(upit);

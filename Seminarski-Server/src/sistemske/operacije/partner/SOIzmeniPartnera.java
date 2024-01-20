@@ -30,7 +30,7 @@ public class SOIzmeniPartnera extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws Exception {
-           return  bbp.izmeni(odo);
+           return  bbp.promeni(odo);
     }
 
 }

@@ -30,7 +30,7 @@ public class SOVratiSveKampanje extends OpsteIzvrsenjeSO {
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) {
         boolean signal = false;
         try {
-            lista = bbp.vrati(new Kampanja());
+            lista = bbp.vratiSve(new Kampanja());
             signal = true;
             return signal;
         } catch (SQLException ex) {
