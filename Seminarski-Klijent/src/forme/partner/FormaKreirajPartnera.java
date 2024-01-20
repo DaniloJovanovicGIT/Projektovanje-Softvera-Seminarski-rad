@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import komunikacija.Odgovor;
 import komunikacija.VrstaOdgovora;
+import konstante.Konstante;
 import kontroler.KontrolerKIPartner;
 
 /**
@@ -192,11 +193,12 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
 
     public void obradiServerskiOdgovor(Odgovor odgovor) {
         if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera.", "Operacija uspešno obavljena.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera.", Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);    
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
-        vratiVrednostiNaPodrazumevane();
+        this.dispose();
+        //vratiVrednostiNaPodrazumevane(); //U slucaju da zelimo da omogucimo da se vise partnera unese
     }
 
     private void vratiVrednostiNaPodrazumevane() {

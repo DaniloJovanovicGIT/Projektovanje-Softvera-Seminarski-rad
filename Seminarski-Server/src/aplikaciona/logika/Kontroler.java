@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import sistemske.operacije.partner.SOIzmeniPartnera;
 import sistemske.operacije.partner.SOObrisiPartnera;
 import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
-import sistemske.operacije.SOVratiSvaOdeljenja;
+import sistemske.operacije.odeljenja.SOVratiSvaOdeljenja;
 import sistemske.operacije.kampanja.SOIzmeniKampanju;
 import sistemske.operacije.kampanja.SOObrisiKampanju;
 import sistemske.operacije.kampanja.SOVratiKampanjeZaVrednost;

@@ -123,9 +123,9 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     Zaposleni izmenjenZaposleni = (Zaposleni) zahtev.getParametar();
                     boolean uspesnoIzmenjenoZaposleni = Kontroler.getInstance().izmeniZaposlenog(izmenjenZaposleni);
                     if (uspesnoIzmenjenoZaposleni) {
-                        odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Uspesno izmenjeno.", VrstaOdgovora.USPESNO);
+                        odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Sistem je uspešno promenio zaposlenog.", VrstaOdgovora.USPESNO);
                     } else {
-                        odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Izmena neuspesna.", VrstaOdgovora.GRESKA);
+                        odgovor = new Odgovor(izmenjenZaposleni, Operacija.IZMENI_ZAPOSLENOG, "Sistem ne može da promeni zaposlenog", VrstaOdgovora.GRESKA);
                     }
                     break;
                 case Operacija.OBRISI_ZAPOSLENOG:
@@ -163,9 +163,9 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     Kampanja izmenjenaKampanja = (Kampanja) zahtev.getParametar();
                     boolean uspesnoIzmenjenaKampanja = Kontroler.getInstance().izmeniKampanju(izmenjenaKampanja);
                     if (uspesnoIzmenjenaKampanja) {
-                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem je zapamtio kampanju.", VrstaOdgovora.USPESNO);
+                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem je promenio kampanju.", VrstaOdgovora.USPESNO);
                     } else {
-                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem ne može da zapamti kampanju.", VrstaOdgovora.GRESKA);
+                        odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem ne može da promeni kampanju.", VrstaOdgovora.GRESKA);
                     }
                     break;
                 case Operacija.OBRISI_KAMPANJU:

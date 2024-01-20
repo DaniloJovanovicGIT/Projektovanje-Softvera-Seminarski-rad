@@ -299,9 +299,9 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
 
         boolean uspesnaIzmena = kontroler.KontorlerKIZaposleni.getInstance().izmeniZaposlenog(izmenjenZaposleni);
         if (uspesnaIzmena) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio zaposlenog", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem je promenio zaposlenog", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da promeni zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
         popuniTabeluSvimZaposlenim();
     }//GEN-LAST:event_btnIzmeniZaposlenogActionPerformed

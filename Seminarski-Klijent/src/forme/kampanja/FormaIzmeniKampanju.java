@@ -389,7 +389,7 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
             JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne može da promeni kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIzmeniKampanjuActionPerformed
 
