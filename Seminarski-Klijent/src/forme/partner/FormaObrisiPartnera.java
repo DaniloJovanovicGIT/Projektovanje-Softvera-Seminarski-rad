@@ -6,12 +6,10 @@ package forme.partner;
 
 import domen.Partner;
 import forme.modeli.tabela.ModelTabelePartner;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import konstante.Konstante;
 
 /**
  *
@@ -297,12 +295,10 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         boolean uspesnoBrisanje = kontroler.KontrolerKIPartner.getInstance().obrisiPartnera(partnerZaBrisanje);
         if (uspesnoBrisanje) {
             JOptionPane.showMessageDialog(this, "Sistem je obrisao partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da obriše partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            this.dispose();
         }
-        popuniTabeluSvimPartnerima();
+        this.dispose();
     }//GEN-LAST:event_btnObrisiPartneraActionPerformed
 
     /**
@@ -343,15 +339,15 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             mtp.setLista(listaSvihPartnera);
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
-            dispose();
+            JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            this.dispose();
         }
     }
 
     private void popuniPodatkePartnera(Partner izabraniPartner) {
         txtPIB.setText(izabraniPartner.getPib());
         txtNaziv.setText(izabraniPartner.getNaziv());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
         txtDatumOsnivanja.setText(sdf.format(izabraniPartner.getDatumOsnivanja()));
         txtKontaktOsoba.setText(izabraniPartner.getKontaktOsoba());
         txtBrojTelefona.setText(izabraniPartner.getBrojTelefona());

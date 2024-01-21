@@ -9,9 +9,7 @@ import domen.Partner;
 import domen.Zadatak;
 import domen.Zaposleni;
 import forme.modeli.tabela.ModelTabeleKampanja;
-import forme.modeli.tabela.ModelTabelePartner;
 import forme.modeli.tabela.ModelTabeleZadatak;
-import forme.modeli.tabela.ModelTabeleZaposleni;
 import forme.zadatak.FormaIzmeniZadatak;
 import forme.zadatak.FormaKreirajZadatak;
 import forme.zadatak.FormaPrikaziZadatak;
@@ -19,8 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import komunikacija.Odgovor;
 import komunikacija.VrstaOdgovora;
@@ -32,7 +28,9 @@ import kontroler.KontrolerKIKampanja;
  * @author Danilo
  */
 public class FormaIzmeniKampanju extends javax.swing.JFrame {
+
     Kampanja izabranaKampanja;
+
     /**
      * Creates new form FormaKreirajKampanju
      */
@@ -92,10 +90,12 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         lblNaziv.setText("Naziv:");
 
         cmbPartner.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPartner.setEnabled(false);
 
         lblDatumPocetka.setText("Datum početka:");
 
         cmbGlavniOdgovorni.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbGlavniOdgovorni.setEnabled(false);
         cmbGlavniOdgovorni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbGlavniOdgovorniActionPerformed(evt);
@@ -353,43 +353,14 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
 
     private void btnIzmeniKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniKampanjuActionPerformed
-        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
-
-        Partner partner = (Partner) cmbPartner.getSelectedItem();
-        String naziv = txtNaziv.getText();
-        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
-
-        Date datumPocetka = null;
-        Date datumZavrsetka = null;
-
-        try {
-            datumPocetka = sdf.parse(txtDatumPocetka.getText());
-            datumZavrsetka = sdf.parse(txtDatumZavrsetka.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Zaposleni odgovorniZaposleni = (Zaposleni) cmbGlavniOdgovorni.getSelectedItem();
-        ArrayList<Zadatak> listaZadataka = mtz.getLista();
-        
-
-        Kampanja kampanja = izabranaKampanja;
-        kampanja.setPartner(partner);
-        kampanja.setNaziv(naziv);
-        kampanja.setDatumPocetka(datumPocetka);
-        kampanja.setDatumZavrsetka(datumZavrsetka);
-        kampanja.setOdgovorniZaposleni(odgovorniZaposleni);
-        for (Zadatak zadatak : listaZadataka) {
-            zadatak.setKampanja(kampanja);
-        }
-        kampanja.setZadaci(listaZadataka);
-
-        Odgovor odgovor = KontrolerKIKampanja.getInstance().izmeniKampanju(kampanja);
-        if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-            JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da promeni kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        if (validirajUnos()) {
+            Odgovor odgovor = KontrolerKIKampanja.getInstance().izmeniKampanju(izabranaKampanja);
+            if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne može da promeni kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            }
+            this.dispose();
         }
     }//GEN-LAST:event_btnIzmeniKampanjuActionPerformed
 
@@ -404,6 +375,8 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
             popuniPodatkeKampanja(izabranaKampanja);
             JOptionPane.showMessageDialog(this, "Sistem je učitao kampanju.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
             btnIzmeniKampanju.setEnabled(true);
+            cmbGlavniOdgovorni.setEnabled(true);
+            cmbPartner.setEnabled(true);
         }
     }//GEN-LAST:event_btnUcitajKampanjuActionPerformed
 
@@ -414,7 +387,6 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
     private void btnPretraziKampanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziKampanjeActionPerformed
         String uslov = txtVrednostPretrage.getText();
         ArrayList<Kampanja> listaKampanjaPretraga = kontroler.KontrolerKIKampanja.getInstance().vratiKampanjeSaUslovom(uslov);
-        System.out.println("POSLAT ZAHTEV");
         if (listaKampanjaPretraga != null && !listaKampanjaPretraga.isEmpty()) {
             ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
             mtk.setLista(listaKampanjaPretraga);
@@ -463,6 +435,7 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
             for (Partner partner : listaSvihPartnera) {
                 cmbPartner.addItem(partner);
             }
+            cmbPartner.setSelectedItem(null);
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             dispose();
@@ -476,6 +449,7 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
             for (Zaposleni zaposleni : listaSvihZaposlnih) {
                 cmbGlavniOdgovorni.addItem(zaposleni);
             }
+            cmbGlavniOdgovorni.setSelectedItem(null);
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može ucita zaposlene", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
             dispose();
@@ -523,5 +497,60 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
         cmbGlavniOdgovorni.setSelectedItem(izabranaKampanja.getOdgovorniZaposleni());
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
         mtz.setLista((ArrayList<Zadatak>) izabranaKampanja.getZadaci());
+    }
+
+    private boolean validirajUnos() {
+        Partner partner = (Partner) cmbPartner.getSelectedItem();
+        if (partner == null) {
+            JOptionPane.showMessageDialog(this, "Morate izabrati partnera za koga se izrađuje kampanja.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        String naziv = txtNaziv.getText().trim();
+        if (naziv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Polje naziv ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
+
+        Date datumPocetka = null;
+        Date datumZavrsetka = null;
+
+        try {
+            datumPocetka = sdf.parse(txtDatumPocetka.getText());
+            datumZavrsetka = sdf.parse(txtDatumZavrsetka.getText());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (datumPocetka.after(datumZavrsetka)) {
+            JOptionPane.showMessageDialog(this, "Datum završetka mora biti nakon datuma početka.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        Zaposleni odgovorniZaposleni = (Zaposleni) cmbGlavniOdgovorni.getSelectedItem();
+        if (odgovorniZaposleni == null) {
+            JOptionPane.showMessageDialog(this, "Morate izabrati glavnog odgovornog zaposlenog za kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
+        ArrayList<Zadatak> listaZadataka = mtz.getLista();
+        if (listaZadataka.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kampanja mora imati makar jedan zadatak.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        izabranaKampanja.setPartner(partner);
+        izabranaKampanja.setNaziv(naziv);
+        izabranaKampanja.setDatumPocetka(datumPocetka);
+        izabranaKampanja.setDatumZavrsetka(datumZavrsetka);
+        izabranaKampanja.setOdgovorniZaposleni(odgovorniZaposleni);
+        for (Zadatak zadatak : listaZadataka) {
+            zadatak.setKampanja(izabranaKampanja);
+        }
+        izabranaKampanja.setZadaci(listaZadataka);
+        return true;
     }
 }

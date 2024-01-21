@@ -10,12 +10,9 @@ import domen.Zadatak;
 import domen.Zaposleni;
 import forme.modeli.tabela.ModelTabeleKampanja;
 import forme.modeli.tabela.ModelTabeleZadatak;
-import forme.zadatak.FormaIzmeniZadatak;
 import forme.zadatak.FormaPrikaziZadatak;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import komunikacija.Odgovor;
 import komunikacija.VrstaOdgovora;
@@ -27,7 +24,6 @@ import kontroler.KontrolerKIKampanja;
  * @author Danilo
  */
 public class FormaObrisiKampanju extends javax.swing.JFrame {
-
     Kampanja izabranaKampanja;
 
     /**
@@ -309,6 +305,7 @@ public class FormaObrisiKampanju extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da obriše kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
+        this.dispose();
     }//GEN-LAST:event_btnObrisiKampanjuActionPerformed
 
     private void btnUcitajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajKampanjuActionPerformed
