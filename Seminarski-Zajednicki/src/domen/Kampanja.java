@@ -85,7 +85,7 @@ public class Kampanja implements OpstiDomenskiObjekat {
 
     @Override
     public String uslov() {
-        return "";
+        return "WHERE k.kampanjaId = " + kampanjaId;
     }
 
     @Override

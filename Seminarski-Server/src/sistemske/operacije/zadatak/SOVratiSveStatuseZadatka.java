@@ -5,7 +5,6 @@
 package sistemske.operacije.zadatak;
 
 import domen.OpstiDomenskiObjekat;
-import domen.Partner;
 import domen.StatusZadatka;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +23,8 @@ public class SOVratiSveStatuseZadatka extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        return true;
+        //provera da li je prosledjeni objekat instanca klase StatusZadatka
+        return odo instanceof StatusZadatka;
     }
 
     @Override

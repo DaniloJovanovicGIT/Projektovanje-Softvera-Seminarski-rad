@@ -23,7 +23,7 @@ public class SOVratiSveKampanje extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        return true;
+        return odo instanceof Kampanja;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SOVratiSveKampanje extends OpsteIzvrsenjeSO {
     }
 
     public ArrayList<Kampanja> getLista() {
-       listaKampanja = new ArrayList<>();
+        listaKampanja = new ArrayList<>();
         for (OpstiDomenskiObjekat opstiDomenskiObjekat : lista) {
             listaKampanja.add((Kampanja) opstiDomenskiObjekat);
         }

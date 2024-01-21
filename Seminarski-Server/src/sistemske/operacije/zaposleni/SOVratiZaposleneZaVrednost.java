@@ -23,11 +23,7 @@ public class SOVratiZaposleneZaVrednost extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        if (odo instanceof Zaposleni zaposleni) {
-            return true;
-        } else {
-            return false;
-        }
+        return odo instanceof Zaposleni;
     }
 
     @Override

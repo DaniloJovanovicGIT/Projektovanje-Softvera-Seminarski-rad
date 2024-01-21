@@ -23,7 +23,7 @@ public class SOVratiKampanjeZaVrednost extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        return true;
+        return odo instanceof Kampanja;
     }
 
     @Override

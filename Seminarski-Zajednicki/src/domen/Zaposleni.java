@@ -77,7 +77,7 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public String uslov() {
-        return "";
+        return "WHERE z.jmbg = "+jmbg;
     }
 
     @Override

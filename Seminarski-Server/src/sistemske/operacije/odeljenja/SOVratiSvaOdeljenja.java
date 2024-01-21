@@ -7,7 +7,6 @@ package sistemske.operacije.odeljenja;
 import sistemske.operacije.partner.SOZapamtiPartnera;
 import domen.Odeljenje;
 import domen.OpstiDomenskiObjekat;
-import domen.Partner;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,7 +23,8 @@ public class SOVratiSvaOdeljenja extends OpsteIzvrsenjeSO{
     
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        return true;
+        //provera da li je prosledjeni objekat instanca klase StatusZadatka
+        return odo instanceof Odeljenje;
     }
 
     @Override

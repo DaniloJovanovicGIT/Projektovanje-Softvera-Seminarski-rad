@@ -8,7 +8,6 @@ import domen.OpstiDomenskiObjekat;
 import domen.Zaposleni;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sistemske.operacije.OpsteIzvrsenjeSO;
@@ -24,12 +23,8 @@ public class SOVratiSveZaposlene extends OpsteIzvrsenjeSO{
     
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        //provera da li je prosledjeni objekat instanca objekat Zaposleni
-        if (odo instanceof Zaposleni zaposleni) {
-            return true;
-        } else {
-            return false;
-        }
+        //provera da li je prosledjeni objekat instanca klase Zaposleni
+        return odo instanceof Zaposleni;
     }
 
     @Override
