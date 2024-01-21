@@ -5,14 +5,11 @@
 package forme.zaposleni;
 
 import domen.Odeljenje;
-import domen.Partner;
 import domen.Zaposleni;
-import forme.modeli.tabela.ModelTabelePartner;
 import forme.modeli.tabela.ModelTabeleZaposleni;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import konstante.Konstante;
 
 /**
  *
@@ -265,7 +262,6 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
         int izabraniRed = tblZaposleni.getSelectedRow();
         if (izabraniRed == -1) {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita zaposlenog.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
         } else {
             ModelTabeleZaposleni mtz = (ModelTabeleZaposleni) tblZaposleni.getModel();
             izabraniZaposleni = mtz.vratiZaposlenog(izabraniRed);
@@ -290,20 +286,15 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
 
     private void btnIzmeniZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZaposlenogActionPerformed
         Zaposleni izmenjenZaposleni = new Zaposleni();
-        izmenjenZaposleni.setJmbg(izabraniZaposleni.getJmbg());
-        izmenjenZaposleni.setNoviJmbg(txtJMBG.getText());
-        izmenjenZaposleni.setIme(txtIme.getText());
-        izmenjenZaposleni.setPrezime(txtPrezime.getText());
-        izmenjenZaposleni.setStaz(Integer.parseInt(txtGodineStaza.getText()));
-        izmenjenZaposleni.setOdeljenje((Odeljenje) cmbOdeljenje.getSelectedItem());
-
-        boolean uspesnaIzmena = kontroler.KontorlerKIZaposleni.getInstance().izmeniZaposlenog(izmenjenZaposleni);
-        if (uspesnaIzmena) {
-            JOptionPane.showMessageDialog(this, "Sistem je promenio zaposlenog", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da promeni zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        if (validirajUnos(izmenjenZaposleni)) {
+            boolean uspesnaIzmena = kontroler.KontorlerKIZaposleni.getInstance().izmeniZaposlenog(izmenjenZaposleni);
+            if (uspesnaIzmena) {
+                JOptionPane.showMessageDialog(this, "Sistem je promenio zaposlenog", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne može da promeni zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            }
+            this.dispose();
         }
-        popuniTabeluSvimZaposlenim();
     }//GEN-LAST:event_btnIzmeniZaposlenogActionPerformed
 
     /**
@@ -363,7 +354,7 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
         txtIme.setText(izabraniZaposleni.getIme());
         txtPrezime.setText(izabraniZaposleni.getPrezime());
         txtGodineStaza.setText(String.valueOf(izabraniZaposleni.getStaz()));
-        cmbOdeljenje.setSelectedIndex(izabraniZaposleni.getOdeljenje().getOdeljenjeId()-1);
+        cmbOdeljenje.setSelectedIndex(izabraniZaposleni.getOdeljenje().getOdeljenjeId() - 1);
     }
 
     private void omoguciUnos() {
@@ -377,5 +368,51 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
         txtGodineStaza.setEditable(true);
         cmbOdeljenje.setEnabled(true);
         btnIzmeniZaposlenog.setEnabled(true);
+    }
+
+    private boolean validirajUnos(Zaposleni izmenjenZaposleni) {
+        String noviJmbg = txtJMBG.getText().trim();
+        if (noviJmbg.length() != 13 || !noviJmbg.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(null, "JMBG mora imati 13 cifara.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        String ime = txtIme.getText().trim();
+        if (ime.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Polje ime ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        String prezime = txtPrezime.getText().trim();
+        if (prezime.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Polje prezime ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        int staz;
+        try {
+            staz = Integer.parseInt(txtGodineStaza.getText().trim());
+            if (staz < 0) {
+                JOptionPane.showMessageDialog(null, "Staž ne može biti negativan.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Neispravan format za staž.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        Odeljenje odeljenje = (Odeljenje) cmbOdeljenje.getSelectedItem();
+        if (odeljenje == null) {
+            JOptionPane.showMessageDialog(null, "Zaposleni mora imati odeljenje iz polja odeljenje.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        izmenjenZaposleni.setJmbg(izabraniZaposleni.getJmbg());
+        izmenjenZaposleni.setNoviJmbg(noviJmbg);
+        izmenjenZaposleni.setIme(ime);
+        izmenjenZaposleni.setPrezime(prezime);
+        izmenjenZaposleni.setStaz(staz);
+        izmenjenZaposleni.setOdeljenje(odeljenje);
+        return true;
     }
 }

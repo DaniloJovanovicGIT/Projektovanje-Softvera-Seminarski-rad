@@ -21,16 +21,18 @@ import konstante.Konstante;
  * @author Danilo
  */
 public class FormaIzmeniZadatak extends javax.swing.JDialog {
+
     Zadatak izabraniZadatak;
     ModelTabeleZadatak mtz;
     int izabraniRed;
+
     /**
      * Creates new form FormaKreirajZadatak
      */
     public FormaIzmeniZadatak(Frame parent, boolean modal, Zadatak izabraniZadatak, ModelTabeleZadatak mtz, int izabraniRed) {
         super(parent, modal);
         initComponents();
-        this.mtz=mtz;
+        this.mtz = mtz;
         this.izabraniZadatak = izabraniZadatak;
         this.izabraniRed = izabraniRed;
         popuniStatuseZadatka();
@@ -138,34 +140,17 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIzmeniZadatakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZadatakActionPerformed
-        String nazivZadatka = txtNaziv.getText();
-        String opisZadatka = txtOpis.getText();
-        
-        Date datumZavrsetka = null;
-        SimpleDateFormat sdf = konstante.Konstante.SIMPLE_DATE_FORMAT;
-        try {
-            datumZavrsetka = sdf.parse(txtDatumZavrsetka.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, konstante.Konstante.PORUKA_GRESKA_FORMAT_DATUMA, konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
+        Zadatak izmenjeniZadatak = new Zadatak();
+        if (validirajUnos(izmenjeniZadatak)) {
+            mtz.izmeniIzabraniZadatak(izmenjeniZadatak, izabraniRed);
+            JOptionPane.showConfirmDialog(this, "Zadatak je izmenjen.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.DEFAULT_OPTION);
+            dispose();
         }
-        
-        StatusZadatka statusZadatka = (StatusZadatka) cmbStatusZadatka.getSelectedItem();
-        Zadatak noviZadatak = new Zadatak();
-        noviZadatak.setNaziv(nazivZadatka);
-        noviZadatak.setOpis(opisZadatka);
-        noviZadatak.setOcekivaniZavrsetak(datumZavrsetka);
-        noviZadatak.setStatusZadatka(statusZadatka);
-        
-        mtz.izmeniIzabraniZadatak(noviZadatak, izabraniRed);
-        JOptionPane.showConfirmDialog(this, "Zadatak je izmenjen.", konstante.Konstante.PORUKA_USPESNO,JOptionPane.DEFAULT_OPTION);
-        dispose();
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIzmeniZadatak;
@@ -185,7 +170,7 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
         ArrayList<StatusZadatka> listaSvihStatusa = kontroler.KontrolerKIZadatak.getInstance().vratiSveStatuseZadataka();
         if (listaSvihStatusa != null) {
             for (StatusZadatka status : listaSvihStatusa) {
-                 cmbStatusZadatka.addItem(status);
+                cmbStatusZadatka.addItem(status);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može statuse zadataka", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
@@ -193,11 +178,39 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
         }
     }
 
-    private void vratiVrednostiNaDefault() {
-        txtDatumZavrsetka.setText("");
-        txtNaziv.setText("");
-        txtOpis.setText("");
-        cmbStatusZadatka.setSelectedItem(null);
+    private boolean validirajUnos(Zadatak zadatak) {
+        String nazivZadatka = txtNaziv.getText().trim();
+        if (nazivZadatka.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Polje naziv ne sme biti prazno.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        String opisZadatka = txtOpis.getText().trim();
+        if (opisZadatka.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Polje opis zadatka ne sme biti prazno.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        Date datumZavrsetka = null;
+        SimpleDateFormat sdf = konstante.Konstante.SIMPLE_DATE_FORMAT;
+        try {
+            datumZavrsetka = sdf.parse(txtDatumZavrsetka.getText());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, konstante.Konstante.PORUKA_GRESKA_FORMAT_DATUMA, konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        StatusZadatka statusZadatka = (StatusZadatka) cmbStatusZadatka.getSelectedItem();
+        if (statusZadatka == null) {
+            JOptionPane.showMessageDialog(this, "Zadatak mora imati status iz polja status zadatka.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        zadatak.setNaziv(nazivZadatka);
+        zadatak.setOpis(opisZadatka);
+        zadatak.setOcekivaniZavrsetak(datumZavrsetka);
+        zadatak.setStatusZadatka(statusZadatka);
+        return true;
     }
 
     private void postaviVrednostiZadatka() {
@@ -205,6 +218,6 @@ public class FormaIzmeniZadatak extends javax.swing.JDialog {
         txtOpis.setText(izabraniZadatak.getOpis());
         SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
         txtDatumZavrsetka.setText(sdf.format(izabraniZadatak.getOcekivaniZavrsetak()));
-        cmbStatusZadatka.setSelectedIndex(izabraniZadatak.getStatusZadatka().getStatusZadatkaId()-1);
+        cmbStatusZadatka.setSelectedIndex(izabraniZadatak.getStatusZadatka().getStatusZadatkaId() - 1);
     }
 }

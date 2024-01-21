@@ -312,7 +312,6 @@ public class FormaObrisiKampanju extends javax.swing.JFrame {
         int izabraniRed = tblKampanje.getSelectedRow();
         if (izabraniRed == -1) {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita kampanju.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
         } else {
             ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
             izabranaKampanja = mtk.vratiKampanju(izabraniRed);
@@ -329,7 +328,6 @@ public class FormaObrisiKampanju extends javax.swing.JFrame {
     private void btnPretraziKampanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziKampanjeActionPerformed
         String uslov = txtVrednostPretrage.getText();
         ArrayList<Kampanja> listaKampanjaPretraga = kontroler.KontrolerKIKampanja.getInstance().vratiKampanjeSaUslovom(uslov);
-        System.out.println("POSLAT ZAHTEV");
         if (listaKampanjaPretraga != null && !listaKampanjaPretraga.isEmpty()) {
             ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
             mtk.setLista(listaKampanjaPretraga);

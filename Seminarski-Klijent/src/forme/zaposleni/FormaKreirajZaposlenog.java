@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import komunikacija.Odgovor;
 import komunikacija.VrstaOdgovora;
+import konstante.Konstante;
 
 /**
  *
  * @author Danilo
  */
 public class FormaKreirajZaposlenog extends javax.swing.JFrame {
+
+    Zaposleni zaposleni;
 
     /**
      * Creates new form FormaKreirajZaposlenog
@@ -135,17 +138,15 @@ public class FormaKreirajZaposlenog extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrezimeActionPerformed
 
     private void btnSacuvajZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajZaposlenogActionPerformed
-        String jmbg = txtJmbg.getText();
-        String ime = txtIme.getText();
-        String prezime = txtPrezime.getText();
-        int staz = Integer.parseInt(txtGodineStaza.getText());
-        Odeljenje odeljenje = (Odeljenje) cmbOdeljenja.getSelectedItem();
-        Zaposleni noviZaposleni = new Zaposleni(jmbg, ime, prezime, staz, odeljenje);
-        Odgovor odgovor = kontroler.KontorlerKIZaposleni.getInstance().kreirajZaposlenog(noviZaposleni);
-        if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-            JOptionPane.showMessageDialog(this, odgovor.getPoruka(), konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+        zaposleni = new Zaposleni();
+        if (validirajUnos()) {
+            Odgovor odgovor = kontroler.KontorlerKIZaposleni.getInstance().kreirajZaposlenog(zaposleni);
+            if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                JOptionPane.showMessageDialog(this, odgovor.getPoruka(), konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            }
+            this.dispose();
         }
     }//GEN-LAST:event_btnSacuvajZaposlenogActionPerformed
 
@@ -174,6 +175,52 @@ public class FormaKreirajZaposlenog extends javax.swing.JFrame {
             for (Odeljenje odeljenje : svaOdeljenja) {
                 cmbOdeljenja.addItem(odeljenje);
             }
+            cmbOdeljenja.setSelectedItem(null);
         }
+    }
+
+    private boolean validirajUnos() {
+        String jmbg = txtJmbg.getText().trim();
+        if (jmbg.length() != 13 || !jmbg.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(null, "JMBG mora imati 13 cifara.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        String ime = txtIme.getText().trim();
+        if (ime.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Polje ime ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        String prezime = txtPrezime.getText().trim();
+        if (prezime.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Polje prezime ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        int staz;
+        try {
+            staz = Integer.parseInt(txtGodineStaza.getText().trim());
+            if (staz < 0) {
+                JOptionPane.showMessageDialog(null, "Staž ne može biti negativan.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Neispravan format za staž.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        Odeljenje odeljenje = (Odeljenje) cmbOdeljenja.getSelectedItem();
+        if (odeljenje == null) {
+            JOptionPane.showMessageDialog(null, "Zaposleni mora imati odeljenje iz polja odeljenje.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        zaposleni.setJmbg(jmbg);
+        zaposleni.setIme(ime);
+        zaposleni.setPrezime(prezime);
+        zaposleni.setStaz(staz);
+        zaposleni.setOdeljenje(odeljenje);
+        return true;
     }
 }

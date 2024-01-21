@@ -4,13 +4,8 @@
  */
 package forme.zaposleni;
 
-import domen.Odeljenje;
-import domen.Partner;
 import domen.Zaposleni;
-import forme.modeli.tabela.ModelTabelePartner;
 import forme.modeli.tabela.ModelTabeleZaposleni;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -266,7 +261,6 @@ public class FormaObrisiZaposlenog extends javax.swing.JFrame {
         int izabraniRed = tblZaposleni.getSelectedRow();
         if (izabraniRed == -1) {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita zaposlenog.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
         } else {
             ModelTabeleZaposleni mtz = (ModelTabeleZaposleni) tblZaposleni.getModel();
             izabraniZaposleni = mtz.vratiZaposlenog(izabraniRed);
@@ -296,7 +290,7 @@ public class FormaObrisiZaposlenog extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da obriše zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         }
-        popuniTabeluSvimZaposlenim();
+        this.dispose();
     }//GEN-LAST:event_btnObrisiZaposlenogActionPerformed
 
     /**
@@ -339,8 +333,6 @@ public class FormaObrisiZaposlenog extends javax.swing.JFrame {
             dispose();
         }
     }
-
-   
 
     private void popuniPodatkeZaposlenog(Zaposleni izabraniZaposleni) {
         txtJMBG.setText(izabraniZaposleni.getJmbg());
