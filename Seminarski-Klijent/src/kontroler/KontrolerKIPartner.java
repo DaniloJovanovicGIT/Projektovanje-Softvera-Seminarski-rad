@@ -24,7 +24,6 @@ import komunikacija.Zahtev;
  */
 public class KontrolerKIPartner extends OpstiKontrolerKI {
 
-    private FormaKreirajPartnera formaKreirajPartnera;
     private static KontrolerKIPartner instance;
 
     private KontrolerKIPartner() {
@@ -37,26 +36,20 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
         return instance;
     }
 
-    public void setFkp(FormaKreirajPartnera fkp) {
-        this.formaKreirajPartnera = fkp;
-    }
-
-    public void kreirajPartnera(Partner partner) {
+    public Odgovor kreirajPartnera(Partner partner) {
         try {
             System.out.println("Saljem zahtev." + partner.getNaziv());
             posiljalac.posalji(new Zahtev(Operacija.ZAPAMTI_PARTNERA, partner, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            obradiOdgovorSOZapamtiPartnera(odgovor);
+            return(Odgovor) primalac.primi();
         } catch (IOException ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
-    public void obradiOdgovorSOZapamtiPartnera(Odgovor odgovor) {
-        formaKreirajPartnera.obradiServerskiOdgovor(odgovor);
-    }
+    
 
     public ArrayList<Partner> vratiSvePartnere() {
         try {

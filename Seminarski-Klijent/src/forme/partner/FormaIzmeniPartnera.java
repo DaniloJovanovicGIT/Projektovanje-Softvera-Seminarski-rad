@@ -9,6 +9,7 @@ import forme.modeli.tabela.ModelTabelePartner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import konstante.Konstante;
 
@@ -18,7 +19,7 @@ import konstante.Konstante;
  */
 public class FormaIzmeniPartnera extends javax.swing.JFrame {
 
-    Partner izabraniPartner;
+    private Partner izabraniPartner;
 
     /**
      * Creates new form FormaIzmeniPartnera
@@ -44,7 +45,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         btnPronadji = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPartneri = new javax.swing.JTable();
-        txtIzaberiPartnera = new javax.swing.JButton();
+        btnUcitajPartnera = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lblPIB = new javax.swing.JLabel();
         lblNaziv = new javax.swing.JLabel();
@@ -85,10 +86,10 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblPartneri);
 
-        txtIzaberiPartnera.setText("Učitaj partnera");
-        txtIzaberiPartnera.addActionListener(new java.awt.event.ActionListener() {
+        btnUcitajPartnera.setText("Učitaj partnera");
+        btnUcitajPartnera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIzaberiPartneraActionPerformed(evt);
+                btnUcitajPartneraActionPerformed(evt);
             }
         });
 
@@ -107,7 +108,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
                                 .addComponent(btnPronadji))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 180, Short.MAX_VALUE)
-                                .addComponent(txtIzaberiPartnera, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnUcitajPartnera, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -121,7 +122,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtIzaberiPartnera))
+                .addComponent(btnUcitajPartnera))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Partner"));
@@ -248,7 +249,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void txtIzaberiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIzaberiPartneraActionPerformed
+    private void btnUcitajPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajPartneraActionPerformed
         int izabraniRed = tblPartneri.getSelectedRow();
         if (izabraniRed == -1) {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
@@ -260,7 +261,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sistem je učitao partnera.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
             btnIzmeniPartnera.setEnabled(true);
         }
-    }//GEN-LAST:event_txtIzaberiPartneraActionPerformed
+    }//GEN-LAST:event_btnUcitajPartneraActionPerformed
 
     private void btnPronadjiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPronadjiActionPerformed
         String uslov = txtPretrazi.getText();
@@ -278,25 +279,15 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
     private void btnIzmeniPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniPartneraActionPerformed
         Partner izmenjenPartner = new Partner();
         izmenjenPartner.setPib(izabraniPartner.getPib());
-        izmenjenPartner.setNaziv(txtNaziv.getText());
-        izmenjenPartner.setNoviPib(txtPIB.getText());
-        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
-        try {
-            izmenjenPartner.setDatumOsnivanja(sdf.parse(txtDatumOsnivanja.getText()));
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        izmenjenPartner.setKontaktOsoba(txtKontaktOsoba.getText());
-        izmenjenPartner.setBrojTelefona(txtBrojTelefona.getText());
-        izmenjenPartner.setEmail(txtEmail.getText());
+        
+        if (validirajUnos(izmenjenPartner)) {
 
-        boolean uspesnaIzmena = kontroler.KontrolerKIPartner.getInstance().izmeniPartnera(izmenjenPartner);
-        if (uspesnaIzmena) {
-            JOptionPane.showMessageDialog(this, "Sistem je promenio partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da promeni partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            boolean uspesnaIzmena = kontroler.KontrolerKIPartner.getInstance().izmeniPartnera(izmenjenPartner);
+            if (uspesnaIzmena) {
+                JOptionPane.showMessageDialog(this, "Sistem je promenio partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne može da promeni partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            }
             this.dispose();
         }
         //popuniTabeluSvimPartnerima(); Ukoliko zelimo da nakon izmene mozemo ponovo da menjamo drugog partnera
@@ -309,6 +300,7 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIzmeniPartnera;
     private javax.swing.JButton btnPronadji;
+    private javax.swing.JButton btnUcitajPartnera;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -322,7 +314,6 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
     private javax.swing.JTextField txtBrojTelefona;
     private javax.swing.JTextField txtDatumOsnivanja;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JButton txtIzaberiPartnera;
     private javax.swing.JTextField txtKontaktOsoba;
     private javax.swing.JTextField txtNaziv;
     private javax.swing.JTextField txtPIB;
@@ -353,5 +344,48 @@ public class FormaIzmeniPartnera extends javax.swing.JFrame {
         txtKontaktOsoba.setText(izabraniPartner.getKontaktOsoba());
         txtBrojTelefona.setText(izabraniPartner.getBrojTelefona());
         txtEmail.setText(izabraniPartner.getEmail());
+    }
+
+    private boolean validirajUnos(Partner izmenjenPartner) {
+        String pib = txtPIB.getText().trim();
+        if (pib.length() != 9 || !pib.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "PIB mora imati 9 cifara.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        izmenjenPartner.setNoviPib(pib);
+        String naziv = txtNaziv.getText().trim();
+        if (naziv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Naziv ne sme biti prazan.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        izmenjenPartner.setNaziv(naziv);
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
+        Date datumOsnivanja = null;
+        try {
+            datumOsnivanja = sdf.parse(txtDatumOsnivanja.getText().trim());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        izmenjenPartner.setDatumOsnivanja(datumOsnivanja);
+        String kontaktOsoba = txtKontaktOsoba.getText().trim();
+        if (kontaktOsoba.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Polje 'Kontakt osoba' ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        izmenjenPartner.setKontaktOsoba(kontaktOsoba);
+        String brojTelefona = txtBrojTelefona.getText().trim();
+        if (!brojTelefona.matches("\\+?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Neispravan format broja telefona.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        izmenjenPartner.setBrojTelefona(brojTelefona);
+        String email = txtEmail.getText().trim();
+        if (!email.contains("@")) {
+            JOptionPane.showMessageDialog(this, "Email mora sadržati simbol '@'.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        izmenjenPartner.setEmail(email);
+        return true;
     }
 }

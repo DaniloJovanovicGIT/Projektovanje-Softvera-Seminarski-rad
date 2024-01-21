@@ -7,9 +7,7 @@ package sistemske.operacije;
 import baza.podataka.BrokerBazePodataka;
 import domen.OpstiDomenskiObjekat;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import komunikacija.Zahtev;
+
 
 /**
  *
@@ -33,7 +31,6 @@ public abstract class OpsteIzvrsenjeSO {
             return signal;
         } catch (Exception ex) {
             bbp.odbaciTransakciju();
-            Logger.getLogger(OpsteIzvrsenjeSO.class.getName()).log(Level.SEVERE, "Greska pri izvrsenju sistemske operacije", ex);
         } finally {
             bbp.zatvoriKonekciju();
         }

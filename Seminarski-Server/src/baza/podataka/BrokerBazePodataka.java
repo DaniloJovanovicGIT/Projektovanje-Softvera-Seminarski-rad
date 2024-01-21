@@ -4,7 +4,6 @@
  */
 package baza.podataka;
 
-import domen.Kampanja;
 import domen.OpstiDomenskiObjekat;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import konstante.Konstante;
 
 /**
  *
@@ -30,9 +28,9 @@ public class BrokerBazePodataka {
 
     public void otvoriKonekciju() throws SQLException {
         if (konekcija == null || konekcija.isClosed()) {
-            String lokacija = konstante.Konstante.LOKACIJA_BAZE + konstante.Konstante.NAZIV_BAZE;
-            String username = konstante.Konstante.USERNAME_BAZA;
-            String password = konstante.Konstante.PASSWORD_BAZA;
+            String lokacija = Konstante.LOKACIJA_BAZE + Konstante.NAZIV_BAZE;
+            String username = Konstante.USERNAME_BAZA;
+            String password = Konstante.PASSWORD_BAZA;
 
             konekcija = DriverManager.getConnection(lokacija, username, password);
             konekcija.setAutoCommit(false);
@@ -91,7 +89,7 @@ public class BrokerBazePodataka {
         return brojObrisanihRedova > 0;
     }
 
-    public OpstiDomenskiObjekat pronadjiObjekat(OpstiDomenskiObjekat objekat) throws SQLException {
+    public OpstiDomenskiObjekat ucitaj(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
                 + " " + objekat.join() + " " + objekat.uslov();
         System.out.println(upit);
@@ -109,7 +107,7 @@ public class BrokerBazePodataka {
         return (List<OpstiDomenskiObjekat>) objekat.vratiSve(rs);
     }
 
-    public int vratiPoslednjiUbaceniKey(OpstiDomenskiObjekat objekat) throws SQLException {
+    public int vratiPoslednjiUbaceniKljuc(OpstiDomenskiObjekat objekat) throws SQLException {
         int maxId = 0;
         String upit = "SELECT MAX(" + objekat.vratiNazivPrimarnogKljuca()+ ") as maxId FROM " + objekat.vratiNazivTabele();
         System.out.println(upit);

@@ -140,12 +140,16 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         lblEmail.setText("Email:");
 
         txtPIB.setEditable(false);
+        txtPIB.setFocusable(false);
 
         txtNaziv.setEditable(false);
+        txtNaziv.setFocusable(false);
 
         txtDatumOsnivanja.setEditable(false);
+        txtDatumOsnivanja.setFocusable(false);
 
         txtKontaktOsoba.setEditable(false);
+        txtKontaktOsoba.setFocusable(false);
         txtKontaktOsoba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtKontaktOsobaActionPerformed(evt);
@@ -153,8 +157,10 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
         });
 
         txtBrojTelefona.setEditable(false);
+        txtBrojTelefona.setFocusable(false);
 
         txtEmail.setEditable(false);
+        txtEmail.setFocusable(false);
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);

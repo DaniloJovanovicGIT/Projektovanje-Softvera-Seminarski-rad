@@ -31,7 +31,7 @@ public class SOZapamtiKampanju extends OpsteIzvrsenjeSO {
             boolean kampanjaSacuvana = bbp.zapamti(novaKampanja);
             if (kampanjaSacuvana) {
 
-                long kampanjaId = bbp.vratiPoslednjiUbaceniKey(novaKampanja);
+                long kampanjaId = bbp.vratiPoslednjiUbaceniKljuc(novaKampanja);
                 novaKampanja.setKampanjaId(kampanjaId);
                 ArrayList<Zadatak> listaZadataka = (ArrayList<Zadatak>) novaKampanja.getZadaci();
                 for (Zadatak zadatak : listaZadataka) {

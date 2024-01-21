@@ -20,7 +20,7 @@ import kontroler.KontrolerKIPartner;
  */
 public class FormaKreirajPartnera extends javax.swing.JFrame {
 
-    KontrolerKIPartner kkip;
+    private Partner noviPartner;
 
     /**
      * Creates new form KreirajPartnera
@@ -28,8 +28,7 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
     public FormaKreirajPartnera() {
         initComponents();
         setLocationRelativeTo(null);
-        kkip = KontrolerKIPartner.getInstance();
-        kkip.setFkp(this);
+        noviPartner = new Partner();
     }
 
     /**
@@ -149,30 +148,22 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNazivActionPerformed
 
+
     private void btnKreirajPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajPartneraActionPerformed
-        String pib = txtPIB.getText();
-        String naziv = txtNaziv.getText();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        Date datumOsnivanja = null;
-        try {
-            datumOsnivanja = sdf.parse(txtDatumOsnivanja.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Datum mora biti u formatu dd.MM.yyyy", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
+        if (validirajUnos()) {
+            Odgovor odgovor = KontrolerKIPartner.getInstance().kreirajPartnera(noviPartner);
+            if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
+                JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera.", Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            }
+            this.dispose();
         }
-        String kontaktOsoba = txtKontaktOsoba.getText();
-        String brojTelefona = txtBrojTelefona.getText();
-        String email = txtEmail.getText();
-
-        kkip.kreirajPartnera(new Partner(pib, naziv, datumOsnivanja, kontaktOsoba, brojTelefona, email));
-
-        //JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", "Došlo je do greške.", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnKreirajPartneraActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKreirajPartnera;
@@ -190,15 +181,47 @@ public class FormaKreirajPartnera extends javax.swing.JFrame {
     private javax.swing.JTextField txtNaziv;
     private javax.swing.JTextField txtPIB;
     // End of variables declaration//GEN-END:variables
-
-    public void obradiServerskiOdgovor(Odgovor odgovor) {
-        if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio partnera.", Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);    
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti partnera.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+private boolean validirajUnos() {
+        String pib = txtPIB.getText().trim();
+        if (pib.length() != 9 || !pib.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "PIB mora imati 9 cifara.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        this.dispose();
-        //vratiVrednostiNaPodrazumevane(); //U slucaju da zelimo da omogucimo da se vise partnera unese
+        noviPartner.setPib(pib);
+        String naziv = txtNaziv.getText().trim();
+        if (naziv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Naziv ne sme biti prazan.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        noviPartner.setNaziv(naziv);
+        SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
+        Date datumOsnivanja = null;
+        try {
+            datumOsnivanja = sdf.parse(txtDatumOsnivanja.getText().trim());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, Konstante.PORUKA_GRESKA_FORMAT_DATUMA, Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        noviPartner.setDatumOsnivanja(datumOsnivanja);
+        String kontaktOsoba = txtKontaktOsoba.getText().trim();
+        if (kontaktOsoba.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Polje 'Kontakt osoba' ne sme biti prazno.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        noviPartner.setKontaktOsoba(kontaktOsoba);
+        String brojTelefona = txtBrojTelefona.getText().trim();
+        if (!brojTelefona.matches("\\+?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Neispravan format broja telefona.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        noviPartner.setBrojTelefona(brojTelefona);
+        String email = txtEmail.getText().trim();
+        if (!email.contains("@")) {
+            JOptionPane.showMessageDialog(this, "Email mora sadržati simbol '@'.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        noviPartner.setEmail(email);
+        return true;
     }
 
     private void vratiVrednostiNaPodrazumevane() {

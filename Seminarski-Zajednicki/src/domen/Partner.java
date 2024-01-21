@@ -25,6 +25,7 @@ public class Partner implements OpstiDomenskiObjekat {
     private String kontaktOsoba;
     private String brojTelefona;
     private String email;
+    
     private String vrednostZaPretragu;
 
     public Partner(String pib, String naziv, Date datumOsnivanja, String kontatktOsoba, String brojTelefona, String email) {
