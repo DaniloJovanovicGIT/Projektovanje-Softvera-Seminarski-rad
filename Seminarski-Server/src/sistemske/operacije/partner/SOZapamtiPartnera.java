@@ -20,9 +20,9 @@ public class SOZapamtiPartnera extends OpsteIzvrsenjeSO {
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws SQLException {
         //provera da li je prosledjeni objekat instanca objekat Partner
         if (odo instanceof Partner partner) {
-            if (!(partner.getPib() != null && partner.getNaziv() != null
-                    && partner.getDatumOsnivanja() != null && partner.getKontaktOsoba() != null
-                    && partner.getBrojTelefona() != null && partner.getEmail() != null)) {
+            if (partner.getPib() == null || partner.getNaziv() == null
+                    || partner.getDatumOsnivanja() == null || partner.getKontaktOsoba() == null
+                    || partner.getBrojTelefona() == null || partner.getEmail() == null) {
                 return false;
             }
             //Provera da li postoji partner sa istim pibom u bazi
