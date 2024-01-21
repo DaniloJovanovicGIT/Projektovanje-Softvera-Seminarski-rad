@@ -4,14 +4,12 @@
  */
 package aplikaciona.logika;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +23,6 @@ public class ServerskaNit extends Thread {
     List<ObradaZahtevaKlijentaNit> listaKlijentskihNiti;
 
     public ServerskaNit() throws IOException {
-        System.out.println("Konstruktor je izvrsen");
         serverskiSoket = new ServerSocket(konstante.Konstante.PORT_SERVERA);
         listaKlijentskihNiti = new ArrayList<>();
     }

@@ -6,10 +6,8 @@ package sistemske.operacije.partner;
 
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
-import java.lang.reflect.Field;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import sistemske.operacije.OpsteIzvrsenjeSO;
 
 /**
@@ -19,16 +17,23 @@ import sistemske.operacije.OpsteIzvrsenjeSO;
 public class SOZapamtiPartnera extends OpsteIzvrsenjeSO {
 
     @Override
-    public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-       if ((Partner)odo instanceof Partner) {
-            if (((Partner) odo).getPib() == null || ((Partner) odo).getNaziv() == null || ((Partner) odo).getDatumOsnivanja() == null || 
-            ((Partner) odo).getKontaktOsoba() == null || ((Partner) odo).getBrojTelefona() == null || ((Partner) odo).getEmail() == null) {
-            return false;
-        }
-        return true;
+    public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws SQLException {
+        //provera da li je prosledjeni objekat instanca objekat Partner
+        if (odo instanceof Partner partner) {
+            if (!(partner.getPib() != null && partner.getNaziv() != null
+                    && partner.getDatumOsnivanja() != null && partner.getKontaktOsoba() != null
+                    && partner.getBrojTelefona() != null && partner.getEmail() != null)) {
+                return false;
+            }
+            //Provera da li postoji partner sa istim pibom u bazi
+            List<OpstiDomenskiObjekat> listaPartnera = bbp.ucitaj(odo);
+            if(!listaPartnera.isEmpty()){
+                return false;
+            }
         } else {
             return false;
         }
+        return true;
     }
 
     @Override

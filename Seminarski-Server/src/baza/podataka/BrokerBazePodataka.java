@@ -89,13 +89,13 @@ public class BrokerBazePodataka {
         return brojObrisanihRedova > 0;
     }
 
-    public OpstiDomenskiObjekat ucitaj(OpstiDomenskiObjekat objekat) throws SQLException {
+    public List<OpstiDomenskiObjekat> ucitaj(OpstiDomenskiObjekat objekat) throws SQLException {
         String upit = "SELECT * FROM " + objekat.vratiNazivTabele() + " " + objekat.alijas()
                 + " " + objekat.join() + " " + objekat.uslov();
         System.out.println(upit);
         Statement st = konekcija.createStatement();
         ResultSet rs = st.executeQuery(upit);
-        return (OpstiDomenskiObjekat) objekat.vratiSve(rs);
+        return  objekat.vratiSve(rs);
     }
 
     public List<OpstiDomenskiObjekat> vratiZaVrednost(OpstiDomenskiObjekat objekat) throws SQLException {

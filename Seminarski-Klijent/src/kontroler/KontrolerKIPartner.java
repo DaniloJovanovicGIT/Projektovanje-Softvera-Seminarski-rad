@@ -4,11 +4,7 @@
  */
 package kontroler;
 
-import domen.Odeljenje;
 import domen.Partner;
-import domen.Zaposleni;
-import forme.partner.FormaIzmeniPartnera;
-import forme.partner.FormaKreirajPartnera;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;

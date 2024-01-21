@@ -5,9 +5,7 @@
 package kontroler;
 
 import domen.Odeljenje;
-import domen.Partner;
 import domen.Zaposleni;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

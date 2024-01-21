@@ -17,19 +17,23 @@ import sistemske.operacije.OpsteIzvrsenjeSO;
  *
  * @author Danilo
  */
-public class SOVratiSvePartnere extends OpsteIzvrsenjeSO{
+public class SOVratiSvePartnere extends OpsteIzvrsenjeSO {
+
     private ArrayList<OpstiDomenskiObjekat> lista;
     private ArrayList<Partner> listaPartnera;
-     
-    
+
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        return true;
+        if (odo instanceof Partner) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean izvrsiSO(OpstiDomenskiObjekat odo) throws Exception {
-         boolean signal = false;
+        boolean signal = false;
         try {
             lista = bbp.vratiSve(new Partner());
             signal = true;

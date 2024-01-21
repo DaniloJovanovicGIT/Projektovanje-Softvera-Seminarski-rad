@@ -6,6 +6,7 @@ package sistemske.operacije.partner;
 
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
+import java.util.List;
 import sistemske.operacije.OpsteIzvrsenjeSO;
 
 /**
@@ -16,17 +17,22 @@ public class SOObrisiPartnera extends OpsteIzvrsenjeSO {
 
     @Override
     public boolean proveriOgranicenja(OpstiDomenskiObjekat odo) throws Exception {
-        if ((Partner) odo instanceof Partner) {
-            if (((Partner) odo).getPib() == null || ((Partner) odo).getNaziv() == null || ((Partner) odo).getDatumOsnivanja() == null
-                    || ((Partner) odo).getKontaktOsoba() == null || ((Partner) odo).getBrojTelefona() == null || ((Partner) odo).getEmail() == null) {
-                System.out.println("Ogrenacinjena nisu zadovoljena");
+         //provera da li je prosledjeni objekat instanca objekat Partner
+        if (odo instanceof Partner partner) {
+            if (!(partner.getPib() != null && partner.getNaziv() != null
+                    && partner.getDatumOsnivanja() != null && partner.getKontaktOsoba() != null
+                    && partner.getBrojTelefona() != null && partner.getEmail() != null)) {
                 return false;
-            } else {
-                return true;
+            }
+            //Provera da li postoji partner sa istim pibom u bazi, treba da postoji da bi ga obrisali
+            List<OpstiDomenskiObjekat> listaPartnera = bbp.ucitaj(odo);
+            if(listaPartnera.isEmpty()){
+                return false;
             }
         } else {
             return false;
         }
+        return true;
     }
 
     @Override

@@ -4,11 +4,7 @@
  */
 package kontroler;
 
-import domen.Partner;
 import domen.StatusZadatka;
-import java.io.IOException;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
@@ -20,21 +16,19 @@ import komunikacija.Zahtev;
  * @author Danilo
  */
 public class KontrolerKIZadatak extends OpstiKontrolerKI {
+
     private static KontrolerKIZadatak instance;
 
     private KontrolerKIZadatak() {
     }
 
     public static KontrolerKIZadatak getInstance() {
-       if(instance==null){
-       instance= new KontrolerKIZadatak();
-       }
+        if (instance == null) {
+            instance = new KontrolerKIZadatak();
+        }
         return instance;
     }
-    
-    
-    
-    
+
     public ArrayList<StatusZadatka> vratiSveStatuseZadataka() {
 
         try {
