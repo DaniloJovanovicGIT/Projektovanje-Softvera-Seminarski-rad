@@ -38,6 +38,9 @@ public class ServerskaForma extends javax.swing.JFrame {
 
         btnPokreniServer = new javax.swing.JButton();
         btnZaustaviServer = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        miKonfiguracija = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Serverska forma");
@@ -58,25 +61,39 @@ public class ServerskaForma extends javax.swing.JFrame {
             }
         });
 
+        miKonfiguracija.setText("Konfiguracija servera");
+
+        jMenuItem1.setText("Postavi parametre servera");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        miKonfiguracija.add(jMenuItem1);
+
+        jMenuBar1.add(miKonfiguracija);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPokreniServer)
-                    .addComponent(btnZaustaviServer))
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE)
+                .addComponent(btnPokreniServer)
+                .addGap(30, 30, 30)
+                .addComponent(btnZaustaviServer)
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(btnPokreniServer)
-                .addGap(33, 33, 33)
-                .addComponent(btnZaustaviServer)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPokreniServer)
+                    .addComponent(btnZaustaviServer))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,6 +117,11 @@ public class ServerskaForma extends javax.swing.JFrame {
             btnPokreniServer.setEnabled(true);
         }
     }//GEN-LAST:event_btnZaustaviServerActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FormaKonfiguracijaServera fks = new FormaKonfiguracijaServera(this, true);
+        fks.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,5 +165,8 @@ public class ServerskaForma extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPokreniServer;
     private javax.swing.JButton btnZaustaviServer;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu miKonfiguracija;
     // End of variables declaration//GEN-END:variables
 }
