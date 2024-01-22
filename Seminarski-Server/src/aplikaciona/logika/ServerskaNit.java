@@ -4,14 +4,17 @@
  */
 package aplikaciona.logika;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import konstante.Konstante;
 
 /**
  *
@@ -23,7 +26,10 @@ public class ServerskaNit extends Thread {
     List<ObradaZahtevaKlijentaNit> listaKlijentskihNiti;
 
     public ServerskaNit() throws IOException {
-        serverskiSoket = new ServerSocket(konstante.Konstante.PORT_SERVERA);
+        Properties parametri = new Properties();
+        parametri.load(new FileReader(konstante.Konstante.LOKACIJA_PARAMETARA_SERVERA));
+        int portServera = Integer.parseInt(parametri.getProperty(Konstante.PORT_SERVERA_KEY));
+        serverskiSoket = new ServerSocket(portServera);
         listaKlijentskihNiti = new ArrayList<>();
     }
 
@@ -31,7 +37,7 @@ public class ServerskaNit extends Thread {
     public void run() {
         while (serverskiSoket != null && !serverskiSoket.isClosed()) {
             try {
-                System.out.println("Server je pokrenut na portu:" + konstante.Konstante.PORT_SERVERA);
+                System.out.println("Server je pokrenut.");
                 Socket soket = serverskiSoket.accept();
                 ObradaZahtevaKlijentaNit klijentskaNit = new ObradaZahtevaKlijentaNit(soket, this);
                 klijentskaNit.start();

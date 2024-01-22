@@ -9,11 +9,14 @@ package konstante;
  * @author Danilo
  */
 public interface Konstante {
-
-    public static final int PORT_SERVERA = 9000;
-    public static String LOKACIJA_BAZE = "jdbc:mysql://localhost:3306/";
-    public static final String NAZIV_BAZE = "seminarski";
-    public static final String USERNAME_BAZA = "root";
-    public static final String PASSWORD_BAZA = "";
+    //lokacije parametara
+    public static final String LOKACIJA_PARAMETARA_SERVERA = "src/config/server.properties";
+    public static String LOKACIJA_PARAMETARA_BAZE = "src/config/baza.properties";
+    //server
+    public static final String PORT_SERVERA_KEY = "serverPort";
     
+    //baza
+    public static final String LOKACIJA_BAZE_KEY = "url";
+    public static final String USERNAME_BAZA_KEY = "username";
+    public static final String PASSWORD_BAZA_KEY = "password";    
 }

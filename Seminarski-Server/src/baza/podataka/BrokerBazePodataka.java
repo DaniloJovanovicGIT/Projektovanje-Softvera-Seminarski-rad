@@ -5,6 +5,9 @@
 package baza.podataka;
 
 import domen.OpstiDomenskiObjekat;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +16,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import konstante.Konstante;
 
 /**
@@ -22,16 +28,24 @@ import konstante.Konstante;
 public class BrokerBazePodataka {
 
     private Connection konekcija;
+    String lokacija;
+    String username;
+    String password;
 
     public BrokerBazePodataka() {
+        Properties parametriBaze = new Properties();
+        try {
+            parametriBaze.load(new FileInputStream(Konstante.LOKACIJA_PARAMETARA_BAZE));
+        } catch (IOException ex) {
+            Logger.getLogger(BrokerBazePodataka.class.getName()).log(Level.SEVERE, "Greska prilikom ucitavanja parametara baze", ex);
+        }
+        lokacija = parametriBaze.getProperty(Konstante.LOKACIJA_BAZE_KEY);
+        username = parametriBaze.getProperty(Konstante.USERNAME_BAZA_KEY);
+        password = parametriBaze.getProperty(Konstante.PASSWORD_BAZA_KEY);
     }
 
     public void otvoriKonekciju() throws SQLException {
         if (konekcija == null || konekcija.isClosed()) {
-            String lokacija = Konstante.LOKACIJA_BAZE + Konstante.NAZIV_BAZE;
-            String username = Konstante.USERNAME_BAZA;
-            String password = Konstante.PASSWORD_BAZA;
-
             konekcija = DriverManager.getConnection(lokacija, username, password);
             konekcija.setAutoCommit(false);
         }
@@ -95,7 +109,7 @@ public class BrokerBazePodataka {
         System.out.println(upit);
         Statement st = konekcija.createStatement();
         ResultSet rs = st.executeQuery(upit);
-        return  objekat.vratiSve(rs);
+        return objekat.vratiSve(rs);
     }
 
     public List<OpstiDomenskiObjekat> vratiZaVrednost(OpstiDomenskiObjekat objekat) throws SQLException {
@@ -109,7 +123,7 @@ public class BrokerBazePodataka {
 
     public int vratiPoslednjiUbaceniKljuc(OpstiDomenskiObjekat objekat) throws SQLException {
         int maxId = 0;
-        String upit = "SELECT MAX(" + objekat.vratiNazivPrimarnogKljuca()+ ") as maxId FROM " + objekat.vratiNazivTabele();
+        String upit = "SELECT MAX(" + objekat.vratiNazivPrimarnogKljuca() + ") as maxId FROM " + objekat.vratiNazivTabele();
         System.out.println(upit);
         Statement st = konekcija.createStatement();
         ResultSet rs = st.executeQuery(upit);
