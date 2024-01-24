@@ -4,11 +4,14 @@
  */
 package aplikaciona.logika;
 
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -27,7 +30,9 @@ public class ServerskaNit extends Thread {
 
     public ServerskaNit() throws IOException {
         Properties parametri = new Properties();
-        parametri.load(new FileReader(konstante.Konstante.LOKACIJA_PARAMETARA_SERVERA));
+//        URL url = ClassLoader.getSystemResource(Konstante.LOKACIJA_PARAMETARA_SERVERA);
+//        parametri.load(url.openStream());
+        parametri.load(new FileInputStream(Konstante.LOKACIJA_PARAMETARA_SERVERA));
         int portServera = Integer.parseInt(parametri.getProperty(Konstante.PORT_SERVERA_KEY));
         serverskiSoket = new ServerSocket(portServera);
         listaKlijentskihNiti = new ArrayList<>();

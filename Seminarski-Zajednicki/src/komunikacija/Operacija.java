@@ -9,6 +9,7 @@ package komunikacija;
  * @author Danilo
  */
 public class Operacija {
+
     public static final int ZAPAMTI_OPSTI_DOMENSKI_OBJEKAT = 0;
     public static final int ZAPAMTI_PARTNERA = 1;
     public static final int VRATI_PARTNERE_ZA_VREDONST = 2;
@@ -26,7 +27,9 @@ public class Operacija {
     public static final int IZMENI_ZAPOSLENOG = 14;
     public static final int OBRISI_ZAPOSLENOG = 15;
     public static final int VRATI_SVE_STATUSE_ZADATKA = 16;
-    public static final int VRATI_SVE_KAMPANJE=17;
-    public static final int IZMENI_KAMPANJU=18;
-    
+    public static final int VRATI_SVE_KAMPANJE = 17;
+    public static final int IZMENI_KAMPANJU = 18;
+    public static final int UCITAJ_PARTNERA = 19;
+    public static final int UCITAJ_ZAPOSLENOG = 20;
+    public static final int LOGIN = 21;
 }

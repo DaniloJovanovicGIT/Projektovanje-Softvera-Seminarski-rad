@@ -18,14 +18,17 @@ import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
 import sistemske.operacije.odeljenja.SOVratiSvaOdeljenja;
 import sistemske.operacije.kampanja.SOIzmeniKampanju;
 import sistemske.operacije.kampanja.SOObrisiKampanju;
+import sistemske.operacije.kampanja.SOUcitajKampanju;
 import sistemske.operacije.kampanja.SOVratiKampanjeZaVrednost;
 import sistemske.operacije.kampanja.SOVratiSveKampanje;
 import sistemske.operacije.kampanja.SOZapamtiKampanju;
+import sistemske.operacije.partner.SOUcitajPartnera;
 import sistemske.operacije.partner.SOVratiSvePartnere;
 import sistemske.operacije.partner.SOZapamtiPartnera;
 import sistemske.operacije.zadatak.SOVratiSveStatuseZadatka;
 import sistemske.operacije.zaposleni.SOIzmeniZaposlenog;
 import sistemske.operacije.zaposleni.SOObrisiZaposlenog;
+import sistemske.operacije.zaposleni.SOUcitajZaposlenog;
 import sistemske.operacije.zaposleni.SOVratiSveZaposlene;
 import sistemske.operacije.zaposleni.SOVratiZaposleneZaVrednost;
 import sistemske.operacije.zaposleni.SOZapamtiZaposlenog;
@@ -87,7 +90,7 @@ public class Kontroler {
     }
 
     public ArrayList<Zaposleni> vratiSveZaposlene() throws SQLException {
-        SOVratiSveZaposlene so =  new SOVratiSveZaposlene();
+        SOVratiSveZaposlene so = new SOVratiSveZaposlene();
         so.opsteIzvrsenjeSO(new Zaposleni());
         return so.getLista();
     }
@@ -139,6 +142,24 @@ public class Kontroler {
     public boolean obrisiKampanju(Kampanja kampanjaZaBrisanje) throws Exception {
         SOObrisiKampanju so = new SOObrisiKampanju();
         return so.opsteIzvrsenjeSO(kampanjaZaBrisanje);
+    }
+
+    public Partner ucitajPartnera(Partner partnerZaUcitavanje) throws SQLException {
+        SOUcitajPartnera so = new SOUcitajPartnera();
+        so.opsteIzvrsenjeSO(partnerZaUcitavanje);
+        return so.getUcitaniPartner();
+    }
+
+    public Zaposleni ucitajZaposlenog(Zaposleni zaposleniZaUcitavanje) throws SQLException {
+        SOUcitajZaposlenog so = new SOUcitajZaposlenog();
+        so.opsteIzvrsenjeSO(zaposleniZaUcitavanje);
+        return so.getUcitaniZaposleni();
+    }
+
+    public Kampanja ucitajKampanju(Kampanja kampanjaZaUcitavanje) throws SQLException {
+        SOUcitajKampanju so = new SOUcitajKampanju();
+        so.opsteIzvrsenjeSO(kampanjaZaUcitavanje);
+        return so.getKampanja();
     }
 
 }

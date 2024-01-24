@@ -8,6 +8,7 @@ import domen.OpstiDomenskiObjekat;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -35,6 +36,7 @@ public class BrokerBazePodataka {
     public BrokerBazePodataka() {
         Properties parametriBaze = new Properties();
         try {
+            InputStream ulaz = this.getClass().getResourceAsStream(Konstante.LOKACIJA_PARAMETARA_BAZE);
             parametriBaze.load(new FileInputStream(Konstante.LOKACIJA_PARAMETARA_BAZE));
         } catch (IOException ex) {
             Logger.getLogger(BrokerBazePodataka.class.getName()).log(Level.SEVERE, "Greska prilikom ucitavanja parametara baze", ex);
