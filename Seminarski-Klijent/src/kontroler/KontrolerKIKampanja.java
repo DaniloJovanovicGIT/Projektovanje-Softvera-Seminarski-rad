@@ -59,18 +59,13 @@ public class KontrolerKIKampanja extends OpstiKontrolerKI {
         return null;
     }
 
-    public ArrayList<Kampanja> vratiKampanjeSaUslovom(String uslov) {
+    public Odgovor vratiKampanjeSaUslovom(String uslov) {
         Kampanja kampanja = new Kampanja();
         kampanja.setVrednostZaPretragu(uslov);
         try {
             System.out.println("Saljem zahtev. Vrati kampanje za vrednost");
             posiljalac.posalji(new Zahtev(Operacija.VRATI_KAMPANJE_ZA_VREDNOST, kampanja, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                return (ArrayList<Kampanja>) odgovor.getParametar();
-            } else {
-                return null;
-            }
+            return (Odgovor) primalac.primi();
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,6 +88,18 @@ public class KontrolerKIKampanja extends OpstiKontrolerKI {
         try {
             System.out.println("Saljem zahtev. Obriši kampanju");
             posiljalac.posalji(new Zahtev(Operacija.OBRISI_KAMPANJU, kampanja, true));
+            return (Odgovor) primalac.primi();
+
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Odgovor ucitajKampanju(Kampanja izabranaKampanja) {
+        try {
+            System.out.println("Saljem zahtev. Ucitaj kampanju");
+            posiljalac.posalji(new Zahtev(Operacija.UCITAJ_KAMPANJU, izabranaKampanja, true));
             return (Odgovor) primalac.primi();
 
         } catch (Exception ex) {

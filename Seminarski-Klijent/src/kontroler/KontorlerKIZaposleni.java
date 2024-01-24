@@ -75,54 +75,52 @@ public class KontorlerKIZaposleni extends OpstiKontrolerKI {
         return null;
     }
 
-    public ArrayList<Zaposleni> vratiZaposleneSaUslovom(String uslov) {
+    public Odgovor vratiZaposleneSaUslovom(String uslov) {
         Zaposleni zaposleni = new Zaposleni();
         zaposleni.setVrednostZaPretragu(uslov);
         try {
             System.out.println("Saljem zahtev. Vrati zaposlene za vrednost");
             posiljalac.posalji(new Zahtev(Operacija.VRATI_ZAPOSLENE_ZA_VREDNOST, zaposleni, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                return (ArrayList<Zaposleni>) odgovor.getParametar();
-            } else {
-                return null;
-            }
+            return (Odgovor) primalac.primi();
+
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public boolean izmeniZaposlenog(Zaposleni izmenjenZaposleni) {
+    public Odgovor izmeniZaposlenog(Zaposleni izmenjenZaposleni) {
         try {
             System.out.println("Saljem zahtev. Izmeni zaposlenog");
             posiljalac.posalji(new Zahtev(Operacija.IZMENI_ZAPOSLENOG, izmenjenZaposleni, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                return true;
-            } else {
-                return false;
-            }
+            return (Odgovor) primalac.primi();
+           
         } catch (Exception ex) {
             Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
     }
 
-    public boolean obrisiZaposlenog(Zaposleni izabraniZaposleni) {
+    public Odgovor obrisiZaposlenog(Zaposleni izabraniZaposleni) {
         try {
             System.out.println("Saljem zahtev. Obrisi zaposlenog");
             posiljalac.posalji(new Zahtev(Operacija.OBRISI_ZAPOSLENOG, izabraniZaposleni, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                return true;
-            } else {
-                return false;
-            }
+            return (Odgovor) primalac.primi();
         } catch (Exception ex) {
             Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
+    }
+
+    public Odgovor ucitajPartnera(Zaposleni izabraniZaposleni) {
+        try {
+            System.out.println("Saljem zahtev. Ucitaj zaposlenog");
+            posiljalac.posalji(new Zahtev(Operacija.UCITAJ_ZAPOSLENOG, izabraniZaposleni, true));
+            return (Odgovor) primalac.primi();
+        } catch (Exception ex) {
+            Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

@@ -26,7 +26,7 @@ import kontroler.KontrolerKIKampanja;
  *
  * @author Danilo
  */
-public class FormaKreirajKampanju extends javax.swing.JFrame {
+public class FormaKreirajKampanju extends javax.swing.JFrame implements forme.Forma{
     Kampanja kampanja;
 
     /**
@@ -271,12 +271,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
     private void btnSacuvajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajKampanjuActionPerformed
         if (validirajUnos()) {
             Odgovor odgovor = KontrolerKIKampanja.getInstance().kreirajKampanju(kampanja);
-            if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Sistem ne može da sačuva kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            }
-         this.dispose();
+            prikaziObavestenje(odgovor, true, this);
         }
     }//GEN-LAST:event_btnSacuvajKampanjuActionPerformed
 

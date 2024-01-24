@@ -63,18 +63,13 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
         return null;
     }
 
-    public ArrayList<Partner> vratiPartnereSaUslovom(String vrednostPretrazivanja) {
+    public Odgovor vratiPartnereSaUslovom(String vrednostPretrazivanja) {
         Partner partner = new Partner();
         partner.setVrednostZaPretragu(vrednostPretrazivanja);
         try {
             System.out.println("Saljem zahtev. Vrati partnere za vrednost");
             posiljalac.posalji(new Zahtev(Operacija.VRATI_PARTNERE_ZA_VREDONST, partner, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                return (ArrayList<Partner>) odgovor.getParametar();
-            } else {
-                return null;
-            }
+            return (Odgovor) primalac.primi();
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,19 +92,27 @@ public class KontrolerKIPartner extends OpstiKontrolerKI {
         return false;
     }
 
-    public boolean obrisiPartnera(Partner partnerZaBrisanje) {
+    public Odgovor obrisiPartnera(Partner partnerZaBrisanje) {
         try {
             System.out.println("Saljem zahtev. Obrisi partnera");
             posiljalac.posalji(new Zahtev(Operacija.OBRISI_PARTNERA, partnerZaBrisanje, true));
-            Odgovor odgovor = (Odgovor) primalac.primi();
-            if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                return true;
-            } else {
-                return false;
-            }
+            return (Odgovor) primalac.primi();
         } catch (Exception ex) {
             Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
     } 
+
+    public Odgovor ucitajPartnera(Partner izabraniPartner) {
+        try {
+            System.out.println("Saljem zahtev, ucitaj partnera.");
+            posiljalac.posalji(new Zahtev(Operacija.UCITAJ_PARTNERA, izabraniPartner, true));
+            return(Odgovor) primalac.primi();
+        } catch (IOException ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKIPartner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

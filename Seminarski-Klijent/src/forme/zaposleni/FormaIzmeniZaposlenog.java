@@ -9,13 +9,14 @@ import domen.Zaposleni;
 import forme.modeli.tabela.ModelTabeleZaposleni;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import komunikacija.Odgovor;
 import konstante.Konstante;
 
 /**
  *
  * @author Danilo
  */
-public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
+public class FormaIzmeniZaposlenog extends javax.swing.JFrame implements forme.Forma {
 
     private Zaposleni izabraniZaposleni;
 
@@ -261,7 +262,7 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
     private void btnUcitajZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajZaposlenogActionPerformed
         int izabraniRed = tblZaposleni.getSelectedRow();
         if (izabraniRed == -1) {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da učita zaposlenog.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate izabrati zaposlenog iz tabele.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         } else {
             ModelTabeleZaposleni mtz = (ModelTabeleZaposleni) tblZaposleni.getModel();
             izabraniZaposleni = mtz.vratiZaposlenog(izabraniRed);
@@ -273,27 +274,18 @@ public class FormaIzmeniZaposlenog extends javax.swing.JFrame {
 
     private void btnPonadjiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPonadjiActionPerformed
         String uslov = txtVrednostPretrage.getText();
-        ArrayList<Zaposleni> listaZaposlenih = kontroler.KontorlerKIZaposleni.getInstance().vratiZaposleneSaUslovom(uslov);
-        if (listaZaposlenih != null && !listaZaposlenih.isEmpty()) {
-            ModelTabeleZaposleni mtz = (ModelTabeleZaposleni) tblZaposleni.getModel();
-            mtz.setLista(listaZaposlenih);
-            JOptionPane.showMessageDialog(this, "Sistem je našao zaposlene po zadatoj vrednosti.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe zaposlene po zadatoj vrednosti", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
+        Odgovor odgovor = kontroler.KontorlerKIZaposleni.getInstance().vratiZaposleneSaUslovom(uslov);
+        prikaziObavestenje(odgovor, false, this);
+        ArrayList<Zaposleni> listaZaposlenih = (ArrayList<Zaposleni>) odgovor.getParametar();
+        ModelTabeleZaposleni mtz = (ModelTabeleZaposleni) tblZaposleni.getModel();
+        mtz.setLista(listaZaposlenih);
     }//GEN-LAST:event_btnPonadjiActionPerformed
 
     private void btnIzmeniZaposlenogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniZaposlenogActionPerformed
         Zaposleni izmenjenZaposleni = new Zaposleni();
         if (validirajUnos(izmenjenZaposleni)) {
-            boolean uspesnaIzmena = kontroler.KontorlerKIZaposleni.getInstance().izmeniZaposlenog(izmenjenZaposleni);
-            if (uspesnaIzmena) {
-                JOptionPane.showMessageDialog(this, "Sistem je promenio zaposlenog", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Sistem ne može da promeni zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            }
-            this.dispose();
+            Odgovor odgovor = kontroler.KontorlerKIZaposleni.getInstance().izmeniZaposlenog(izmenjenZaposleni);
+            prikaziObavestenje(odgovor, true, this);
         }
     }//GEN-LAST:event_btnIzmeniZaposlenogActionPerformed
 

@@ -27,7 +27,7 @@ import kontroler.KontrolerKIKampanja;
  *
  * @author Danilo
  */
-public class FormaIzmeniKampanju extends javax.swing.JFrame {
+public class FormaIzmeniKampanju extends javax.swing.JFrame implements forme.Forma {
 
     Kampanja izabranaKampanja;
 
@@ -355,25 +355,21 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
     private void btnIzmeniKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniKampanjuActionPerformed
         if (validirajUnos()) {
             Odgovor odgovor = KontrolerKIKampanja.getInstance().izmeniKampanju(izabranaKampanja);
-            if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Sistem ne može da promeni kampanju.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            }
-            this.dispose();
+            prikaziObavestenje(odgovor, true, this);
         }
     }//GEN-LAST:event_btnIzmeniKampanjuActionPerformed
 
     private void btnUcitajKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUcitajKampanjuActionPerformed
         int izabraniRed = tblKampanje.getSelectedRow();
         if (izabraniRed == -1) {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da učita kampanju.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            return;
+            JOptionPane.showMessageDialog(this, "Morate izabrati kampanju iz tabele.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         } else {
             ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
             izabranaKampanja = mtk.vratiKampanju(izabraniRed);
-            popuniPodatkeKampanja(izabranaKampanja);
-            JOptionPane.showMessageDialog(this, "Sistem je učitao kampanju.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            Odgovor odgovor = KontrolerKIKampanja.getInstance().ucitajKampanju(izabranaKampanja);
+            prikaziObavestenje(odgovor, false, this);
+            Kampanja vracenaKampanja = (Kampanja) odgovor.getParametar();
+            popuniPodatkeKampanja(vracenaKampanja);
             btnIzmeniKampanju.setEnabled(true);
             cmbGlavniOdgovorni.setEnabled(true);
             cmbPartner.setEnabled(true);
@@ -386,15 +382,11 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame {
 
     private void btnPretraziKampanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziKampanjeActionPerformed
         String uslov = txtVrednostPretrage.getText();
-        ArrayList<Kampanja> listaKampanjaPretraga = kontroler.KontrolerKIKampanja.getInstance().vratiKampanjeSaUslovom(uslov);
-        if (listaKampanjaPretraga != null && !listaKampanjaPretraga.isEmpty()) {
-            ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
-            mtk.setLista(listaKampanjaPretraga);
-            JOptionPane.showMessageDialog(this, "Sistem je našao kampanje po zadatoj vrednosti.", Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe kampanje po zadatoj vrednosti", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
+        Odgovor odgovor = kontroler.KontrolerKIKampanja.getInstance().vratiKampanjeSaUslovom(uslov);
+        prikaziObavestenje(odgovor, false, this);
+        ArrayList<Kampanja> listaKampanjaPretraga = (ArrayList<Kampanja>) odgovor.getParametar();
+        ModelTabeleKampanja mtk = (ModelTabeleKampanja) tblKampanje.getModel();
+        mtk.setLista(listaKampanjaPretraga);
     }//GEN-LAST:event_btnPretraziKampanjeActionPerformed
 
     /**

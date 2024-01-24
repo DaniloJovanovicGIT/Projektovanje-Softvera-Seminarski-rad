@@ -5,17 +5,20 @@
 package forme.partner;
 
 import domen.Partner;
+import forme.Forma;
 import forme.modeli.tabela.ModelTabelePartner;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import komunikacija.Odgovor;
 import konstante.Konstante;
+import kontroler.KontrolerKIPartner;
 
 /**
  *
  * @author Danilo
  */
-public class FormaObrisiPartnera extends javax.swing.JFrame {
+public class FormaObrisiPartnera extends javax.swing.JFrame implements Forma{
 
     Partner izabraniPartner;
 
@@ -266,39 +269,30 @@ public class FormaObrisiPartnera extends javax.swing.JFrame {
     private void txtIzaberiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIzaberiPartneraActionPerformed
         int izabraniRed = tblPartneri.getSelectedRow();
         if (izabraniRed == -1) {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da učita partnera.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            this.dispose();
+            JOptionPane.showMessageDialog(this, "Morate izabrati partnera iz tabele.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
         } else {
             ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
             izabraniPartner = mtp.vratiPartnera(izabraniRed);
-            popuniPodatkePartnera(izabraniPartner);
-            JOptionPane.showMessageDialog(this, "Sistem je učitao partnera.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
+            Odgovor odgovor = KontrolerKIPartner.getInstance().ucitajPartnera(izabraniPartner);
+            prikaziObavestenje(odgovor, false, this);
+            popuniPodatkePartnera((Partner) odgovor.getParametar());
             btnObrisiPartnera.setEnabled(true);
         }
     }//GEN-LAST:event_txtIzaberiPartneraActionPerformed
 
     private void btnPronadjiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPronadjiActionPerformed
         String uslov = txtPretrazi.getText();
-        ArrayList<Partner> listaPartnera = kontroler.KontrolerKIPartner.getInstance().vratiPartnereSaUslovom(uslov);
-        if (listaPartnera != null && !listaPartnera.isEmpty()) {
-            ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
-            mtp.setLista(listaPartnera);
-            JOptionPane.showMessageDialog(this, "Sistem je našao partnere po zadatoj vrednosti.", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da nađe partnere po zadatoj vrednosti", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-        }
+        Odgovor odgovor = KontrolerKIPartner.getInstance().vratiPartnereSaUslovom(uslov);
+        prikaziObavestenje(odgovor, false, this);
+        ArrayList<Partner> listaPartnera = (ArrayList<Partner>) odgovor.getParametar();
+        ModelTabelePartner mtp = (ModelTabelePartner) tblPartneri.getModel();
+        mtp.setLista(listaPartnera);
     }//GEN-LAST:event_btnPronadjiActionPerformed
 
     private void btnObrisiPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiPartneraActionPerformed
         Partner partnerZaBrisanje = izabraniPartner;
-        boolean uspesnoBrisanje = kontroler.KontrolerKIPartner.getInstance().obrisiPartnera(partnerZaBrisanje);
-        if (uspesnoBrisanje) {
-            JOptionPane.showMessageDialog(this, "Sistem je obrisao partnera", konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može da obriše partnera", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-        }
-        this.dispose();
+        Odgovor odgovor = kontroler.KontrolerKIPartner.getInstance().obrisiPartnera(partnerZaBrisanje);
+        prikaziObavestenje(odgovor, true, this);
     }//GEN-LAST:event_btnObrisiPartneraActionPerformed
 
     /**

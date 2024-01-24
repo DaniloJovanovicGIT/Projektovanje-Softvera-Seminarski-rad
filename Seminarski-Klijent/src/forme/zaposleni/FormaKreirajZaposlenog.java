@@ -16,7 +16,7 @@ import konstante.Konstante;
  *
  * @author Danilo
  */
-public class FormaKreirajZaposlenog extends javax.swing.JFrame {
+public class FormaKreirajZaposlenog extends javax.swing.JFrame implements forme.Forma{
 
     Zaposleni zaposleni;
 
@@ -141,12 +141,7 @@ public class FormaKreirajZaposlenog extends javax.swing.JFrame {
         zaposleni = new Zaposleni();
         if (validirajUnos()) {
             Odgovor odgovor = kontroler.KontorlerKIZaposleni.getInstance().kreirajZaposlenog(zaposleni);
-            if (odgovor != null && odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
-                JOptionPane.showMessageDialog(this, odgovor.getPoruka(), konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti zaposlenog", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            }
-            this.dispose();
+            prikaziObavestenje(odgovor, true, this);
         }
     }//GEN-LAST:event_btnSacuvajZaposlenogActionPerformed
 
