@@ -315,7 +315,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
             cmbPartner.setSelectedItem(null);
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
+            this.dispose();
         }
     }
 
@@ -329,7 +329,7 @@ public class FormaKreirajKampanju extends javax.swing.JFrame {
             cmbGlavniOdgovorni.setSelectedItem(null);
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može ucita zaposlene", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
+            this.dispose();
         }
     }
 
