@@ -13,7 +13,7 @@ import komunikacija.VrstaOdgovora;
  *
  * @author Danilo
  */
-public interface Forma {
+public interface FormaInterfejs {
 
     /**
      *

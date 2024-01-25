@@ -15,7 +15,7 @@ import sesija.Sesija;
  *
  * @author Danilo
  */
-public class FormaLogin extends javax.swing.JFrame implements Forma {
+public class FormaLogin extends javax.swing.JFrame implements FormaInterfejs {
 
     /**
      * Creates new form FormaLogin

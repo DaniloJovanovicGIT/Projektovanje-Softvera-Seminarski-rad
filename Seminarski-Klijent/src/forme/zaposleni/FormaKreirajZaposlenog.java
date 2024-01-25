@@ -16,7 +16,7 @@ import konstante.Konstante;
  *
  * @author Danilo
  */
-public class FormaKreirajZaposlenog extends javax.swing.JFrame implements forme.Forma{
+public class FormaKreirajZaposlenog extends javax.swing.JFrame implements forme.FormaInterfejs{
 
     Zaposleni zaposleni;
 

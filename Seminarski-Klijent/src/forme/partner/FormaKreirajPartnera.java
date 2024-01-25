@@ -5,7 +5,6 @@
 package forme.partner;
 
 import domen.Partner;
-import forme.Forma;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,12 +13,13 @@ import komunikacija.Odgovor;
 import komunikacija.VrstaOdgovora;
 import konstante.Konstante;
 import kontroler.KontrolerKIPartner;
+import forme.FormaInterfejs;
 
 /**
  *
  * @author Danilo
  */
-public class FormaKreirajPartnera extends javax.swing.JFrame implements Forma {
+public class FormaKreirajPartnera extends javax.swing.JFrame implements FormaInterfejs {
 
     private Partner noviPartner;
 

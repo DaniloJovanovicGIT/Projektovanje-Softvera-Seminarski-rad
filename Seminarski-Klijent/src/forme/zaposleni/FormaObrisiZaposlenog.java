@@ -14,7 +14,7 @@ import komunikacija.Odgovor;
  *
  * @author Danilo
  */
-public class FormaObrisiZaposlenog extends javax.swing.JFrame implements forme.Forma {
+public class FormaObrisiZaposlenog extends javax.swing.JFrame implements forme.FormaInterfejs {
 
     private Zaposleni izabraniZaposleni;
 

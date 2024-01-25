@@ -5,7 +5,6 @@
 package forme.partner;
 
 import domen.Partner;
-import forme.Forma;
 import forme.modeli.tabela.ModelTabelePartner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,12 +18,13 @@ import komunikacija.VrstaOdgovora;
 import konstante.Konstante;
 import kontroler.KontorlerKIZaposleni;
 import kontroler.KontrolerKIPartner;
+import forme.FormaInterfejs;
 
 /**
  *
  * @author Danilo
  */
-public class FormaIzmeniPartnera extends javax.swing.JFrame implements Forma {
+public class FormaIzmeniPartnera extends javax.swing.JFrame implements FormaInterfejs {
 
     private Partner izabraniPartner;
 

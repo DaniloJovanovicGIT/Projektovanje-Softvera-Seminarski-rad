@@ -27,7 +27,7 @@ import kontroler.KontrolerKIKampanja;
  *
  * @author Danilo
  */
-public class FormaIzmeniKampanju extends javax.swing.JFrame implements forme.Forma {
+public class FormaIzmeniKampanju extends javax.swing.JFrame implements forme.FormaInterfejs {
 
     Kampanja izabranaKampanja;
 
