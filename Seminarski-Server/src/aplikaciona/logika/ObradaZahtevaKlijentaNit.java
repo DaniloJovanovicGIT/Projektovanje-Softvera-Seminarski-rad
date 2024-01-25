@@ -17,6 +17,7 @@ import komunikacija.VrstaOdgovora;
 import komunikacija.Zahtev;
 import poslovna.logika.Kontroler;
 import domen.Kampanja;
+import domen.Menadzer;
 import domen.Odeljenje;
 import domen.StatusZadatka;
 import domen.Zaposleni;
@@ -211,6 +212,15 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                         odgovor = new Odgovor(vracenaKampanja, Operacija.UCITAJ_KAMPANJU, "Sistem je učitao kampanju.", VrstaOdgovora.USPESNO);
                     } else {
                         odgovor = new Odgovor(vracenaKampanja, Operacija.UCITAJ_KAMPANJU, "Sistem ne može da učita kampanju.", VrstaOdgovora.GRESKA);
+                    }
+                    break;
+                case Operacija.LOGIN:
+                    Menadzer menadzer = (Menadzer) zahtev.getParametar();
+                    Menadzer ulogovaniMenadzer = Kontroler.getInstance().login(menadzer);
+                    if (ulogovaniMenadzer != null) {
+                        odgovor = new Odgovor(ulogovaniMenadzer, Operacija.LOGIN, "Uspešno ste se ulogovali. Dobrodošli.", VrstaOdgovora.USPESNO);
+                    } else {
+                        odgovor = new Odgovor(ulogovaniMenadzer, Operacija.LOGIN, "Pogrešni kredencijali. Pokušajte ponovo.", VrstaOdgovora.GRESKA);
                     }
                     break;
 

@@ -51,7 +51,7 @@ public class BrokerBazePodataka {
             konekcija = DriverManager.getConnection(lokacija, username, password);
             konekcija.setAutoCommit(false);
         }
-        System.out.println("KOnekcija otvorena");
+        System.out.println("Konekcija otvorena");
     }
 
     public void potvrdiTransakciju() throws SQLException {

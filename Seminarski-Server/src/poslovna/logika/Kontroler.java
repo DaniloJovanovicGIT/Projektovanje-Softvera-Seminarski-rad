@@ -5,6 +5,7 @@
 package poslovna.logika;
 
 import domen.Kampanja;
+import domen.Menadzer;
 import domen.Odeljenje;
 import domen.OpstiDomenskiObjekat;
 import domen.Partner;
@@ -12,6 +13,7 @@ import domen.StatusZadatka;
 import domen.Zaposleni;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import sistemske.operacije.SOLogin;
 import sistemske.operacije.partner.SOIzmeniPartnera;
 import sistemske.operacije.partner.SOObrisiPartnera;
 import sistemske.operacije.partner.SOVratiPartnereZaVrednost;
@@ -160,6 +162,12 @@ public class Kontroler {
         SOUcitajKampanju so = new SOUcitajKampanju();
         so.opsteIzvrsenjeSO(kampanjaZaUcitavanje);
         return so.getKampanja();
+    }
+
+    public Menadzer login(Menadzer menadzer) throws SQLException {
+        SOLogin so = new SOLogin();
+        so.opsteIzvrsenjeSO(menadzer);
+        return so.getUlogovaniMenadzer();
     }
 
 }

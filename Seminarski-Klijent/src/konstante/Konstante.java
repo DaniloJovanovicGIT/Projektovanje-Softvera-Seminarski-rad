@@ -16,7 +16,7 @@ public class Konstante {
     public static final String ADRESA_SERVERA = "localhost";
     
     //UI PORUKE
-    public static final String PORUKA_USPESNO = "Uspešno izvrsšeno.";
+    public static final String PORUKA_USPESNO = "Uspešno izvršeno.";
     public static final String PORUKA_NEUSPESNO = "Došlo je do greške.";
     
     //OBRADA DATUMA
