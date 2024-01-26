@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package aplikaciona.logika;
+package niti;
 
 import domen.Partner;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import domen.Kampanja;
 import domen.Menadzer;
 import domen.Odeljenje;
 import domen.StatusZadatka;
+import domen.Zadatak;
 import domen.Zaposleni;
 import java.util.ArrayList;
 
@@ -171,6 +172,10 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     break;
                 case Operacija.IZMENI_KAMPANJU:
                     Kampanja izmenjenaKampanja = (Kampanja) zahtev.getParametar();
+                    System.out.println(izmenjenaKampanja.getNaziv());
+                    for (Zadatak zadatak : izmenjenaKampanja.getZadaci()) {
+                        System.out.println(zadatak.getNaziv());
+                    }
                     boolean uspesnoIzmenjenaKampanja = Kontroler.getInstance().izmeniKampanju(izmenjenaKampanja);
                     if (uspesnoIzmenjenaKampanja) {
                         odgovor = new Odgovor(izmenjenaKampanja, Operacija.IZMENI_KAMPANJU, "Sistem je promenio kampanju.", VrstaOdgovora.USPESNO);

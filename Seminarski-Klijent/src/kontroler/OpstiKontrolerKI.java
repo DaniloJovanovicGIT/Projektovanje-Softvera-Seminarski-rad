@@ -36,11 +36,11 @@ public  class OpstiKontrolerKI {
         
     }
 
-    protected void posaljiZahtev(Zahtev zahtev) {
+    protected void posaljiZahtev(Zahtev zahtev) throws IOException {
         try {
             posiljalac.posalji(zahtev);
         } catch (IOException ex) {
-             java.util.logging.Logger.getLogger(OpstiKontrolerKI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            throw ex;
         }
     }
 

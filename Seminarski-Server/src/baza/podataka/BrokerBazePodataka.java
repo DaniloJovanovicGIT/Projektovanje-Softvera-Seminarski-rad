@@ -38,12 +38,13 @@ public class BrokerBazePodataka {
         try {
             InputStream ulaz = this.getClass().getResourceAsStream(Konstante.LOKACIJA_PARAMETARA_BAZE);
             parametriBaze.load(new FileInputStream(Konstante.LOKACIJA_PARAMETARA_BAZE));
+            lokacija = parametriBaze.getProperty(Konstante.LOKACIJA_BAZE_KEY);
+            username = parametriBaze.getProperty(Konstante.USERNAME_BAZA_KEY);
+            password = parametriBaze.getProperty(Konstante.PASSWORD_BAZA_KEY);
         } catch (IOException ex) {
             Logger.getLogger(BrokerBazePodataka.class.getName()).log(Level.SEVERE, "Greska prilikom ucitavanja parametara baze", ex);
+            System.exit(0);
         }
-        lokacija = parametriBaze.getProperty(Konstante.LOKACIJA_BAZE_KEY);
-        username = parametriBaze.getProperty(Konstante.USERNAME_BAZA_KEY);
-        password = parametriBaze.getProperty(Konstante.PASSWORD_BAZA_KEY);
     }
 
     public void otvoriKonekciju() throws SQLException {

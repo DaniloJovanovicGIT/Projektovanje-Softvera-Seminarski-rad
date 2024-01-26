@@ -116,8 +116,8 @@ public class FormaLogin extends javax.swing.JFrame implements FormaInterfejs {
         String password = String.valueOf(txtPassword.getPassword());
         Odgovor odgovor = KontrolerKILogin.getInstance().login(username, password);
         if (odgovor == null) {
-            JOptionPane.showMessageDialog(this, "Došlo je do greške u komunikaciji. Servis nije dostupan.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
+            JOptionPane.showMessageDialog(this, "Došlo je do greške u komunikaciji sa serverom. Servis nije dostupan.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         } else if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
             JOptionPane.showMessageDialog(this, odgovor.getPoruka(), Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
             Menadzer ulogovaniMenadzer = (Menadzer) odgovor.getParametar();

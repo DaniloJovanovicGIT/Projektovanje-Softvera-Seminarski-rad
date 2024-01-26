@@ -25,6 +25,7 @@ public class FormaKonfiguracijaServera extends javax.swing.JDialog {
     public FormaKonfiguracijaServera(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         ucitajParametreServera();
         ucitajParametreBaze();
     }

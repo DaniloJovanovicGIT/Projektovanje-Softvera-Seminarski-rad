@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package aplikaciona.logika;
+package niti;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,10 +29,8 @@ public class ServerskaNit extends Thread {
     ServerSocket serverskiSoket;
     List<ObradaZahtevaKlijentaNit> listaKlijentskihNiti;
 
-    public ServerskaNit() throws IOException {
+    public ServerskaNit() throws FileNotFoundException, IOException {
         Properties parametri = new Properties();
-//        URL url = ClassLoader.getSystemResource(Konstante.LOKACIJA_PARAMETARA_SERVERA);
-//        parametri.load(url.openStream());
         parametri.load(new FileInputStream(Konstante.LOKACIJA_PARAMETARA_SERVERA));
         int portServera = Integer.parseInt(parametri.getProperty(Konstante.PORT_SERVERA_KEY));
         serverskiSoket = new ServerSocket(portServera);

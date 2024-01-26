@@ -39,9 +39,7 @@ public class KontorlerKIZaposleni extends OpstiKontrolerKI {
             Odgovor odgovor = (Odgovor) primalac.primi();
             if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
                 return (ArrayList<Odeljenje>) odgovor.getParametar();
-            } else {
-                return null;
-            }
+            } 
         } catch (Exception ex) {
             Logger.getLogger(KontorlerKIZaposleni.class.getName()).log(Level.SEVERE, null, ex);
         }

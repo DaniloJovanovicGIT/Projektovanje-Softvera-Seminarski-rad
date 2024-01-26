@@ -28,8 +28,8 @@ public class SOIzmeniKampanju extends OpsteIzvrsenjeSO {
                 return false;
             }
             //Provera da li postoji kampanja sa istim identifikatorom u bazi, treba da postoji
-            List<OpstiDomenskiObjekat> listaPartnera = bbp.ucitaj(odo);
-            if (listaPartnera.isEmpty()) {
+            List<OpstiDomenskiObjekat> listaKampanja = bbp.ucitaj(odo);
+            if (listaKampanja.isEmpty()) {
                 return false;
             }
         } else {
@@ -39,21 +39,26 @@ public class SOIzmeniKampanju extends OpsteIzvrsenjeSO {
     }
 
     @Override
-    public boolean izvrsiSO(OpstiDomenskiObjekat odo){
+    public boolean izvrsiSO(OpstiDomenskiObjekat odo) {
         boolean signal = false;
         try {
             Kampanja kampanja = (Kampanja) odo;
+            System.err.println(kampanja.getNaziv());
+            for (Zadatak zadatak : kampanja.getZadaci()) {
+                System.err.println(zadatak.getNaziv());
+            }
             boolean izmenjenaKampanja = bbp.promeni(kampanja);
-            if(izmenjenaKampanja){
+            if (izmenjenaKampanja) {
                 for (Zadatak zadatak : kampanja.getZadaci()) {
-                    if(zadatak.getZadatakId()==null){
+                    if (zadatak.getZadatakId() == null) {
                         bbp.zapamti(zadatak);
-                    }else{
+                    } else {
                         bbp.promeni(zadatak);
+                        System.err.println("Promenjen zadatak");
                     }
                 }
-            }else{
-            return false;
+            } else {
+                return false;
             }
             signal = true;
         } catch (SQLException ex) {
@@ -61,5 +66,5 @@ public class SOIzmeniKampanju extends OpsteIzvrsenjeSO {
         }
         return signal;
     }
-    
+
 }

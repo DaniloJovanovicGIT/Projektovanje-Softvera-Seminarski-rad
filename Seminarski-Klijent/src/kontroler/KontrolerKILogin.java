@@ -5,6 +5,9 @@
 package kontroler;
 
 import domen.Menadzer;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
 import komunikacija.Zahtev;
@@ -31,8 +34,13 @@ public class KontrolerKILogin extends OpstiKontrolerKI {
         Menadzer menadzer = new Menadzer();
         menadzer.setUsername(username);
         menadzer.setPassword(password);
-        posaljiZahtev(new Zahtev(Operacija.LOGIN, menadzer, true));
-        return primiOdgovor();
+        try {
+            posaljiZahtev(new Zahtev(Operacija.LOGIN, menadzer, true));
+            return primiOdgovor();
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerKILogin.class.getName()).log(Level.SEVERE, "Server nije u funkciji.", ex);
+        }
+        return null;
     }
 
 }

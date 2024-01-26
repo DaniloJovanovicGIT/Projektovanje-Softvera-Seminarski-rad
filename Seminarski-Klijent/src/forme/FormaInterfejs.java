@@ -23,8 +23,8 @@ public interface FormaInterfejs {
      */
     public default void prikaziObavestenje(Odgovor odgovor, boolean zatvori, JFrame aThis) {
         if (odgovor == null) {
-            JOptionPane.showMessageDialog(aThis, "Došlo je do greške u komunikaciji. Pokušajte ponovo.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            aThis.dispose();
+            JOptionPane.showMessageDialog(aThis, "Komunikacija sa serverom je prekinuta. Pokrenite server.", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         } else if (odgovor.getVrstaOdgovora() == VrstaOdgovora.USPESNO) {
             JOptionPane.showMessageDialog(aThis, odgovor.getPoruka(), konstante.Konstante.PORUKA_USPESNO, JOptionPane.INFORMATION_MESSAGE);
         } else if (odgovor.getVrstaOdgovora() == VrstaOdgovora.GRESKA) {

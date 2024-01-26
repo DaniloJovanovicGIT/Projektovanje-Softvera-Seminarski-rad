@@ -69,7 +69,7 @@ public class ModelTabeleZadatak extends AbstractTableModel {
 
     public void dodaj(Zadatak noviZadatak) {
         lista.add(noviZadatak);
-        fireTableRowsInserted(lista.size()-1, lista.size()+1);
+        fireTableDataChanged();
     }
 
     public void obrisi(int izabraniRed) {

@@ -5,6 +5,7 @@
 package kontroler;
 
 import domen.Kampanja;
+import domen.Zadatak;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,8 +75,8 @@ public class KontrolerKIKampanja extends OpstiKontrolerKI {
 
     public Odgovor izmeniKampanju(Kampanja izmenjenaKampanja) {
         try {
-            System.out.println("Saljem zahtev. Izmeni kampanju");
-            posiljalac.posalji(new Zahtev(Operacija.IZMENI_KAMPANJU, izmenjenaKampanja, true));
+            Kampanja promenjenaKampanja = new Kampanja(izmenjenaKampanja.getKampanjaId(), izmenjenaKampanja.getNaziv(), izmenjenaKampanja.getDatumPocetka(), izmenjenaKampanja.getDatumZavrsetka(), izmenjenaKampanja.getOdgovorniZaposleni(), izmenjenaKampanja.getPartner(), izmenjenaKampanja.getZadaci());
+            posiljalac.posalji(new Zahtev(Operacija.IZMENI_KAMPANJU,promenjenaKampanja, true));
             return (Odgovor) primalac.primi();
 
         } catch (Exception ex) {

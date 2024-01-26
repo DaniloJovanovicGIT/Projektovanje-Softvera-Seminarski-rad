@@ -353,8 +353,9 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame implements forme.For
     }//GEN-LAST:event_btnIzmeniZadatakActionPerformed
 
     private void btnIzmeniKampanjuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniKampanjuActionPerformed
-        if (validirajUnos()) {
-            Odgovor odgovor = KontrolerKIKampanja.getInstance().izmeniKampanju(izabranaKampanja);
+        Kampanja izmenjenaKampanja = izabranaKampanja;
+        if (validirajUnos(izmenjenaKampanja)) {
+            Odgovor odgovor = KontrolerKIKampanja.getInstance().izmeniKampanju(izmenjenaKampanja);
             prikaziObavestenje(odgovor, true, this);
         }
     }//GEN-LAST:event_btnIzmeniKampanjuActionPerformed
@@ -491,7 +492,7 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame implements forme.For
         mtz.setLista((ArrayList<Zadatak>) izabranaKampanja.getZadaci());
     }
 
-    private boolean validirajUnos() {
+    private boolean validirajUnos(Kampanja izmenjenaKampanja) {
         Partner partner = (Partner) cmbPartner.getSelectedItem();
         if (partner == null) {
             JOptionPane.showMessageDialog(this, "Morate izabrati partnera za koga se izrađuje kampanja.", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
@@ -534,15 +535,15 @@ public class FormaIzmeniKampanju extends javax.swing.JFrame implements forme.For
             return false;
         }
 
-        izabranaKampanja.setPartner(partner);
-        izabranaKampanja.setNaziv(naziv);
-        izabranaKampanja.setDatumPocetka(datumPocetka);
-        izabranaKampanja.setDatumZavrsetka(datumZavrsetka);
-        izabranaKampanja.setOdgovorniZaposleni(odgovorniZaposleni);
+        izmenjenaKampanja.setPartner(partner);
+        izmenjenaKampanja.setNaziv(naziv);
+        izmenjenaKampanja.setDatumPocetka(datumPocetka);
+        izmenjenaKampanja.setDatumZavrsetka(datumZavrsetka);
+        izmenjenaKampanja.setOdgovorniZaposleni(odgovorniZaposleni);
         for (Zadatak zadatak : listaZadataka) {
-            zadatak.setKampanja(izabranaKampanja);
+            zadatak.setKampanja(izmenjenaKampanja);
         }
-        izabranaKampanja.setZadaci(listaZadataka);
+        izmenjenaKampanja.setZadaci(listaZadataka);
         return true;
     }
 }

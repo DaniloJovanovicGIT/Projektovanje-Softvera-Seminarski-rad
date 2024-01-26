@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import aplikaciona.logika.ServerskaNit;
+import niti.ServerskaNit;
 
 /**
  *
@@ -21,10 +21,15 @@ public class ServerskaForma extends javax.swing.JFrame {
     /**
      * Creates new form ServerskaForma
      */
-    public ServerskaForma() throws IOException {
+    public ServerskaForma() {
         initComponents();
         setLocationRelativeTo(null);
-
+        try {
+            sn = new ServerskaNit();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da ucita parametre.","Doslo je do greske.", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
     }
 
     /**
@@ -100,14 +105,9 @@ public class ServerskaForma extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPokreniServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPokreniServerActionPerformed
-        try {
-            sn = new ServerskaNit();
             sn.start();
             btnPokreniServer.setEnabled(false);
-            btnZaustaviServer.setEnabled(true);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-        }
+            btnZaustaviServer.setEnabled(true);            
     }//GEN-LAST:event_btnPokreniServerActionPerformed
 
     private void btnZaustaviServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZaustaviServerActionPerformed
@@ -153,11 +153,7 @@ public class ServerskaForma extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new ServerskaForma().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(ServerskaForma.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new ServerskaForma().setVisible(true);
             }
         });
     }
