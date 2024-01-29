@@ -25,4 +25,4 @@
  
 Београд 2023. 
 
-Линк према документацији: https://fonbgacrs-my.sharepoint.com/:w:/g/personal/dj20180130_student_fon_bg_ac_rs/EX4Tmz88pq5IqftBQpdZ3fEBjAqEPNiIWwzbdK9Jvjhx4w?e=kgvFNO
+Линк према документацији: https://drive.google.com/file/d/1YFByS8NIEbfPJ6XeWHKKqz6y9awGmrZD/view?usp=drive_link
