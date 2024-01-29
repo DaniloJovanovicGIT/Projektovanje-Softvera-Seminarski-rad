@@ -4,6 +4,7 @@
  */
 package niti;
 
+import domen.Menadzer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,6 +29,7 @@ public class ServerskaNit extends Thread {
 
     ServerSocket serverskiSoket;
     List<ObradaZahtevaKlijentaNit> listaKlijentskihNiti;
+    ArrayList<Menadzer> ulogovaniMenadzeri;
 
     public ServerskaNit() throws FileNotFoundException, IOException {
         Properties parametri = new Properties();
@@ -35,6 +37,7 @@ public class ServerskaNit extends Thread {
         int portServera = Integer.parseInt(parametri.getProperty(Konstante.PORT_SERVERA_KEY));
         serverskiSoket = new ServerSocket(portServera);
         listaKlijentskihNiti = new ArrayList<>();
+        ulogovaniMenadzeri = new ArrayList<Menadzer>();
     }
 
     @Override
@@ -43,7 +46,7 @@ public class ServerskaNit extends Thread {
             try {
                 System.out.println("Server je pokrenut.");
                 Socket soket = serverskiSoket.accept();
-                ObradaZahtevaKlijentaNit klijentskaNit = new ObradaZahtevaKlijentaNit(soket, this);
+                ObradaZahtevaKlijentaNit klijentskaNit = new ObradaZahtevaKlijentaNit(soket, this, ulogovaniMenadzeri);
                 klijentskaNit.start();
                 listaKlijentskihNiti.add(klijentskaNit);
                 System.out.println("Povezao se klijent broj : " + (listaKlijentskihNiti.size()));

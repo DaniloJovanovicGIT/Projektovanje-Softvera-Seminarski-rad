@@ -34,12 +34,14 @@ public class ObradaZahtevaKlijentaNit extends Thread {
     private ServerskaNit serverskaNit;
     private Posiljalac posiljalac;
     private Primalac primalac;
+    ArrayList<Menadzer> ulogovaniMenadzeri;
 
-    ObradaZahtevaKlijentaNit(Socket soket, ServerskaNit serverskaNit) throws IOException {
+    ObradaZahtevaKlijentaNit(Socket soket, ServerskaNit serverskaNit,ArrayList<Menadzer> ulogovaniMenadzeri) throws IOException {
         this.soket = soket;
         this.serverskaNit = serverskaNit;
         this.posiljalac = new Posiljalac(soket);
         this.primalac = new Primalac(soket);
+        this.ulogovaniMenadzeri = ulogovaniMenadzeri;
     }
 
     @Override
@@ -221,11 +223,32 @@ public class ObradaZahtevaKlijentaNit extends Thread {
                     break;
                 case Operacija.LOGIN:
                     Menadzer menadzer = (Menadzer) zahtev.getParametar();
-                    Menadzer ulogovaniMenadzer = Kontroler.getInstance().login(menadzer);
-                    if (ulogovaniMenadzer != null) {
-                        odgovor = new Odgovor(ulogovaniMenadzer, Operacija.LOGIN, "Uspešno ste se ulogovali. Dobrodošli.", VrstaOdgovora.USPESNO);
-                    } else {
-                        odgovor = new Odgovor(ulogovaniMenadzer, Operacija.LOGIN, "Pogrešni kredencijali. Pokušajte ponovo.", VrstaOdgovora.GRESKA);
+                    System.out.println(menadzer.getUsername() + " " + menadzer.getPassword());
+                    boolean vecUlogovan = false;
+                    for (Menadzer ulogovaniMenadzer : ulogovaniMenadzeri) {
+                        System.err.println(ulogovaniMenadzer.getUsername() + " " + ulogovaniMenadzer.getPassword());
+
+                        if (menadzer.getUsername().equals(ulogovaniMenadzer.getUsername()) && menadzer.getPassword().equals(ulogovaniMenadzer.getPassword())) {
+
+                            vecUlogovan = true;
+                            odgovor = new Odgovor(null, Operacija.LOGIN, "Menadžer je već ulogovan.", VrstaOdgovora.GRESKA);
+
+                        }
+                    }
+                    System.out.println(vecUlogovan);
+                    if (!vecUlogovan) {
+                        Menadzer ulogovaniMenadzer = Kontroler.getInstance().login(menadzer);
+                        if (ulogovaniMenadzer != null) {
+                            odgovor = new Odgovor(ulogovaniMenadzer, Operacija.LOGIN, "Uspešno ste se ulogovali. Dobrodošli.", VrstaOdgovora.USPESNO);
+                            ulogovaniMenadzeri.add(ulogovaniMenadzer);
+
+                        } else {
+                            odgovor = new Odgovor(ulogovaniMenadzer, Operacija.LOGIN, "Pogrešni kredencijali. Pokušajte ponovo.", VrstaOdgovora.GRESKA);
+                        }
+                    }
+                    System.out.println("Ulogovani menadzeri:");
+                    for (Menadzer menadzer1 : ulogovaniMenadzeri) {
+                        System.out.println(menadzer1);
                     }
                     break;
 

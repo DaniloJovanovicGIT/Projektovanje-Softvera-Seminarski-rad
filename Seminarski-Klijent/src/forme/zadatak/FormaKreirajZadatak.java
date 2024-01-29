@@ -169,7 +169,7 @@ public class FormaKreirajZadatak extends javax.swing.JDialog {
             cmbStatusZadatka.setSelectedItem(null);
         } else {
             JOptionPane.showMessageDialog(this, "Sistem ne može da učita statuse zadataka", konstante.Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
+            this.dispose();
         }
     }
 
