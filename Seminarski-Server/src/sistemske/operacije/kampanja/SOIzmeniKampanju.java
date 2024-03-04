@@ -27,6 +27,10 @@ public class SOIzmeniKampanju extends OpsteIzvrsenjeSO {
                     || kampanja.getDatumZavrsetka() == null || kampanja.getOdgovorniZaposleni() == null || kampanja.getZadaci() == null) {
                 return false;
             }
+            //Provera da li je datum pocetka kampanje pre datuma zavrsetka kampanje
+            if (kampanja.getDatumPocetka().after(kampanja.getDatumZavrsetka())) {
+                return false;
+            }
             //Provera da li postoji kampanja sa istim identifikatorom u bazi, treba da postoji
             List<OpstiDomenskiObjekat> listaKampanja = bbp.ucitaj(odo);
             if (listaKampanja.isEmpty()) {

@@ -28,6 +28,10 @@ public class SOZapamtiKampanju extends OpsteIzvrsenjeSO {
                     || kampanja.getDatumZavrsetka() == null || kampanja.getOdgovorniZaposleni() == null || kampanja.getZadaci() == null) {
                 return false;
             }
+            //Provera da li je datum pocetka kampanje pre datuma zavrsetka kampanje
+            if(kampanja.getDatumPocetka().after(kampanja.getDatumZavrsetka())){
+                return false;
+            }
             //Provera da li postoji kampanja sa istim identifikatorom u bazi
             List<OpstiDomenskiObjekat> listaPartnera = bbp.ucitaj(odo);
             if (!listaPartnera.isEmpty()) {
