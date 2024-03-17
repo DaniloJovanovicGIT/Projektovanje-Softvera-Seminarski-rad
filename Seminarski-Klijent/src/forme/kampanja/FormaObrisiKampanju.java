@@ -35,8 +35,8 @@ public class FormaObrisiKampanju extends javax.swing.JFrame implements forme.For
         postaviModelTabeleKampanja();
         postaviModelTabeleZadatak();
         popuniSveKampanje();
-        popuniPartnere();
-        popuniZaposlene();
+        cmbGlavniOdgovorni.removeAllItems();
+        cmbPartner.removeAllItems();
     }
 
     /**
@@ -358,34 +358,6 @@ public class FormaObrisiKampanju extends javax.swing.JFrame implements forme.For
     private javax.swing.JTextField txtVrednostPretrage;
     // End of variables declaration//GEN-END:variables
 
-    private void popuniPartnere() {
-        cmbPartner.removeAllItems();
-        ArrayList<Partner> listaSvihPartnera = kontroler.KontrolerKIPartner.getInstance().vratiSvePartnere();
-        if (listaSvihPartnera != null && !listaSvihPartnera.isEmpty()) {
-            for (Partner partner : listaSvihPartnera) {
-                cmbPartner.addItem(partner);
-            }
-            cmbPartner.setSelectedItem(null);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može ucita partnere", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
-    }
-
-    private void popuniZaposlene() {
-        cmbGlavniOdgovorni.removeAllItems();
-        ArrayList<Zaposleni> listaSvihZaposlnih = kontroler.KontorlerKIZaposleni.getInstance().vratiSveZaposlene();
-        if (listaSvihZaposlnih != null && !listaSvihZaposlnih.isEmpty()) {
-            for (Zaposleni zaposleni : listaSvihZaposlnih) {
-                cmbGlavniOdgovorni.addItem(zaposleni);
-            }
-            cmbGlavniOdgovorni.setSelectedItem(null);
-        } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne može ucita zaposlene", Konstante.PORUKA_NEUSPESNO, JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
-    }
-
     private void postaviModelTabeleZadatak() {
         ModelTabeleZadatak mtz = new ModelTabeleZadatak();
         tblZadaci.setModel(mtz);
@@ -408,11 +380,13 @@ public class FormaObrisiKampanju extends javax.swing.JFrame implements forme.For
     }
 
     private void popuniPodatkeKampanja(Kampanja izabranaKampanja) {
+        cmbPartner.addItem(izabranaKampanja.getPartner());
         cmbPartner.setSelectedItem(izabranaKampanja.getPartner());
         txtNaziv.setText(izabranaKampanja.getNaziv());
         SimpleDateFormat sdf = Konstante.SIMPLE_DATE_FORMAT;
         txtDatumPocetka.setText(sdf.format(izabranaKampanja.getDatumPocetka()));
         txtDatumZavrsetka.setText(sdf.format(izabranaKampanja.getDatumZavrsetka()));
+        cmbGlavniOdgovorni.addItem(izabranaKampanja.getOdgovorniZaposleni());
         cmbGlavniOdgovorni.setSelectedItem(izabranaKampanja.getOdgovorniZaposleni());
         ModelTabeleZadatak mtz = (ModelTabeleZadatak) tblZadaci.getModel();
         mtz.setLista((ArrayList<Zadatak>) izabranaKampanja.getZadaci());
